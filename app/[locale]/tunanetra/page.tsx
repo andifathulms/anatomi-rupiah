@@ -24,6 +24,13 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
   const rows = blindCodeRows(locale)
   const gaps = blindCodeGaps()
 
+  const seen = new Map<string, (typeof detail.citations)[number]>()
+  for (const citation of [...detail.citations, ...rows.flatMap((row) => row.citations)]) {
+    const key = `${citation.publisher}·${citation.title}·${citation.locator ?? ''}`
+    if (!seen.has(key)) seen.set(key, citation)
+  }
+  const pageCitations = [...seen.values()]
+
   return (
     <div className="py-14">
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-diraba">
@@ -134,7 +141,8 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
         .
       </p>
 
-      <CitationList citations={detail.citations} locale={locale} />
+      {/* Feature sources plus the per-note sources behind the table above. */}
+      <CitationList citations={pageCitations} locale={locale} />
     </div>
   )
 }

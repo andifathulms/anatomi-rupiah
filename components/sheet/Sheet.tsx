@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Loupe } from '@/components/loupe/Loupe'
+import { CitationLines } from '@/components/mechanism/CitationList'
 import { Schematic } from '@/components/sheet/Schematic'
 import type { SheetNoteView } from '@/lib/schematic/sheet'
 import type { LembarCopy } from '@/lib/i18n/lembar'
+import type { Locale } from '@/lib/i18n'
 import type { CheckChannel } from '@/lib/content/schema'
 
 /**
@@ -21,6 +23,7 @@ export interface SheetProps {
   /** Authored mechanism SVG, read at build time and passed in as markup. */
   readonly mechanisms: Readonly<Record<string, string>>
   readonly copy: LembarCopy
+  readonly locale: Locale
 }
 
 const CHANNEL_TEXT: Record<CheckChannel, string> = {
@@ -37,7 +40,7 @@ const CHANNEL_BG: Record<CheckChannel, string> = {
   mesin: 'bg-mesin',
 }
 
-export function Sheet({ notes, mechanisms, copy }: SheetProps) {
+export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
   const [noteId, setNoteId] = useState(notes[0]?.id ?? '')
   const [featureId, setFeatureId] = useState<string | undefined>(undefined)
 
@@ -157,6 +160,16 @@ export function Sheet({ notes, mechanisms, copy }: SheetProps) {
                   {copy.readMore} →
                 </Link>
               </p>
+
+              {/* Placement is a claim about the world, so it shows its sources. */}
+              <h4 className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+                {copy.sourcesLabel}
+              </h4>
+              <CitationLines
+                citations={marker.citations}
+                locale={locale}
+                className="mt-2 space-y-1 text-xs text-engraving-faint"
+              />
             </div>
 
             {mechanism !== undefined && (

@@ -1,6 +1,6 @@
 import { denominations } from '@/data/denominations'
 import { featuresById } from '@/lib/content'
-import type { CheckChannel } from '@/lib/content/schema'
+import type { CheckChannel, Citation } from '@/lib/content/schema'
 import { CHANNEL_LABEL, href, type Locale } from '@/lib/i18n'
 import { loupeViewModel, type LoupeViewModel } from './loupe'
 import { schematicViewModel, type SchematicViewModel } from './view-model'
@@ -20,6 +20,8 @@ export interface SheetMarkerView {
   readonly featureName: string
   readonly note: string
   readonly featureUrl: string
+  /** Sources behind this placement. A citation nobody can read is not one. */
+  readonly citations: readonly Citation[]
   readonly loupe: LoupeViewModel
 }
 
@@ -77,6 +79,7 @@ export function sheetNotes(locale: Locale): readonly SheetNoteView[] {
         featureName: feature.name[locale],
         note: placement.note.text[locale],
         featureUrl: href(locale, `ciri/${feature.id}`),
+        citations: placement.note.citations,
         loupe: loupeViewModel(placement.region, size),
       })),
     }

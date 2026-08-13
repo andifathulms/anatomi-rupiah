@@ -6,6 +6,42 @@ import type { Locale } from '@/lib/i18n'
  * shows them. Build-enforced by the citation validator; shown here because a
  * citation nobody can read is not a citation.
  */
+/** The list on its own, for places that already have a heading of their own. */
+export function CitationLines({
+  citations,
+  locale,
+  className = 'mt-4 space-y-2 text-sm text-engraving-soft',
+}: {
+  readonly citations: readonly Citation[]
+  readonly locale: Locale
+  readonly className?: string
+}) {
+  return (
+    <ul className={className}>
+      {citations.map((citation) => (
+        <li key={`${citation.publisher}-${citation.title}-${citation.locator ?? ''}`}>
+          <span className="text-engraving">{citation.publisher}</span> — {citation.title}
+          {citation.locator !== undefined && <span>, {citation.locator}</span>}
+          {citation.url !== undefined && (
+            <>
+              {' '}
+              <a
+                href={citation.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="underline underline-offset-4"
+              >
+                ↗
+                <span className="sr-only">{locale === 'id' ? 'buka sumber' : 'open source'}</span>
+              </a>
+            </>
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export function CitationList({
   citations,
   locale,
@@ -18,28 +54,7 @@ export function CitationList({
       <h2 id="sumber" className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
         {locale === 'id' ? 'Sumber' : 'Sources'}
       </h2>
-      <ul className="mt-4 space-y-2 text-sm text-engraving-soft">
-        {citations.map((citation) => (
-          <li key={`${citation.publisher}-${citation.title}-${citation.locator ?? ''}`}>
-            <span className="text-engraving">{citation.publisher}</span> — {citation.title}
-            {citation.locator !== undefined && <span>, {citation.locator}</span>}
-            {citation.url !== undefined && (
-              <>
-                {' '}
-                <a
-                  href={citation.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="underline underline-offset-4"
-                >
-                  ↗
-                  <span className="sr-only">{locale === 'id' ? 'buka sumber' : 'open source'}</span>
-                </a>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
+      <CitationLines citations={citations} locale={locale} />
     </section>
   )
 }

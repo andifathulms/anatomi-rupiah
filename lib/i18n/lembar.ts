@@ -11,6 +11,7 @@ export interface LembarCopy {
   readonly scaleNote: string
   readonly indicativeNote: string
   readonly readMore: string
+  readonly sourcesLabel: string
   readonly emisiCurrent: string
   readonly emisi2016: string
 }
@@ -29,6 +30,7 @@ export const LEMBAR: Record<Locale, LembarCopy> = {
     indicativeNote:
       'Letak penanda bersifat perkiraan. Bank Indonesia menyebutkan ciri apa yang ada pada tiap pecahan; koordinatnya tidak dipublikasikan dan tidak diukur di sini. Penanda hanya mengarahkan mata ke bagian yang tepat pada uang sungguhan.',
     readMore: 'Baca mekanismenya',
+    sourcesLabel: 'Sumber penanda ini',
     emisiCurrent: 'Tahun Emisi 2022',
     emisi2016: 'Tahun Emisi 2016 — masih berlaku',
   },
@@ -45,6 +47,7 @@ export const LEMBAR: Record<Locale, LembarCopy> = {
     indicativeNote:
       'Marker positions are approximate. Bank Indonesia states which features each denomination carries; it does not publish coordinates, and none were measured here. A marker exists to send your eye to the right part of a real note.',
     readMore: 'Read the mechanism',
+    sourcesLabel: 'Sources for this marker',
     emisiCurrent: 'Emission year 2022',
     emisi2016: 'Emission year 2016 — still legal tender',
   },

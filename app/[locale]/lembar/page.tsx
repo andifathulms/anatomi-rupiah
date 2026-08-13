@@ -28,7 +28,7 @@ export default function LembarPage({ params }: { readonly params: { readonly loc
     <div className="py-14">
       <h1 className="font-display text-4xl leading-tight">{copy.title}</h1>
       <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{copy.lede}</p>
-      <Sheet notes={sheetNotes(locale)} mechanisms={mechanismMarkup()} copy={copy} />
+      <Sheet notes={sheetNotes(locale)} mechanisms={mechanismMarkup()} copy={copy} locale={locale} />
     </div>
   )
 }
