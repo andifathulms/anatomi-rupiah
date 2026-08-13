@@ -77,7 +77,10 @@ function checkClaim(claim: Claim, where: string, issues: ContentIssue[]): void {
   screen(claim.text.en, `${where}.en`, issues)
 }
 
-function claimsOf(item: Content): ReadonlyArray<readonly [string, Claim]> {
+/** Every claim location on a content item, tagged with where it lives. Shared
+ * with the sources aggregator so "every claim" means the same thing in both
+ * places. */
+export function claimsOf(item: Content): ReadonlyArray<readonly [string, Claim]> {
   switch (item.type) {
     case 'feature': {
       const feature: Feature = item
