@@ -39,16 +39,35 @@ export const SITE: Record<Locale, SiteCopy> = {
   },
 }
 
+export interface PlainPoint {
+  readonly title: string
+  readonly body: string
+}
+
+export interface StartPath {
+  readonly segment: string
+  readonly title: string
+  readonly body: string
+  readonly minutes: string
+}
+
 export interface HomeCopy {
   readonly kicker: string
   readonly title: string
   readonly lede: string
+  readonly answer: string
+  readonly anatomyCaption: string
+  readonly anatomyHint: string
+  readonly plainHeading: string
+  readonly plainPoints: readonly PlainPoint[]
   readonly channelsHeading: string
+  readonly channelsLede: string
   readonly honestHeading: string
   readonly honestBody: string
   readonly honestQuote: string
   readonly startHeading: string
   readonly startBody: string
+  readonly startPaths: readonly StartPath[]
   readonly startCta: string
   readonly legalCta: string
 }
@@ -57,32 +76,112 @@ export const HOME: Record<Locale, HomeCopy> = {
   id: {
     kicker: 'Dilihat · Diraba · Diterawang',
     title: 'Anatomi Rupiah',
+    answer:
+      'Situs ini menunjukkan cara kerja pengaman pada uang Rupiah — dan cara memeriksanya sendiri.',
     lede:
-      'Hampir semua orang Indonesia hafal tiga kata itu. Jauh lebih sedikit yang bisa menjelaskan apa sebenarnya tanda air itu secara fisik, mengapa cetakan intaglio terasa timbul, atau apa yang dikerjakan benang pengaman di dalam kertas. Situs ini menjelaskan mekanismenya.',
+      'Hampir semua orang Indonesia hafal tiga kata itu. Jauh lebih sedikit yang bisa menjelaskan apa sebenarnya tanda air itu, mengapa cetakannya terasa timbul, atau apa yang dikerjakan benang pengaman di dalam kertas. Di sini semuanya dibongkar lapis demi lapis.',
+    anatomyCaption: 'Skema terurai, bertanda SPESIMEN, digambar pada',
+    anatomyHint: 'Gerakkan kursor untuk memutar. Pilih satu lapisan untuk membacanya.',
+    plainHeading: 'Singkatnya',
+    plainPoints: [
+      {
+        title: 'Yang dilakukan situs ini',
+        body: 'Menjelaskan setiap unsur pengaman pada uang Rupiah: apa yang terjadi di dalam bahannya, dan apa yang harus Anda lihat, raba, atau terawangkan.',
+      },
+      {
+        title: 'Yang tidak dilakukan',
+        body: 'Tidak memindai uang, tidak memakai kamera, dan tidak pernah menyatakan selembar uang asli atau palsu.',
+      },
+      {
+        title: 'Siapa yang berwenang',
+        body: 'Bank Indonesia. Kalau Anda ragu terhadap selembar uang, bawa ke bank atau kantor Bank Indonesia.',
+      },
+    ],
     channelsHeading: 'Empat kanal pemeriksaan',
+    channelsLede:
+      'Warna di situs ini bukan hiasan. Tiap warna berarti satu cara memeriksa, dan dipakai konsisten di setiap halaman.',
     honestHeading: 'Satu dari tiga tidak bisa lewat layar',
     honestBody:
       'Diraba adalah pemeriksaan dengan ujung jari. Layar tidak punya tekstur, dan getaran tidak menirukan cetakan timbul. Kami tidak akan berpura-pura sebaliknya.',
     honestQuote: 'Diraba tidak bisa lewat layar. Ambil uangnya, rasakan cetakan timbulnya.',
-    startHeading: 'Mulai dari mekanismenya',
-    startBody:
-      'Setiap ciri digambar sebagai potongan melintang atau gambar terurai: apa yang terjadi pada bahan, dan apa yang harus Anda amati.',
+    startHeading: 'Mulai dari mana',
+    startBody: 'Tiga jalan masuk, tergantung waktu yang Anda punya.',
+    startPaths: [
+      {
+        segment: 'tigad',
+        title: 'Ikuti tiga langkah',
+        body: 'Dilihat, diraba, diterawang — berurutan, dengan alasan fisik di balik masing-masing.',
+        minutes: '5 menit',
+      },
+      {
+        segment: 'lembar',
+        title: 'Lihat letaknya',
+        body: 'Skema tiap pecahan dengan penanda ciri, lengkap dengan tampilan diperbesar.',
+        minutes: '3 menit',
+      },
+      {
+        segment: 'ciri',
+        title: 'Pelajari mekanismenya',
+        body: 'Delapan penjelasan, tiap satu digambar sebagai potongan melintang.',
+        minutes: '15 menit',
+      },
+    ],
     startCta: 'Lihat ciri-ciri',
     legalCta: 'Dasar hukum & metode',
   },
   en: {
     kicker: 'Dilihat · Diraba · Diterawang',
     title: 'Anatomi Rupiah',
+    answer:
+      'This site shows how the security features of Rupiah banknotes work — and how to check them yourself.',
     lede:
-      'Almost every Indonesian can recite those three words. Far fewer could say what a watermark physically is, why intaglio printing feels raised, or what the security thread is doing inside the paper. This site explains the mechanisms.',
+      'Almost every Indonesian can recite those three words. Far fewer could say what a watermark actually is, why the printing feels raised, or what the security thread is doing inside the paper. Here it is taken apart, layer by layer.',
+    anatomyCaption: 'Exploded schematic, marked SPESIMEN, drawn at',
+    anatomyHint: 'Move the pointer to turn it. Choose a layer to read about it.',
+    plainHeading: 'In short',
+    plainPoints: [
+      {
+        title: 'What this site does',
+        body: 'Explains each security feature on Rupiah banknotes: what happens inside the material, and what you should look at, feel for, or hold to the light.',
+      },
+      {
+        title: 'What it does not do',
+        body: 'It does not scan notes, use a camera, or ever tell you whether a note is genuine or counterfeit.',
+      },
+      {
+        title: 'Who decides',
+        body: 'Bank Indonesia. If a note troubles you, take it to a bank or a Bank Indonesia office.',
+      },
+    ],
     channelsHeading: 'Four checking channels',
+    channelsLede:
+      'Colour here is not decoration. Each hue means one way of checking, used consistently on every page.',
     honestHeading: 'One of the three cannot be done on a screen',
     honestBody:
       'Diraba is a check made with a fingertip. A screen has no texture, and a vibration does not imitate raised printing. We will not pretend otherwise.',
     honestQuote: 'Diraba tidak bisa lewat layar. Ambil uangnya, rasakan cetakan timbulnya.',
-    startHeading: 'Start with the mechanism',
-    startBody:
-      'Each feature is drawn in cross-section or exploded view: what happens in the material, and what you should observe.',
+    startHeading: 'Where to start',
+    startBody: 'Three ways in, depending on the time you have.',
+    startPaths: [
+      {
+        segment: 'tigad',
+        title: 'Follow the three steps',
+        body: 'Dilihat, diraba, diterawang — in order, with the physical reason behind each.',
+        minutes: '5 min',
+      },
+      {
+        segment: 'lembar',
+        title: 'See where they sit',
+        body: 'A schematic of each denomination with feature markers, and a magnified view.',
+        minutes: '3 min',
+      },
+      {
+        segment: 'ciri',
+        title: 'Learn the mechanisms',
+        body: 'Eight explainers, each drawn in cross-section.',
+        minutes: '15 min',
+      },
+    ],
     startCta: 'See the features',
     legalCta: 'Legal basis & method',
   },

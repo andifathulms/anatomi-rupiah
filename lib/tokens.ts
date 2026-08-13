@@ -47,3 +47,31 @@ export const CHANNEL_INK = {
 } as const
 
 export type ChannelInk = keyof typeof CHANNEL_INK
+
+/**
+ * Lighter and darker readings of each channel hue, for fills, tinted panels,
+ * and text on tinted panels. These are the *same* four meanings — a tint of
+ * teal still means dilihat. The taxonomy is not diluted by having a range.
+ */
+export const CHANNEL_TINT = {
+  dilihat: '#E8F0F0',
+  diraba: '#F4EBE3',
+  diterawang: '#F7EFDC',
+  mesin: '#EEEAF7',
+} as const
+
+export const CHANNEL_DEEP = {
+  dilihat: '#1D4B50',
+  diraba: '#6B482E',
+  diterawang: '#8A6115',
+  mesin: '#4A3577',
+} as const
+
+/**
+ * The inspection surface: the dark ground used where the subject is light
+ * itself — the UV panel, the light-table sections. Not a "dark theme"; a
+ * different physical situation, which is why it appears only in those places.
+ */
+export const INSPECT = '#14181E'
+export const INSPECT_SOFT = '#1F252E'
+export const INSPECT_EDGE = '#2C3540'

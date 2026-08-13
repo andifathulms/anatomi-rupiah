@@ -4,6 +4,7 @@ import { Loupe } from '@/components/loupe/Loupe'
 import { Schematic } from '@/components/sheet/Schematic'
 import { assertRegionIsADetail } from '@/lib/schematic/loupe'
 import { sheetNotes } from '@/lib/schematic/sheet'
+import { anatomyViewModel } from '@/lib/hero/anatomy'
 import { hasBakedMark } from '@/lib/spesimen'
 import {
   FORBIDDEN_SCALE_BAND,
@@ -128,6 +129,54 @@ export function renderAllLoupes(): RenderedSchematic[] {
       widthMm: marker.loupe.regionWidthMm,
     })),
   )
+}
+
+/**
+ * The exploded anatomy on the home page is note-shaped, so it is a schematic
+ * and is held to the schematic rules: marked, and drawn below the size cap.
+ * Asserted on its view model rather than its markup because the component is
+ * interactive; the marking it renders comes straight from these fields.
+ */
+export function checkAnatomyMarking(): Violation[] {
+  const violations: Violation[] = []
+  const model = anatomyViewModel()
+
+  const marked = model.layers.filter((layer) => layer.markD !== undefined && layer.markD.length > 0)
+  if (marked.length < 2) {
+    violations.push({
+      check: 'anatomy-marking',
+      where: 'hero anatomy',
+      message:
+        'the exploded stack must carry the marking on its back and front layers, so it is marked ' +
+        'from any angle it can be seen from.',
+    })
+  }
+
+  const back = model.layers[0]
+  const front = model.layers[model.layers.length - 1]
+  for (const [name, layer] of [
+    ['back', back],
+    ['front', front],
+  ] as const) {
+    if (layer === undefined || layer.markD === undefined || layer.markD.length === 0) {
+      violations.push({
+        check: 'anatomy-marking',
+        where: `hero anatomy · ${name} layer`,
+        message: 'layer carries no baked mark geometry.',
+      })
+    }
+  }
+
+  const scale = model.widthPx / (151 * PX_PER_MM)
+  if (isInsideForbiddenBand(scale) || scale > MAX_SCHEMATIC_SCALE) {
+    violations.push({
+      check: 'anatomy-marking',
+      where: 'hero anatomy',
+      message: `renders at ${(scale * 100).toFixed(1)}% of actual size, above the cap.`,
+    })
+  }
+
+  return violations
 }
 
 export function checkLoupeRegions(): Violation[] {

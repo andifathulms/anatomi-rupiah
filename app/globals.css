@@ -4,23 +4,24 @@
 
 /*
  * The material world is an engraving proof sheet — PRD §9.
- * Heavy off-white stock, dense black line-work, registration marks in the margin.
+ * Heavy off-white stock, dense black line-work, registration marks in the
+ * margin. Depth here comes from ink and paper, never from glass and glow.
  */
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
 
   body {
     @apply bg-proof text-engraving font-sans antialiased;
-    /* Faint laid-paper ruling. Drawn with gradients so no raster asset exists. */
+    /* Laid-paper ruling plus a faint press vignette. Drawn with gradients so
+       no raster asset exists anywhere in the repository. */
     background-image:
-      repeating-linear-gradient(
-        90deg,
-        rgba(26, 31, 38, 0.028) 0 1px,
-        transparent 1px 26px
-      );
+      radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
+      repeating-linear-gradient(90deg, rgba(26, 31, 38, 0.022) 0 1px, transparent 1px 26px);
+    background-attachment: fixed;
   }
 
   ::selection {
@@ -28,14 +29,20 @@
   }
 
   :focus-visible {
-    outline: 2px solid theme('colors.dilihat');
+    outline: 2px solid theme('colors.dilihat.DEFAULT');
     outline-offset: 3px;
+    border-radius: 2px;
   }
 
   h1,
   h2,
   h3 {
     @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   /* Denominations and dimensions read as the mechanical lettering on the notes. */
@@ -52,13 +59,58 @@
   .callout-number {
     @apply font-mono text-xs tabular-nums;
   }
+
+  /* An engraver's small caps label. Used for every eyebrow on the site. */
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-engraving-faint;
+  }
+
+  .card {
+    @apply border border-engraving/10 bg-proof shadow-sheet transition-shadow duration-200;
+  }
+
+  .card-interactive {
+    @apply card hover:shadow-lift focus-within:shadow-lift;
+  }
+
+  /*
+   * The inspection surface. Used only where the subject is light itself — the
+   * UV panel and the light-table sections — never as a general dark theme.
+   */
+  .inspect-surface {
+    @apply bg-inspect text-proof;
+    background-image: radial-gradient(
+      100% 100% at 50% 0%,
+      rgba(107, 79, 168, 0.16) 0%,
+      transparent 65%
+    );
+  }
+}
+
+/*
+ * Mechanism animation.
+ *
+ * Applied from here rather than inside the .svg files, so the artwork in
+ * art/mechanisms stays pure geometry — it is authored work and it is also
+ * downloadable on its own, where a static diagram is the right thing.
+ */
+@layer utilities {
+  .mech svg [stroke='#C08A2E'] path,
+  .mech-rays path {
+    animation: ray-travel 3.2s ease-in-out infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
@@ -70,7 +122,8 @@
    * schematic is a step toward a printed note, and no print path may take it.
    */
   [data-schematic],
-  [data-loupe] {
+  [data-loupe],
+  [data-anatomy] {
     display: none !important;
   }
 

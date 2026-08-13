@@ -8,6 +8,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
 import {
+  checkAnatomyMarking,
   checkAssetPolicy,
   checkDependencies,
   checkExportSurface,
@@ -58,6 +59,7 @@ function main(): void {
     ],
     ['size constraint — never near actual banknote size', checkSizeConstraint(rendered)],
     ['loupe regions — a detail, never a whole note', checkLoupeRegions()],
+    ['hero anatomy — marked and under the size cap', checkAnatomyMarking()],
     ['export surface — mechanism diagrams only, never a note', checkExportSurface(files)],
     ['source policy — no capture, no camera, no runtime network', checkSourcePolicy(files)],
     ['marking implementation — geometry, never an overlay', checkMarkingImplementation(files)],
