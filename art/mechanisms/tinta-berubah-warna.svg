@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170" fill="none">
+  <!--
+    Tinta berubah warna — light reflects from the top and bottom of a thin
+    layer. The two reflections travel different distances depending on the
+    viewing angle, so which colour survives depends on where you stand.
+    Channel: dilihat (#2C6E75).
+  -->
+  <g stroke="#1A1F26" stroke-width="1.6" stroke-linecap="round">
+    <!-- the layer, drawn thick enough to see the two surfaces -->
+    <rect x="40" y="104" width="240" height="10" fill="#2C6E75" opacity="0.35" />
+    <rect x="40" y="104" width="240" height="10" stroke="#1A1F26" stroke-width="1.2" />
+    <rect x="40" y="114" width="240" height="16" fill="#E4DFD2" />
+    <rect x="40" y="114" width="240" height="16" stroke="#1A1F26" stroke-width="1.2" />
+
+    <!-- 1 · straight on: the two reflections agree -->
+    <g stroke="#2C6E75">
+      <path d="M110 40v58M126 98v-58" />
+      <path d="M106 46l4-6 4 6M122 92l4 6 4-6" />
+    </g>
+    <path d="M118 104v10" stroke="#7A828C" stroke-width="1" stroke-dasharray="2 2" />
+
+    <!-- 2 · at an angle: the paths differ, and a different colour survives -->
+    <g stroke="#6B4FA8">
+      <path d="M196 40l-14 58M212 98l26-58" />
+      <path d="M180 40l4 6 6-4M234 46l4-6 4 6" />
+    </g>
+    <path d="M204 104v10" stroke="#7A828C" stroke-width="1" stroke-dasharray="2 2" />
+
+    <!-- 3 · the result, as two swatches -->
+    <rect x="60" y="140" width="44" height="16" fill="#2C6E75" stroke="none" />
+    <rect x="60" y="140" width="44" height="16" stroke="#1A1F26" stroke-width="1.2" />
+    <rect x="216" y="140" width="44" height="16" fill="#6B4FA8" stroke="none" />
+    <rect x="216" y="140" width="44" height="16" stroke="#1A1F26" stroke-width="1.2" />
+  </g>
+
+  <g font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">
+    <circle cx="82" cy="60" r="9" fill="#2C6E75" />
+    <text x="82" y="63" fill="#EFEBE1">1</text>
+    <circle cx="268" cy="60" r="9" fill="#2C6E75" />
+    <text x="268" y="63" fill="#EFEBE1">2</text>
+  </g>
+</svg>

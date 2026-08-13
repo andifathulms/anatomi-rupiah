@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170" fill="none">
+  <!--
+    Gambar saling isi (rectoverso) — two incomplete halves printed on opposite
+    faces, in register. Neither reads on its own; held to light they close into
+    one shape. The shape drawn here is a neutral rosette, not a note motif.
+    Channel: diterawang (#C08A2E).
+  -->
+  <g stroke="#1A1F26" stroke-width="1.6">
+    <!-- front face: one half of the figure -->
+    <rect x="20" y="42" width="80" height="72" fill="#E4DFD2" />
+    <g stroke="#C08A2E" stroke-width="2">
+      <path d="M60 58v40M60 78h-18M60 78l-13-13M60 78l-13 13" />
+    </g>
+
+    <!-- back face: the complementary half -->
+    <rect x="120" y="42" width="80" height="72" fill="#E4DFD2" />
+    <g stroke="#C08A2E" stroke-width="2" opacity="0.55">
+      <path d="M160 78h18M160 78l13-13M160 78l13 13" />
+    </g>
+
+    <!-- held to light: the halves register into one complete figure -->
+    <rect x="228" y="42" width="72" height="72" fill="#E4DFD2" />
+    <g stroke="#C08A2E" stroke-width="2">
+      <path d="M264 58v40M246 78h36M251 65l26 26M277 65l-26 26" />
+      <circle cx="264" cy="78" r="6" />
+    </g>
+
+    <path d="M206 78h14M216 74l6 4-6 4" stroke="#1A1F26" stroke-width="1.4" />
+  </g>
+
+  <g font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">
+    <circle cx="60" cy="132" r="9" fill="#C08A2E" />
+    <text x="60" y="135" fill="#EFEBE1">1</text>
+    <circle cx="160" cy="132" r="9" fill="#C08A2E" />
+    <text x="160" y="135" fill="#EFEBE1">2</text>
+    <circle cx="264" cy="132" r="9" fill="#C08A2E" />
+    <text x="264" y="135" fill="#EFEBE1">3</text>
+  </g>
+</svg>

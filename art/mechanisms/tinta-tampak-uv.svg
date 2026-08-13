@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170" fill="none">
+  <!--
+    Unsur kasat UV — invisible under ordinary light, emitting visible light when
+    excited by ultraviolet. Two states, side by side. The pattern drawn is an
+    abstract lattice, not a note design.
+    Channel: mesin/UV (#6B4FA8).
+  -->
+  <g stroke="#1A1F26" stroke-width="1.6">
+    <!-- 1 · ordinary light: nothing to see -->
+    <rect x="20" y="46" width="118" height="70" fill="#E4DFD2" />
+    <g stroke="#C08A2E" stroke-width="1.2">
+      <path d="M34 34h20M44 26v16" />
+      <path d="M62 34h20M72 26v16" />
+    </g>
+    <path d="M40 74h78M40 88h56" stroke="#7A828C" stroke-width="0.9" opacity="0.5" />
+
+    <!-- 2 · under UV: the same area emits -->
+    <rect x="182" y="46" width="118" height="70" fill="#1A1F26" />
+    <g stroke="#6B4FA8" stroke-width="1.6">
+      <path d="M196 34h20M206 26v16" />
+      <path d="M224 34h20M234 26v16" />
+    </g>
+    <g stroke="#6B4FA8" stroke-width="2" stroke-linecap="round">
+      <path d="M198 66h86M198 80h60M198 94h74" />
+      <circle cx="270" cy="94" r="7" />
+    </g>
+    <rect x="182" y="46" width="118" height="70" stroke="#1A1F26" stroke-width="1.6" />
+
+    <path d="M148 80h22M162 76l6 4-6 4" stroke="#1A1F26" stroke-width="1.4" />
+  </g>
+
+  <g font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">
+    <circle cx="79" cy="136" r="9" fill="#6B4FA8" />
+    <text x="79" y="139" fill="#EFEBE1">1</text>
+    <circle cx="241" cy="136" r="9" fill="#6B4FA8" />
+    <text x="241" y="139" fill="#EFEBE1">2</text>
+  </g>
+</svg>
