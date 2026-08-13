@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { ReliefLight } from '@/components/channel/ReliefLight'
 import { CitationList } from '@/components/mechanism/CitationList'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
 import { blindCodeGaps, blindCodeRows } from '@/lib/content/tunanetra'
 import { featureDetail } from '@/lib/content/views'
 import { LOCALES, href, isLocale } from '@/lib/i18n'
+import { DEMO } from '@/lib/i18n/demo'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
@@ -76,6 +78,8 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
           )}
         </section>
       </div>
+
+      <ReliefLight copy={DEMO[locale]} ridges={4} />
 
       <section className="mt-16" aria-labelledby="tabel">
         <h2 id="tabel" className="font-display text-2xl">

@@ -104,3 +104,57 @@ void main() {
   gl_FragColor = vec4(colour, edge);
 }
 `
+
+/**
+ * Raking light across relief — the intaglio and blind-code mechanism.
+ *
+ * Ink standing proud of the surface catches light from a low angle and casts
+ * into shadow on the far side. Move the light and the ridges appear and
+ * disappear, which is why raised printing is legible by eye as well as by
+ * finger. The surface is computed as a height field and shaded from its
+ * gradient: no geometry, no note, just relief and a lamp.
+ */
+export const RELIEF_FRAGMENT = `
+precision mediump float;
+varying vec2 vUv;
+
+uniform float uLightAngle;  // azimuth of the raking light, radians
+uniform float uRidgeCount;  // ridges across the panel
+uniform vec3 uInk;
+uniform vec3 uStock;
+
+// Height at a point: a run of rounded ridges over a flat sheet.
+float height(vec2 p) {
+  float phase = p.x * uRidgeCount * 6.2831853;
+  float ridges = pow(max(0.0, sin(phase)), 6.0);
+  // Ridges only occupy a band, so the flat stock is visible for comparison.
+  float band = smoothstep(0.18, 0.28, p.y) * (1.0 - smoothstep(0.72, 0.82, p.y));
+  return ridges * band;
+}
+
+void main() {
+  vec2 p = vUv;
+  float e = 0.0025;
+
+  // Surface normal from the height gradient.
+  float hx = height(p + vec2(e, 0.0)) - height(p - vec2(e, 0.0));
+  float hy = height(p + vec2(0.0, e)) - height(p - vec2(0.0, e));
+  vec3 normal = normalize(vec3(-hx * 26.0, -hy * 26.0, 1.0));
+
+  // A low, raking lamp: the whole point is the grazing angle.
+  vec3 light = normalize(vec3(cos(uLightAngle), sin(uLightAngle), 0.42));
+  float lambert = max(0.0, dot(normal, light));
+
+  float h = height(p);
+  vec3 colour = mix(uStock, uInk, clamp(h * 1.35, 0.0, 1.0));
+  // Ambient kept high so the flat sheet reads as proof stock, not as grey.
+  colour *= 0.66 + 0.72 * lambert;
+
+  // Contact shadow where a ridge meets the sheet.
+  colour *= 1.0 - 0.22 * smoothstep(0.02, 0.3, h) * (1.0 - lambert);
+
+  vec2 d = abs(vUv - 0.5) * 2.0;
+  float edge = 1.0 - smoothstep(0.92, 1.0, max(d.x, d.y));
+  gl_FragColor = vec4(colour, edge);
+}
+`

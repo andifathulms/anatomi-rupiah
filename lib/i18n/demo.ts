@@ -20,6 +20,10 @@ export interface DemoCopy {
   readonly lightMove: string
   readonly lightDisclaimer: string
   readonly glUnavailable: string
+  readonly reliefHeading: string
+  readonly reliefBody: string
+  readonly reliefLightLabel: string
+  readonly reliefDisclaimer: string
 }
 
 export const DEMO: Record<Locale, DemoCopy> = {
@@ -50,6 +54,12 @@ export const DEMO: Record<Locale, DemoCopy> = {
       'Bentuk pada peragaan ini sengaja dibuat abstrak — sebuah lensa dan satu cincin ornamen — bukan gambar pahlawan dan bukan tanda air pada uang mana pun. Yang diperagakan adalah hubungannya: terang mengikuti ketebalan.',
     glUnavailable:
       'Peragaan ini memerlukan WebGL, yang tidak tersedia di peramban ini. Penjelasan dan diagramnya tetap lengkap di atas.',
+    reliefHeading: 'Sapukan cahaya',
+    reliefBody:
+      'Layar tidak bisa menyampaikan rabaan, tetapi bisa menunjukkan akibat lain dari cetakan timbul: tinta yang berdiri di atas permukaan menangkap cahaya dari sudut rendah dan menaungi sisi seberangnya. Geser arah cahayanya.',
+    reliefLightLabel: 'Arah cahaya',
+    reliefDisclaimer:
+      'Permukaan pada peragaan ini adalah deretan punggungan biasa, bukan ukiran pada uang mana pun. Ini menunjukkan bagaimana relief menangkap cahaya — bukan pengganti merabanya. Untuk itu tetap ambil uangnya.',
   },
   en: {
     tiltHeading: 'Try tilting it',
@@ -78,5 +88,11 @@ export const DEMO: Record<Locale, DemoCopy> = {
       'The shape here is deliberately abstract — a lens and an ornament ring — not a portrait and not the watermark of any note. What is demonstrated is the relationship: brightness follows thickness.',
     glUnavailable:
       'This demonstration needs WebGL, which this browser does not provide. The explanation and diagram above are complete without it.',
+    reliefHeading: 'Sweep the light',
+    reliefBody:
+      'A screen cannot convey touch, but it can show the other consequence of raised printing: ink standing above the surface catches light from a low angle and shadows the far side. Move the light around.',
+    reliefLightLabel: 'Light direction',
+    reliefDisclaimer:
+      'The surface here is a run of plain ridges, not the engraving on any note. It shows how relief catches light — it is not a substitute for feeling it. For that, still take out a note.',
   },
 }

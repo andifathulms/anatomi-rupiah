@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { LightTable } from '@/components/channel/LightTable'
+import { ReliefLight } from '@/components/channel/ReliefLight'
 import { TiltDemo } from '@/components/channel/TiltDemo'
 import { UvToggle } from '@/components/channel/UvToggle'
 import { CitationList } from '@/components/mechanism/CitationList'
@@ -106,6 +107,8 @@ export default function FeaturePage({
       </div>
 
       {detail.id === 'tanda-air' && <LightTable copy={DEMO[locale]} />}
+      {detail.id === 'cetak-intaglio' && <ReliefLight copy={DEMO[locale]} ridges={11} />}
+      {detail.id === 'kode-tuna-netra' && <ReliefLight copy={DEMO[locale]} ridges={4} />}
       {detail.id === 'tinta-berubah-warna' && <TiltDemo copy={DEMO[locale]} />}
       {detail.id === 'tinta-tampak-uv' && <UvToggle copy={DEMO[locale]} />}
 
