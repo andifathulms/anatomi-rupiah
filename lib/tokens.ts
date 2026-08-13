@@ -29,6 +29,16 @@ export const MESIN = '#6B4FA8'
 /** Reserved for the Pasal 24 marking. Never used for anything else. */
 export const SPESIMEN_INK = '#A8443A'
 
+/**
+ * Demonstration ramp for the colour-shift illustration only.
+ *
+ * Deliberately outside the channel taxonomy: these two hues mean "the colour
+ * moved", not "this is how you check a note". Reusing a channel colour here
+ * would teach the palette wrongly. Never use these for UI state.
+ */
+export const OVI_NEAR = '#1F6F5C'
+export const OVI_FAR = '#7A3C6B'
+
 export const CHANNEL_INK = {
   dilihat: DILIHAT,
   diraba: DIRABA,

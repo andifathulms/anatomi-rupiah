@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { TiltDemo } from '@/components/channel/TiltDemo'
+import { UvToggle } from '@/components/channel/UvToggle'
 import { CitationList } from '@/components/mechanism/CitationList'
+import { DEMO } from '@/lib/i18n/demo'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
 import { featureDetail, featureIds } from '@/lib/content/views'
 import { LOCALES, isLocale } from '@/lib/i18n'
@@ -74,6 +77,9 @@ export default function FeaturePage({
           </p>
         </section>
       </div>
+
+      {detail.id === 'tinta-berubah-warna' && <TiltDemo copy={DEMO[locale]} />}
+      {detail.id === 'tinta-tampak-uv' && <UvToggle copy={DEMO[locale]} />}
 
       <CitationList citations={detail.citations} locale={locale} />
     </article>
