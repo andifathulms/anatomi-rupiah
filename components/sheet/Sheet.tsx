@@ -7,7 +7,7 @@ import { CitationLines } from '@/components/mechanism/CitationList'
 import { Schematic } from '@/components/sheet/Schematic'
 import type { SheetNoteView } from '@/lib/schematic/sheet'
 import type { LembarCopy } from '@/lib/i18n/lembar'
-import type { Locale } from '@/lib/i18n'
+import { href, type Locale } from '@/lib/i18n'
 import type { CheckChannel } from '@/lib/content/schema'
 
 /**
@@ -85,6 +85,11 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
           </div>
           <p className="numeric mt-3 text-xs text-engraving-faint">
             {copy.scaleNote} {note.schematic.scalePercent}% · {note.widthMm} × {note.heightMm} mm
+          </p>
+          <p className="mt-2">
+            <Link href={href(locale, `lembar/${note.id}`)} className="text-sm underline underline-offset-4">
+              {copy.checklistLink} →
+            </Link>
           </p>
         </div>
 

@@ -14,6 +14,7 @@ export interface LembarCopy {
   readonly sourcesLabel: string
   readonly emisiCurrent: string
   readonly emisi2016: string
+  readonly checklistLink: string
 }
 
 export const LEMBAR: Record<Locale, LembarCopy> = {
@@ -33,6 +34,7 @@ export const LEMBAR: Record<Locale, LembarCopy> = {
     sourcesLabel: 'Sumber penanda ini',
     emisiCurrent: 'Tahun Emisi 2022',
     emisi2016: 'Tahun Emisi 2016 — masih berlaku',
+    checklistLink: 'Buka daftar periksa pecahan ini',
   },
   en: {
     title: 'The sheet',
@@ -50,5 +52,6 @@ export const LEMBAR: Record<Locale, LembarCopy> = {
     sourcesLabel: 'Sources for this marker',
     emisiCurrent: 'Emission year 2022',
     emisi2016: 'Emission year 2016 — still legal tender',
+    checklistLink: 'Open this denomination’s checklist',
   },
 }
