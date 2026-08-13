@@ -19,6 +19,7 @@ export const MECHANISM_IDS = [
   'gambar-saling-isi',
   'mikroteks',
   'tinta-tampak-uv',
+  'kode-tuna-netra',
 ] as const
 
 export type MechanismId = (typeof MECHANISM_IDS)[number]

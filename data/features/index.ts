@@ -2,6 +2,7 @@ import type { Feature } from '@/lib/content/schema'
 import { benangPengaman } from './benang-pengaman'
 import { cetakIntaglio } from './cetak-intaglio'
 import { gambarSalingIsi } from './gambar-saling-isi'
+import { kodeTunaNetra } from './kode-tuna-netra'
 import { mikroteks } from './mikroteks'
 import { tandaAir } from './tanda-air'
 import { tintaBerubahWarna } from './tinta-berubah-warna'
@@ -16,6 +17,7 @@ export const features: readonly Feature[] = [
   benangPengaman,
   gambarSalingIsi,
   cetakIntaglio,
+  kodeTunaNetra,
   tintaBerubahWarna,
   mikroteks,
   tintaTampakUv,

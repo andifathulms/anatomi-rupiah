@@ -45,6 +45,18 @@ export const UU_7_2011: Citation = {
   accessed: ACCESSED,
 }
 
+/**
+ * Persatuan Tunanetra Indonesia, the national blind persons' association, which
+ * Bank Indonesia consulted on the code. The right source for what the marks
+ * mean and how many there are per denomination.
+ */
+export const PERTUNI_BLIND_CODE: Citation = {
+  publisher: 'Persatuan Tunanetra Indonesia (Pertuni)',
+  title: 'Aksesibilitas untuk Tunanetra pada Uang Baru NKRI (25 Desember 2016)',
+  url: 'https://pertuni.or.id/aksesibilitas-untuk-tunanetra-pada-uang-baru-nkri/',
+  accessed: ACCESSED,
+}
+
 /** The standard published reference on document security optics. */
 export function vanRenesse(locator: string): Citation {
   return {

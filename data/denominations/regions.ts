@@ -38,6 +38,7 @@ export function upperRight(widthMm: number): Zone {
   return { xMm: widthMm - 74, yMm: 8, widthMm: 22, heightMm: 22 }
 }
 
-export function lowerEdge(widthMm: number): Zone {
-  return { xMm: widthMm - 30, yMm: 55, widthMm: 22, heightMm: 8 }
+/** The blind code sits at the outer edge, in the same place on every note. */
+export function edgeCode(widthMm: number): Zone {
+  return { xMm: widthMm - 16, yMm: 20, widthMm: 12, heightMm: 26 }
 }
