@@ -65,6 +65,10 @@ export default function HomePage({ params }: { readonly params: { readonly local
             {copy.startCta}
           </Link>
         </div>
+        <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-engraving-soft">
+          <span>{copy.ctaHints.primary}</span>
+          <span>{copy.ctaHints.secondary}</span>
+        </p>
         </div>
 
         <AnatomyStack
