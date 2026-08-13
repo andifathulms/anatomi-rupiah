@@ -77,6 +77,21 @@ export const PERTUNI_BLIND_CODE: Citation = {
   accessed: ACCESSED,
 }
 
+/**
+ * The official national-hero encyclopedia: ninety biographies published by the
+ * Directorate of History and Traditional Values, Directorate General of Culture.
+ * Used for the figures on the notes, and the only biography source cited here.
+ */
+export function ENSIKLOPEDIA_PAHLAWAN(entry: string): Citation {
+  return {
+    publisher: 'Direktorat Sejarah dan Nilai Tradisional, Direktorat Jenderal Kebudayaan',
+    title: 'Julinar Said dan Triana Wulandari, Ensiklopedi Pahlawan Nasional (1995)',
+    url: 'https://repositori.kemendikdasmen.go.id/8315/1/ENSIKLOPEDIA%20PAHLAWAN%20NASIONAL.pdf',
+    locator: entry,
+    accessed: ACCESSED,
+  }
+}
+
 /** The standard published reference on document security optics. */
 export function vanRenesse(locator: string): Citation {
   return {

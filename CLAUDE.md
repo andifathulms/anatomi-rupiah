@@ -156,7 +156,7 @@ M0–M6 built. `pnpm compliance:check`, `pnpm content:validate`, `pnpm test:run`
 
 **Open, and deliberately so:**
 
-- Hero biographies are unwritten. The authoritative national-hero sources refuse automated retrieval; an uncited biography does not ship, so the `/tokoh` page states the gap instead of filling it.
-- No written confirmation has been sought from Bank Indonesia directly. Worth doing before the project is promoted rather than merely published.
+- Hero biographies are written for six of the seven notes, from the Ensiklopedi Pahlawan Nasional (1995). Djuanda Kartawidjaja and Idham Chalid are absent from that encyclopedia, so theirs stay unwritten and `/tokoh` names the omission.
+- No written confirmation has been sought from Bank Indonesia. `docs/surat-bank-indonesia.md` is a drafted enquiry ready for a person to send; it has not been sent.
 
 Before any release, work through `docs/content-review-checklist.md` — the §4 pass is a person's job, not the validator's.

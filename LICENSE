@@ -1,0 +1,74 @@
+Anatomi Rupiah is licensed in two parts, because the code and the artwork carry
+different risks.
+
+================================================================================
+1. SOURCE CODE — MIT License
+================================================================================
+
+Applies to everything except the directories and files listed in part 2.
+
+Copyright (c) 2026 Andi Fathul Mukminin Salahuddin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+2. ARTWORK AND WRITTEN CONTENT — CC BY-NC-SA 4.0
+================================================================================
+
+Applies to:
+
+  art/**                 authored SVG illustrations, including note schematics
+  data/**                written explainers and their citations
+  lib/i18n/**            page copy
+  docs/**                project documentation
+
+Licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+You are free to share and adapt this material for non-commercial purposes, with
+attribution, under the same licence.
+
+WHY NON-COMMERCIAL, WHEN THE CODE IS NOT
+----------------------------------------
+This is a deliberate asymmetry, not an oversight.
+
+The schematics are depictions of Rupiah banknotes. They exist under the
+educational exemption in UU 7/2011 Pasal 24 ayat (1), which permits imitating
+Rupiah for educational and/or promotional purposes with the word "spesimen"
+applied. That exemption attaches to the purpose of the use, and Pasal 24 ayat (2)
+separately prohibits distributing or circulating Rupiah Tiruan.
+
+A permissive licence on the artwork would invite reuse whose purpose this project
+cannot see and cannot vouch for. Restricting commercial reuse keeps the artwork
+closer to the exemption it relies on. The code carries no such risk, so it is
+MIT and genuinely open source.
+
+Note that CC BY-NC-SA is not an OSI-approved open-source licence. The artwork is
+"open" in the sense of freely readable, shareable, and adaptable for education —
+not in the OSI sense.
+
+NOTHING HERE GRANTS RIGHTS OVER RUPIAH ITSELF
+---------------------------------------------
+This licence covers only original work in this repository. It grants no rights
+in respect of Indonesian currency, and it does not exempt anyone from UU 7/2011.
+Any reuse of the schematics must keep the SPESIMEN marking intact and remain
+within the statutory exemption. Removing the marking is not a licence violation
+so much as a criminal one.
+
+Bank Indonesia is not affiliated with this project and has not endorsed it.

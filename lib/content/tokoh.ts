@@ -1,4 +1,5 @@
 import { denominations } from '@/data/denominations'
+import { FIGURES_WITHOUT_BIOGRAPHY } from '@/data/figures'
 import { figuresById, motifsById } from '@/lib/content'
 import type { Citation, Motif } from './schema'
 import type { Locale } from '@/lib/i18n'
@@ -20,6 +21,7 @@ export interface NotePeopleView {
   readonly id: string
   readonly caption: string
   readonly figureName?: string
+  readonly figureLifespan?: string
   readonly figureClaims: readonly string[]
   readonly motifs: readonly MotifView[]
   readonly citations: readonly Citation[]
@@ -50,6 +52,7 @@ export function notePeople(locale: Locale): readonly NotePeopleView[] {
         id: note.id,
         caption: `Rp${note.valueIdr.toLocaleString('id-ID')} · TE ${note.emisi}`,
         figureName: figure?.name,
+        figureLifespan: figure?.lifespan,
         figureClaims: (figure?.claims ?? []).map((claim) => claim.text[locale]),
         motifs: motifs.map((motif) => ({
           id: motif.id,
@@ -61,4 +64,9 @@ export function notePeople(locale: Locale): readonly NotePeopleView[] {
         citations: [...seen.values()],
       }
     })
+}
+
+/** Named openly on the page: the encyclopedia does not cover these figures. */
+export function figuresWithoutBiography(): readonly string[] {
+  return FIGURES_WITHOUT_BIOGRAPHY
 }

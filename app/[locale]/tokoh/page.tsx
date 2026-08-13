@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { notePeople } from '@/lib/content/tokoh'
+import { figuresWithoutBiography, notePeople } from '@/lib/content/tokoh'
 import { LOCALES, isLocale } from '@/lib/i18n'
 import type { Motif } from '@/lib/content/schema'
 
@@ -23,6 +23,7 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
   if (!isLocale(params.locale)) notFound()
   const locale = params.locale
   const notes = notePeople(locale)
+  const missing = figuresWithoutBiography()
 
   return (
     <div className="py-14">
@@ -37,8 +38,8 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
 
       <p className="mt-6 max-w-prose border-l-2 border-engraving/20 pl-3 text-sm leading-relaxed text-engraving-faint">
         {locale === 'id'
-          ? 'Riwayat hidup para tokoh belum ditulis di sini. Sumber resmi yang diperiksa untuk itu menolak pengambilan otomatis, dan proyek ini tidak memuat klaim tanpa sumber yang bisa ditelusuri. Yang tercantum di bawah adalah keterangan Bank Indonesia sendiri tentang tiap pecahan.'
-          : 'Biographies of the figures are not written here yet. The authoritative sources checked for them refuse automated retrieval, and this project does not carry a claim without a source a reader can follow. What appears below is Bank Indonesia’s own record for each note.'}
+          ? `Riwayat hidup bersumber dari Ensiklopedi Pahlawan Nasional (1995) terbitan Direktorat Jenderal Kebudayaan. Ensiklopedia itu memuat sembilan puluh tokoh dan tidak mencakup ${missing.join(' dan ')}; riwayat keduanya karena itu belum ditulis di sini, bukan diringkas dari sumber yang tidak dapat ditelusuri.`
+          : `Biographies come from the Ensiklopedi Pahlawan Nasional (1995), published by the Directorate General of Culture. It covers ninety figures and does not include ${missing.join(' or ')}, so their biographies are left unwritten here rather than summarised from a source a reader could not follow.`}
       </p>
 
       <div className="mt-14 space-y-14">
@@ -51,6 +52,9 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
             {note.figureName !== undefined && (
               <div className="mt-4">
                 <h3 className="font-display text-2xl">{note.figureName}</h3>
+                {note.figureLifespan !== undefined && (
+                  <p className="numeric mt-1 text-sm text-engraving-faint">{note.figureLifespan}</p>
+                )}
                 <ul className="mt-3 max-w-prose space-y-2 leading-relaxed text-engraving-soft">
                   {note.figureClaims.map((claim) => (
                     <li key={claim}>{claim}</li>
