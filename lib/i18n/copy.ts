@@ -51,8 +51,14 @@ export interface StartPath {
   readonly minutes: string
 }
 
+export interface CtaHints {
+  readonly primary: string
+  readonly secondary: string
+}
+
 export interface HomeCopy {
   readonly kicker: string
+  readonly kickerGloss: string
   readonly title: string
   readonly lede: string
   readonly answer: string
@@ -69,12 +75,14 @@ export interface HomeCopy {
   readonly startBody: string
   readonly startPaths: readonly StartPath[]
   readonly startCta: string
+  readonly ctaHints: CtaHints
   readonly legalCta: string
 }
 
 export const HOME: Record<Locale, HomeCopy> = {
   id: {
     kicker: 'Dilihat · Diraba · Diterawang',
+    kickerGloss: 'tiga cara memeriksa ciri pengaman uang',
     title: 'Anatomi Rupiah',
     answer:
       'Situs ini menunjukkan cara kerja pengaman pada uang Rupiah — dan cara memeriksanya sendiri.',
@@ -127,10 +135,15 @@ export const HOME: Record<Locale, HomeCopy> = {
       },
     ],
     startCta: 'Lihat ciri-ciri',
+    ctaHints: {
+      primary: 'Diagram 3D interaktif, sekitar 5 menit',
+      secondary: 'Delapan mekanisme, telusuri sesuai minat Anda',
+    },
     legalCta: 'Dasar hukum & metode',
   },
   en: {
     kicker: 'Dilihat · Diraba · Diterawang',
+    kickerGloss: "the three ways Indonesians check a note's security features",
     title: 'Anatomi Rupiah',
     answer:
       'This site shows how the security features of Rupiah banknotes work — and how to check them yourself.',
@@ -183,6 +196,10 @@ export const HOME: Record<Locale, HomeCopy> = {
       },
     ],
     startCta: 'See the features',
+    ctaHints: {
+      primary: 'Interactive 3D walkthrough, about 5 minutes',
+      secondary: 'Eight mechanisms, browse at your own pace',
+    },
     legalCta: 'Legal basis & method',
   },
 }
