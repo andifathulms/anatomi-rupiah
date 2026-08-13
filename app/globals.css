@@ -54,9 +54,41 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @media print {
-  /* Explainers print. Schematics do not — PRD §2, invariant 5. */
-  [data-schematic] {
+  /*
+   * Explainers print. Note artwork does not — PRD §2, invariant 5. A printed
+   * schematic is a step toward a printed note, and no print path may take it.
+   */
+  [data-schematic],
+  [data-loupe] {
     display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  header nav,
+  a[download],
+  button {
+    display: none !important;
+  }
+
+  /* Citations are the point of an explainer; print the URLs behind them. */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    word-break: break-all;
   }
 }

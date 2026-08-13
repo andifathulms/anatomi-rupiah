@@ -1,0 +1,67 @@
+name: Build and deploy
+
+# The compliance and content gates run before anything is built, and before
+# anything is published. They are never skipped and never made non-blocking.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Publish mechanism diagrams
+        run: pnpm export:mechanisms
+
+      - name: Compliance gate
+        run: pnpm compliance:check
+
+      - name: Citation completeness
+        run: pnpm content:validate
+
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test:run
+
+      - name: Static export
+        run: pnpm build
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

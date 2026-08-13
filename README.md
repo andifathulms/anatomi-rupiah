@@ -18,6 +18,20 @@ Accordingly:
 
 See [`docs/bi-reproduction-guidance.md`](docs/bi-reproduction-guidance.md) and the site's `/hukum` page.
 
+## What is here
+
+| Route | |
+|---|---|
+| `/[locale]` | The four checking channels, and the limit stated up front |
+| `/[locale]/lembar` | The proof sheet — schematic, margin callouts, loupe |
+| `/[locale]/ciri/[feature]` | Eight mechanism explainers, each drawn in cross-section |
+| `/[locale]/tigad` | *Dilihat, Diraba, Diterawang*, with an honest ending |
+| `/[locale]/tunanetra` | Kode tuna netra, and the pair count per denomination |
+| `/[locale]/tokoh` | Figures and motifs, per note |
+| `/[locale]/hukum` | The legal basis, the method, and who determines authenticity |
+
+Indonesian is the default locale; English is at `/en`.
+
 ## Development
 
 ```bash
@@ -32,7 +46,9 @@ pnpm build               # compliance + content checks, then static export to ./
 pnpm preview             # serve ./out under the production basePath
 ```
 
-`pnpm compliance:check` gates the build and CI. It is never bypassed, never given a skip flag, and its assertions are never weakened.
+`pnpm compliance:check` gates the build and CI. It is never bypassed, never given a skip flag, and its assertions are never weakened. It renders every schematic and every loupe detail through `react-dom/server` and asserts the marking on each, then checks the asset policy, the size constraint, the loupe regions, the export surface, the shipped source, the marking implementation, and the dependency list.
+
+Before a release, work through [`docs/content-review-checklist.md`](docs/content-review-checklist.md). The §4 pass — *does this sentence help someone check a note, or make one?* — is a person's job, not the validator's.
 
 ## Not affiliated with Bank Indonesia
 

@@ -143,4 +143,20 @@ The site states that it is a personal educational project relying on the exempti
 
 ## Current state
 
-M0 — not yet scaffolded. Next: the baked-SPESIMEN renderer, the asset policy check, the size constraint, and the citation schema — plus verifying Bank Indonesia's reproduction guidance. **No schematic or content work until `pnpm compliance:check` passes and the BI guidance is confirmed.**
+M0–M6 built. `pnpm compliance:check`, `pnpm content:validate`, `pnpm test:run`, `pnpm typecheck`, `pnpm lint`, and `pnpm build` all pass; CI gates the Pages deploy on every one of them.
+
+- **M0** — BI reproduction guidance checked and recorded in `docs/bi-reproduction-guidance.md`; baked-SPESIMEN renderer; size constraint; citation schema and validator; eight-check compliance gate.
+- **M1** — seven mechanism cross-sections, authored SVG, every claim cited.
+- **M2** — the sheet: ten denominations (TE 2022 and the three largest of TE 2016), markers, and the loupe.
+- **M3** — the 3D walkthrough with the honest *diraba* ending, and kode tuna netra.
+- **M4** — figures and motifs, cited to BI's own Desain Utama record.
+- **M5** — the tilt demonstration and the UV toggle.
+- **M6** — mechanism-diagram sharing with an export-surface gate, print stylesheet, reduced-motion, and the Actions deploy.
+
+**Open, and deliberately so:**
+
+- Hero biographies are unwritten. The authoritative national-hero sources refuse automated retrieval; an uncited biography does not ship, so the `/tokoh` page states the gap instead of filling it.
+- Kode tuna netra is recorded for TE 2016 only. BI's TE 2022 pages do not name it, and `/tunanetra` says so.
+- No written confirmation has been sought from Bank Indonesia directly. Worth doing before the project is promoted rather than merely published.
+
+Before any release, work through `docs/content-review-checklist.md` — the §4 pass is a person's job, not the validator's.
