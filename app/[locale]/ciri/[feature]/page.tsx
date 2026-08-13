@@ -103,6 +103,26 @@ export default function FeaturePage({
               ? 'Halaman ini menjelaskan cara memeriksa ciri, bukan cara membuatnya. Situs ini juga tidak menyatakan apakah selembar uang asli — kewenangan itu ada pada Bank Indonesia.'
               : 'This page explains how to check a feature, not how one is produced. Nor does this site say whether any note is genuine — that authority rests with Bank Indonesia.'}
           </p>
+
+          {detail.carriedBy.length > 0 && (
+            <div className="mt-8 border-t border-engraving/15 pt-5">
+              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+                {locale === 'id' ? 'Muncul pada' : 'Appears on'}
+              </h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {detail.carriedBy.map((denomination) => (
+                  <li key={denomination.id}>
+                    <Link
+                      href={denomination.url}
+                      className="numeric border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
+                    >
+                      {denomination.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
       </div>
 
