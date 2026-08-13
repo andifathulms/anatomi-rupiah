@@ -164,12 +164,14 @@ export function validateContent(items: readonly unknown[]): ContentIssue[] {
         message: `no figure "${item.figureId}"`,
       })
     }
-    if (item.motifId !== undefined && !motifIds.has(item.motifId)) {
-      issues.push({
-        kind: 'reference',
-        where: `denomination:${item.id}.motifId`,
-        message: `no motif "${item.motifId}"`,
-      })
+    for (const motifId of item.motifIds ?? []) {
+      if (!motifIds.has(motifId)) {
+        issues.push({
+          kind: 'reference',
+          where: `denomination:${item.id}.motifIds`,
+          message: `no motif "${motifId}"`,
+        })
+      }
     }
     item.placements.forEach((placement, index) => {
       if (!featureIds.has(placement.featureId)) {

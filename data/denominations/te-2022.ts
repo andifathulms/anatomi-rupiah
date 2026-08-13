@@ -1,5 +1,6 @@
 import type { Denomination, Placement } from '@/lib/content/schema'
 import { biUang } from '../citations'
+import { FIGURE_ID_BY_PAGE, MOTIF_IDS_BY_PAGE } from '../motifs'
 import { rightPanel, upperLeft } from './regions'
 
 /**
@@ -78,5 +79,7 @@ export const te2022: readonly Denomination[] = SEEDS.map((seed) => ({
     heightMm: 65,
     citations: [biUang(seed.pageId, seed.label, 'Ukuran')],
   },
+  figureId: FIGURE_ID_BY_PAGE[seed.pageId],
+  motifIds: MOTIF_IDS_BY_PAGE[seed.pageId],
   placements: placementsFor(seed),
 }))

@@ -92,8 +92,8 @@ export const denominationSchema = z.object({
   }),
   /** Optional until the figure is written and cited — M4. */
   figureId: slugSchema.optional(),
-  /** Optional until the motif is written and cited — M4. */
-  motifId: slugSchema.optional(),
+  /** The reverse carries several subjects — a dance, a landscape, a flower. */
+  motifIds: z.array(slugSchema).optional(),
   placements: z.array(placementSchema).min(1),
   /** Optional until the blind code is written and cited — M3. */
   kodeTunaNetra: z
@@ -110,7 +110,8 @@ export const figureSchema = z.object({
   type: z.literal('figure'),
   id: slugSchema,
   name: z.string().min(1),
-  lifespan: z.string().min(1),
+  /** Omitted until dates can be cited to a source that can be followed. */
+  lifespan: z.string().min(1).optional(),
   claims: z.array(claimSchema).min(1),
 })
 export type Figure = z.infer<typeof figureSchema>
@@ -119,7 +120,7 @@ export const motifSchema = z.object({
   type: z.literal('motif'),
   id: slugSchema,
   name: localizedSchema,
-  kind: z.enum(['tari', 'pemandangan', 'tenun']),
+  kind: z.enum(['tari', 'pemandangan', 'bunga', 'tenun']),
   origin: localizedSchema,
   claims: z.array(claimSchema).min(1),
 })
