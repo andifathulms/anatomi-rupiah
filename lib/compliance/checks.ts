@@ -329,6 +329,7 @@ interface SourceRule {
 const FORBIDDEN_SOURCE: readonly SourceRule[] = [
   { pattern: /\btoDataURL\b/, message: 'canvas capture could emit a full-note image (PRD §2)' },
   { pattern: /\btoBlob\b/, message: 'canvas capture could emit a full-note image (PRD §2)' },
+  { pattern: /\breadPixels\b/, message: 'no pixel readback from any surface, WebGL included (PRD §2)' },
   { pattern: /\bhtml2canvas\b/, message: 'DOM capture could emit a full-note image (PRD §2)' },
   { pattern: /getContext\(\s*['"]2d['"]/, message: 'no raster canvas path exists here (PRD §2)' },
   { pattern: /\bgetUserMedia\b/, message: 'no camera input, ever (PRD §2, invariant 6)' },

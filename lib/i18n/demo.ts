@@ -15,6 +15,11 @@ export interface DemoCopy {
   readonly uvOrdinary: string
   readonly uvLamp: string
   readonly uvDisclaimer: string
+  readonly lightHeading: string
+  readonly lightBody: string
+  readonly lightMove: string
+  readonly lightDisclaimer: string
+  readonly glUnavailable: string
 }
 
 export const DEMO: Record<Locale, DemoCopy> = {
@@ -29,7 +34,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
     tiltUsingDevice: 'Mengikuti kemiringan perangkat',
     tiltDeviceUnavailable: 'Perangkat ini tidak melaporkan kemiringan. Gunakan penggeser.',
     tiltDisclaimer:
-      'Ini peragaan prinsipnya, bukan tiruan tinta pada uang. Dua warna di sini dipilih untuk peragaan; yang diajarkan adalah hubungannya — warna mengikuti sudut pandang Anda.',
+      'Peragaan ini menghitung interferensi lapisan tipis untuk tiga panjang gelombang, jadi warnanya benar-benar mengikuti sudut pandang. Tebal lapisannya dipilih agar efeknya jelas di layar — ini bukan tiruan tinta pada uang mana pun.',
     uvHeading: 'Nyalakan lampunya',
     uvBody:
       'Peragaan dua keadaan: cahaya ruangan biasa, lalu di bawah sinar ultraviolet. Perubahannya adalah pergantian keadaan, bukan animasi.',
@@ -37,6 +42,14 @@ export const DEMO: Record<Locale, DemoCopy> = {
     uvLamp: 'Sinar ultraviolet',
     uvDisclaimer:
       'Layar tidak memancarkan ultraviolet. Yang ditampilkan di sini adalah gambaran hasilnya, dan tidak bisa menggantikan lampu UV sungguhan.',
+    lightHeading: 'Meja cahaya',
+    lightBody:
+      'Gerakkan sumber cahaya di belakang lembar. Terangnya mengikuti ketebalan bahan: makin tebal bagian yang dilewati, makin sedikit cahaya yang sampai ke mata.',
+    lightMove: 'Geser cahaya',
+    lightDisclaimer:
+      'Bentuk pada peragaan ini sengaja dibuat abstrak — sebuah lensa dan satu cincin ornamen — bukan gambar pahlawan dan bukan tanda air pada uang mana pun. Yang diperagakan adalah hubungannya: terang mengikuti ketebalan.',
+    glUnavailable:
+      'Peragaan ini memerlukan WebGL, yang tidak tersedia di peramban ini. Penjelasan dan diagramnya tetap lengkap di atas.',
   },
   en: {
     tiltHeading: 'Try tilting it',
@@ -49,7 +62,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
     tiltUsingDevice: 'Following device tilt',
     tiltDeviceUnavailable: 'This device reports no tilt. Use the slider.',
     tiltDisclaimer:
-      'This demonstrates the principle, not any note’s ink. The two colours here were chosen for the demonstration; what is being taught is the relationship — the colour follows your angle.',
+      'This computes thin-film interference for three wavelengths, so the colour genuinely follows your viewing angle. The layer thickness is chosen to make the effect legible on a screen — it is not a copy of any note’s ink.',
     uvHeading: 'Switch the lamp on',
     uvBody:
       'Two states, shown side by side: ordinary room light, then under ultraviolet. The change is a state change, not an animation.',
@@ -57,5 +70,13 @@ export const DEMO: Record<Locale, DemoCopy> = {
     uvLamp: 'Ultraviolet',
     uvDisclaimer:
       'A screen emits no ultraviolet. What is shown here is a picture of the result, and cannot stand in for a real UV lamp.',
+    lightHeading: 'Light table',
+    lightBody:
+      'Move the light source behind the sheet. Brightness follows thickness: the more material the light crossed, the less of it reaches your eye.',
+    lightMove: 'Move the light',
+    lightDisclaimer:
+      'The shape here is deliberately abstract — a lens and an ornament ring — not a portrait and not the watermark of any note. What is demonstrated is the relationship: brightness follows thickness.',
+    glUnavailable:
+      'This demonstration needs WebGL, which this browser does not provide. The explanation and diagram above are complete without it.',
   },
 }

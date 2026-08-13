@@ -151,8 +151,9 @@ M0–M6 built. `pnpm compliance:check`, `pnpm content:validate`, `pnpm test:run`
 - **M3** — the 3D walkthrough with the honest *diraba* ending, and kode tuna netra.
 - **M4** — figures and motifs, cited to BI's own Desain Utama record.
 - **TE 2022 re-grounded** on the seven Peraturan Bank Indonesia (24/8–24/14/PBI/2022) — primary law, article by article — which closed the blind-code gap and gave every current note its full marker set.
-- **M5** — the tilt demonstration and the UV toggle.
+- **M5** — the tilt demonstration and the UV toggle, both now WebGL: `lib/webgl` runs one fragment shader on one quad with no 3D library, computing thin-film interference and transmitted-light absorption directly. The shader panels are procedural physics and carry no note artwork — nothing is uploaded as a texture, because rasterising the SVG would need the 2D canvas the gate forbids. Every panel falls back to SVG when WebGL is absent.
 - **M6** — mechanism-diagram sharing with an export-surface gate, print stylesheet, reduced-motion, and the Actions deploy.
+- **Design pass** — exploded 3D anatomy hero, visual feature index, sticky nav, channel tints, and a maker's mark in the footer kept visually separate from the legal notices.
 
 **Open, and deliberately so:**
 

@@ -75,3 +75,12 @@ export const CHANNEL_DEEP = {
 export const INSPECT = '#14181E'
 export const INSPECT_SOFT = '#1F252E'
 export const INSPECT_EDGE = '#2C3540'
+
+/**
+ * Hex to a 0..1 RGB triplet, for shader uniforms. Keeps the WebGL panels on
+ * the same palette as everything else rather than inventing colours in GLSL.
+ */
+export function rgbTriplet(hex: string): readonly [number, number, number] {
+  const value = Number.parseInt(hex.slice(1), 16)
+  return [((value >> 16) & 255) / 255, ((value >> 8) & 255) / 255, (value & 255) / 255]
+}
