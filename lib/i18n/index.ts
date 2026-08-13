@@ -73,6 +73,14 @@ export const ROUTES: readonly Route[] = [
       en: 'The legal basis and method behind this site',
     },
   },
+  {
+    segment: 'sumber',
+    label: { id: 'Sumber', en: 'Sources' },
+    hint: {
+      id: 'Setiap sumber yang dikutip di situs ini, di satu tempat',
+      en: 'Every source cited on this site, in one place',
+    },
+  },
 ]
 
 export function href(locale: Locale, segment: string): string {
