@@ -41,9 +41,14 @@ export default function HomePage({ params }: { readonly params: { readonly local
     <div>
       <section className="grid items-center gap-6 pt-10 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14">
         <div>
-        <p className="eyebrow">{copy.kicker}</p>
+        <p className="eyebrow">
+          {copy.kicker}
+          <span className="ml-2 font-sans normal-case tracking-normal text-engraving-soft">
+            — {copy.kickerGloss}
+          </span>
+        </p>
         <h1 className="mt-5 max-w-4xl font-display text-hero">{copy.title}</h1>
-        <p className="mt-6 max-w-2xl text-lede text-engraving">{copy.answer}</p>
+        <p className="mt-4 max-w-2xl font-display text-title text-engraving">{copy.answer}</p>
         <p className="mt-4 max-w-prose leading-relaxed text-engraving-soft">{copy.lede}</p>
 
         <div className="mt-7 flex flex-wrap gap-3">
