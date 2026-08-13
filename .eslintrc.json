@@ -1,6 +1,11 @@
 {
-  "extends": "next/core-web-vitals",
+  "root": true,
+  "extends": ["next/core-web-vitals"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "error"
-  }
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-non-null-assertion": "error"
+  },
+  "ignorePatterns": ["out/", ".next/", "node_modules/"]
 }

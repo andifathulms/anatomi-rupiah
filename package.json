@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "pnpm compliance:check && pnpm content:validate && next build",
+    "postbuild": "tsx --tsconfig scripts/tsconfig.json scripts/postbuild.ts",
     "preview": "node scripts/preview.mjs",
     "compliance:check": "tsx --tsconfig scripts/tsconfig.json scripts/compliance-check.ts",
     "content:validate": "tsx --tsconfig scripts/tsconfig.json scripts/content-validate.ts",
@@ -25,6 +26,8 @@
     "@types/node": "20.16.11",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
+    "@typescript-eslint/eslint-plugin": "8.8.1",
+    "@typescript-eslint/parser": "8.8.1",
     "@vitejs/plugin-react": "4.3.2",
     "autoprefixer": "10.4.20",
     "eslint": "8.57.1",

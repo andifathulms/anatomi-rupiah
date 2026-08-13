@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * The material world is an engraving proof sheet — PRD §9.
+ * Heavy off-white stock, dense black line-work, registration marks in the margin.
+ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-proof text-engraving font-sans antialiased;
+    /* Faint laid-paper ruling. Drawn with gradients so no raster asset exists. */
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(26, 31, 38, 0.028) 0 1px,
+        transparent 1px 26px
+      );
+  }
+
+  ::selection {
+    @apply bg-diterawang/25;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.dilihat');
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  /* Denominations and dimensions read as the mechanical lettering on the notes. */
+  .numeric {
+    @apply font-mono tabular-nums;
+  }
+}
+
+@layer components {
+  .rule {
+    @apply border-t border-engraving/15;
+  }
+
+  .callout-number {
+    @apply font-mono text-xs tabular-nums;
+  }
+}
+
+@media print {
+  /* Explainers print. Schematics do not — PRD §2, invariant 5. */
+  [data-schematic] {
+    display: none !important;
+  }
+}
