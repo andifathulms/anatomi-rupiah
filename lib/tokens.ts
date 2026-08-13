@@ -16,7 +16,10 @@ export const PROOF_EDGE = '#D6D0BF'
 
 export const ENGRAVING = '#1A1F26'
 export const ENGRAVING_SOFT = '#3D454F'
-export const ENGRAVING_FAINT = '#7A828C'
+/** Darkened from the original #7A828C (2026-08-14): that value read at 3.27:1
+ * against proof stock, below WCAG AA for the small text it's used for
+ * sitewide (captions, hints, citations). This reads at 4.73:1. */
+export const ENGRAVING_FAINT = '#626870'
 
 /** Dilihat — visible in ordinary light. */
 export const DILIHAT = '#2C6E75'
