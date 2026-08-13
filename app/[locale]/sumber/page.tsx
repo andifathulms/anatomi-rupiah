@@ -26,7 +26,7 @@ export default function SumberPage({ params }: { readonly params: { readonly loc
       <ul className="mt-10 space-y-6">
         {sources.map((source) => (
           <li key={`${source.publisher}-${source.title}-${source.url ?? ''}`} className="card p-5">
-            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-engraving-faint">
+            <p className="font-mono text-label uppercase tracking-[0.24em] text-engraving-faint">
               {source.publisher}
             </p>
             <p className="mt-1.5 leading-relaxed">

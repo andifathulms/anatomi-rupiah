@@ -54,6 +54,10 @@ const config: Config = {
         title: ['clamp(2rem, 1.4rem + 2.6vw, 3.25rem)', { lineHeight: '1.06', letterSpacing: '-0.015em' }],
         section: ['clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem)', { lineHeight: '1.15' }],
         lede: ['clamp(1.0625rem, 1rem + 0.5vw, 1.375rem)', { lineHeight: '1.6' }],
+        // The small-caps label size — eyebrows, channel labels, citation
+        // headings. Was two near-duplicate arbitrary values (0.6875rem and
+        // 0.65rem) doing the same job across the codebase; one token now.
+        label: ['0.6875rem', { lineHeight: '1.4' }],
       },
       maxWidth: {
         sheet: '80rem',

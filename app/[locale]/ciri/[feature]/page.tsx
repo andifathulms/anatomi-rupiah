@@ -60,7 +60,7 @@ export default function FeaturePage({
       </Link>
 
       <div className={`mt-5 border-l-4 pl-5 sm:pl-7 ${CHANNEL_ACCENT[detail.channel]}`}>
-        <p className={`font-mono text-[0.6875rem] uppercase tracking-[0.24em] ${CHANNEL_TEXT[detail.channel]}`}>
+        <p className={`font-mono text-label uppercase tracking-[0.24em] ${CHANNEL_TEXT[detail.channel]}`}>
           {detail.channelLabel}
         </p>
         <h1 className="mt-3 max-w-3xl font-display text-title">{detail.name}</h1>

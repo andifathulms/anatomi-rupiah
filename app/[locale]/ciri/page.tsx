@@ -87,7 +87,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
                 dangerouslySetInnerHTML={{ __html: mechanismSvg(card.illustration) }}
               />
               <div className="flex flex-1 flex-col p-5">
-                <p className={`font-mono text-[0.65rem] uppercase tracking-[0.2em] ${CHANNEL_TEXT[card.channel]}`}>
+                <p className={`font-mono text-label uppercase tracking-[0.2em] ${CHANNEL_TEXT[card.channel]}`}>
                   {card.channelLabel}
                 </p>
                 <h2 className="mt-2 font-display text-xl group-hover:underline group-hover:underline-offset-4">
@@ -97,7 +97,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
                   {card.summary}
                 </p>
                 {card.hasLimitation && (
-                  <p className="mt-4 inline-flex w-fit rounded-full bg-diraba-tint px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-diraba-deep">
+                  <p className="mt-4 inline-flex w-fit rounded-full bg-diraba-tint px-2.5 py-1 font-mono text-label uppercase tracking-wider text-diraba-deep">
                     {locale === 'id' ? 'Ada batas layar' : 'Has a screen limit'}
                   </p>
                 )}

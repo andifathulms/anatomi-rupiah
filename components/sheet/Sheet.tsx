@@ -120,7 +120,7 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
                   <span>
                     <span className="block text-sm">{candidate.featureName}</span>
                     <span
-                      className={`block font-mono text-[0.65rem] uppercase tracking-wider ${CHANNEL_TEXT[candidate.channel]}`}
+                      className={`block font-mono text-label uppercase tracking-wider ${CHANNEL_TEXT[candidate.channel]}`}
                     >
                       {candidate.channelLabel}
                     </span>

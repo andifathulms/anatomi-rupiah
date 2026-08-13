@@ -71,7 +71,7 @@ export default function DenominationChecklistPage({
                 <li key={item.featureId} className="border-l-2 border-engraving/20 pl-4">
                   <p className="font-display text-lg">{item.featureName}</p>
                   <p className="mt-1 leading-relaxed text-engraving-soft">{item.note}</p>
-                  <p className="mt-2 font-mono text-[0.65rem] uppercase tracking-wider text-engraving-faint">
+                  <p className="mt-2 font-mono text-label uppercase tracking-wider text-engraving-faint">
                     {copy.sourcesLabel}
                   </p>
                   <CitationLines
@@ -91,7 +91,7 @@ export default function DenominationChecklistPage({
               {copy.kodeTunaNetraHeading}
             </h2>
             <p className="mt-4 leading-relaxed text-engraving-soft">{checklist.kodeTunaNetra.description}</p>
-            <p className="mt-2 font-mono text-[0.65rem] uppercase tracking-wider text-engraving-faint">
+            <p className="mt-2 font-mono text-label uppercase tracking-wider text-engraving-faint">
               {copy.sourcesLabel}
             </p>
             <CitationLines
