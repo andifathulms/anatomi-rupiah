@@ -80,7 +80,7 @@ export default function HomePage({ params }: { readonly params: { readonly local
       </section>
 
       <section className="mt-8 sm:mt-12" aria-labelledby="singkat">
-        <h2 id="singkat" className="eyebrow">
+        <h2 id="singkat" className="font-display text-section">
           {copy.plainHeading}
         </h2>
         <ul className="mt-5 grid gap-4 md:grid-cols-3">
