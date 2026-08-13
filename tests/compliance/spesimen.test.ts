@@ -117,6 +117,34 @@ describe('bakeSpesimen', () => {
     }
   })
 
+  it('keeps the mark inside the artwork at every shape it accepts', () => {
+    const shapes = [
+      { width: 300, height: 130 },
+      { width: 151, height: 65 },
+      { width: 34, height: 47 },
+      { width: 14, height: 52 },
+      { width: 30, height: 15 },
+      { width: 40, height: 20 },
+      { width: 50, height: 50 },
+    ]
+    for (const shape of shapes) {
+      const baked = bakeSpesimen('M0 0H1V1H0Z', shape)
+      for (const d of [baked.markD, baked.marginMarkD]) {
+        const b = boundsOf(d)
+        expect(b.minX).toBeGreaterThanOrEqual(-0.001)
+        expect(b.minY).toBeGreaterThanOrEqual(-0.001)
+        expect(b.maxX).toBeLessThanOrEqual(shape.width + 0.001)
+        expect(b.maxY).toBeLessThanOrEqual(shape.height + 0.001)
+      }
+    }
+  })
+
+  it('refuses a sliver rather than shrinking the mark to fit it', () => {
+    // A shape too extreme to carry a legible mark is one we do not draw.
+    expect(() => bakeSpesimen('M0 0H1V1H0Z', { width: 5, height: 55 })).toThrow(/floor/)
+    expect(() => bakeSpesimen('M0 0H1V1H0Z', { width: 5, height: 55 })).toThrow(/Reshape/)
+  })
+
   it('refuses to mark empty or degenerate artwork', () => {
     expect(() => bakeSpesimen('', box)).toThrow(/empty artwork/)
     expect(() => bakeSpesimen(outline, { width: 0, height: 130 })).toThrow(/positive extent/)

@@ -150,13 +150,13 @@ M0–M6 built. `pnpm compliance:check`, `pnpm content:validate`, `pnpm test:run`
 - **M2** — the sheet: ten denominations (TE 2022 and the three largest of TE 2016), markers, and the loupe.
 - **M3** — the 3D walkthrough with the honest *diraba* ending, and kode tuna netra.
 - **M4** — figures and motifs, cited to BI's own Desain Utama record.
+- **TE 2022 re-grounded** on the seven Peraturan Bank Indonesia (24/8–24/14/PBI/2022) — primary law, article by article — which closed the blind-code gap and gave every current note its full marker set.
 - **M5** — the tilt demonstration and the UV toggle.
 - **M6** — mechanism-diagram sharing with an export-surface gate, print stylesheet, reduced-motion, and the Actions deploy.
 
 **Open, and deliberately so:**
 
 - Hero biographies are unwritten. The authoritative national-hero sources refuse automated retrieval; an uncited biography does not ship, so the `/tokoh` page states the gap instead of filling it.
-- Kode tuna netra is recorded for TE 2016 only. BI's TE 2022 pages do not name it, and `/tunanetra` says so.
 - No written confirmation has been sought from Bank Indonesia directly. Worth doing before the project is promoted rather than merely published.
 
 Before any release, work through `docs/content-review-checklist.md` — the §4 pass is a person's job, not the validator's.

@@ -29,7 +29,7 @@ export interface Wordmark {
   readonly height: number
 }
 
-const DEFAULT_TRACKING = 0.32
+export const DEFAULT_TRACKING = 0.32
 const PRECISION = 3
 
 function round(n: number): number {

@@ -23,7 +23,7 @@ export function portrait(): Zone {
 export function threadBand(widthMm: number): Zone {
   // Short of the full height on purpose: the loupe refuses a region that spans
   // the note, and a marker is a pointer rather than a tracing.
-  return { xMm: Math.round(widthMm * 0.42), yMm: 5, widthMm: 5, heightMm: 55 }
+  return { xMm: Math.round(widthMm * 0.38), yMm: 6, widthMm: 14, heightMm: 52 }
 }
 
 export function upperLeft(): Zone {
@@ -38,7 +38,12 @@ export function upperRight(widthMm: number): Zone {
   return { xMm: widthMm - 74, yMm: 8, widthMm: 22, heightMm: 22 }
 }
 
+/** Microtext reads as a fine rule until magnified. */
+export function microLine(widthMm: number): Zone {
+  return { xMm: Math.round(widthMm * 0.2), yMm: 44, widthMm: 30, heightMm: 15 }
+}
+
 /** The blind code sits at the outer edge, in the same place on every note. */
 export function edgeCode(widthMm: number): Zone {
-  return { xMm: widthMm - 16, yMm: 20, widthMm: 12, heightMm: 26 }
+  return { xMm: widthMm - 18, yMm: 18, widthMm: 14, heightMm: 28 }
 }

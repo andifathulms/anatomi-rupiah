@@ -30,6 +30,26 @@ export function biUang(pageId: number, title: string, locator?: string): Citatio
   }
 }
 
+/**
+ * The Peraturan Bank Indonesia issued for each Tahun Emisi 2022 denomination.
+ *
+ * These are primary law, not a catalogue entry: each one enumerates the note's
+ * ciri umum and ciri khusus article by article, and states its dimensions. Where
+ * a PBI and the Gambar Uang page both cover a fact, the PBI is cited.
+ */
+export function pbi2022(number: number, denomination: string, locator: string): Citation {
+  const padded = String(number).padStart(2, '0')
+  return {
+    publisher: 'Bank Indonesia',
+    title:
+      `Peraturan Bank Indonesia Nomor 24/${number}/PBI/2022 tentang Pengeluaran dan Pengedaran ` +
+      `Uang Rupiah Kertas Pecahan ${denomination} Tahun Emisi 2022`,
+    url: `https://www.bi.go.id/id/publikasi/peraturan/Documents/PBI_24${padded}22.pdf`,
+    locator,
+    accessed: ACCESSED,
+  }
+}
+
 export const BI_GAMBAR_UANG: Citation = {
   publisher: 'Bank Indonesia',
   title: 'Rupiah — Gambar Uang',

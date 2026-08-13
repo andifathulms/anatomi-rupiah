@@ -1,4 +1,5 @@
-import { buildWordmark, type Wordmark } from './wordmark'
+import { GLYPH_HEIGHT, GLYPH_WIDTH } from './glyphs'
+import { DEFAULT_TRACKING, buildWordmark, type Wordmark } from './wordmark'
 
 export { buildWordmark } from './wordmark'
 export type { Wordmark, WordmarkOptions } from './wordmark'
@@ -49,6 +50,31 @@ function diagonalOf(box: ArtworkBox): number {
 }
 
 /**
+ * Width of the wordmark as a multiple of its cap height, for the word being
+ * applied. Derived from the layout in buildWordmark: each glyph advances by
+ * 0.6 cap heights and each gap by the tracking fraction.
+ */
+const WORDMARK_ASPECT =
+  SPESIMEN_WORD.length * (GLYPH_WIDTH / GLYPH_HEIGHT) + (SPESIMEN_WORD.length - 1) * DEFAULT_TRACKING
+
+/**
+ * The largest cap height whose rotated wordmark still fits inside the artwork.
+ *
+ * Sizing from the box height alone was wrong: on an elongated crop the mark
+ * ran outside the artwork and only a fragment of it rendered. The marking has
+ * to sit *within* the thing it marks, so both extents are solved here.
+ */
+function fittedCapHeight(box: ArtworkBox, rotationDeg: number): number {
+  const theta = (rotationDeg * Math.PI) / 180
+  const cos = Math.abs(Math.cos(theta))
+  const sin = Math.abs(Math.sin(theta))
+  return Math.min(
+    box.width / (WORDMARK_ASPECT * cos + sin),
+    box.height / (WORDMARK_ASPECT * sin + cos),
+  )
+}
+
+/**
  * Angle of the box diagonal, so the mark lies along the longest available run
  * and reads at the largest possible size.
  */
@@ -65,23 +91,32 @@ export function bakeSpesimen(outlineD: string, box: ArtworkBox): BakedArtwork {
   }
 
   const diagonal = diagonalOf(box)
+  const rotationDeg = diagonalAngleDeg(box)
 
-  // Sized so the word spans most of the diagonal: unmistakable, not incidental.
+  // As large as the artwork allows, struck along its longest run: unmistakable,
+  // not incidental — and wholly inside the artwork, so none of it is clipped.
   const primary: Wordmark = buildWordmark(SPESIMEN_WORD, {
-    capHeight: box.height * 0.2,
+    capHeight: fittedCapHeight(box, rotationDeg) * 0.94,
     centerX: box.width / 2,
     centerY: box.height / 2,
-    rotationDeg: diagonalAngleDeg(box),
+    rotationDeg,
   })
 
+  // The floor is not negotiable. An artwork shape too extreme to carry a
+  // legible mark is an artwork shape this project does not draw.
   if (primary.width < diagonal * MIN_MARK_COVERAGE) {
     throw new Error(
-      'bakeSpesimen: marking would render too small to satisfy Pasal 24 ayat (1). Refusing.',
+      `bakeSpesimen: marking would span only ${((primary.width / diagonal) * 100).toFixed(0)}% ` +
+        `of the ${box.width}×${box.height} artwork diagonal, below the ` +
+        `${MIN_MARK_COVERAGE * 100}% floor required to satisfy Pasal 24 ayat (1). Refusing. ` +
+        `Reshape the artwork rather than shrinking the mark.`,
     )
   }
 
+  // The margin mark is fitted the same way, so it too stays inside the artwork.
+  const marginCapHeight = Math.min(box.height * 0.055, (box.width * 0.86) / WORDMARK_ASPECT)
   const margin: Wordmark = buildWordmark(SPESIMEN_WORD, {
-    capHeight: box.height * 0.055,
+    capHeight: marginCapHeight,
     centerX: box.width / 2,
     centerY: box.height * 0.93,
     rotationDeg: 0,
@@ -91,8 +126,9 @@ export function bakeSpesimen(outlineD: string, box: ArtworkBox): BakedArtwork {
     outlineD,
     markD: primary.d,
     marginMarkD: margin.d,
-    markStrokeWidth: box.height * 0.022,
-    marginMarkStrokeWidth: box.height * 0.007,
+    // Stroke follows cap height, so weight reads the same at any artwork size.
+    markStrokeWidth: primary.height * 0.13,
+    marginMarkStrokeWidth: marginCapHeight * 0.16,
     word: SPESIMEN_WORD,
   }
 }
