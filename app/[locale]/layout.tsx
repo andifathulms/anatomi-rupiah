@@ -5,6 +5,7 @@ import '../globals.css'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { LOCALES, isLocale } from '@/lib/i18n'
+import { assetPath } from '@/lib/paths'
 import { SITE } from '@/lib/i18n/copy'
 
 /**
@@ -38,7 +39,15 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
+/**
+ * Social scrapers need absolute URLs; this makes Next emit them.
+ * Origin only — assetPath already supplies the basePath, and including it here
+ * too would double it.
+ */
+const SITE_ORIGIN = 'https://andifathulms.github.io/'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: {
     default: 'Anatomi Rupiah',
     template: '%s · Anatomi Rupiah',
@@ -46,6 +55,23 @@ export const metadata: Metadata = {
   description:
     'Penjelasan mekanisme unsur pengaman uang Rupiah. Skema, bertanda SPESIMEN, tidak menentukan keaslian.',
   robots: { index: true, follow: true },
+  manifest: assetPath('/manifest.webmanifest'),
+  icons: {
+    icon: [{ url: assetPath('/brand/favicon.svg'), type: 'image/svg+xml' }],
+    apple: [{ url: assetPath('/brand/apple-touch-icon-180.png'), sizes: '180x180' }],
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Anatomi Rupiah',
+    title: 'Anatomi Rupiah',
+    description:
+      'Cara kerja unsur pengaman uang Rupiah, dan cara memeriksanya. Skema bertanda SPESIMEN.',
+    images: [{ url: assetPath('/brand/og-1200x630.png'), width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [assetPath('/brand/og-1200x630.png')],
+  },
 }
 
 export default function LocaleLayout({

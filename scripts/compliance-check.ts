@@ -5,6 +5,7 @@
  * with a criminal penalty attached. It is never bypassed, never given a skip
  * flag, and no assertion in it is ever weakened to make something pass.
  */
+import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
@@ -42,10 +43,18 @@ function trackedFiles(): RepoFile[] | null {
     if (paths.length === 0) return null
     return paths
       .filter((path) => existsSync(join(ROOT, path)))
-      .map((path) => ({ path, read: () => readFileSync(join(ROOT, path), 'utf8') }))
+      .map((path) => ({
+        path,
+        read: () => readFileSync(join(ROOT, path), 'utf8'),
+        hash: () => sha256(join(ROOT, path)),
+      }))
   } catch {
     return null
   }
+}
+
+function sha256(full: string): string {
+  return createHash('sha256').update(readFileSync(full)).digest('hex')
 }
 
 function walk(dir: string, collected: RepoFile[] = []): RepoFile[] {
@@ -58,6 +67,7 @@ function walk(dir: string, collected: RepoFile[] = []): RepoFile[] {
       collected.push({
         path: relative(ROOT, full).split(sep).join('/'),
         read: () => readFileSync(full, 'utf8'),
+        hash: () => sha256(full),
       })
     }
   }

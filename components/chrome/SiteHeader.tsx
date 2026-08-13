@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { ROUTES, href, type Locale } from '@/lib/i18n'
 import { parsePathname } from '@/lib/i18n/path'
 import { SITE } from '@/lib/i18n/copy'
+import { assetPath } from '@/lib/paths'
 
 /**
  * Sticky, and horizontally scrollable on narrow screens rather than collapsed
@@ -21,10 +22,22 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
       <div className="mx-auto flex max-w-sheet items-center gap-4 px-5 py-3">
         <Link
           href={href(locale, '')}
-          className="shrink-0 font-display text-lg tracking-tight"
+          className="flex shrink-0 items-center gap-2.5"
           aria-label={copy.siteName}
         >
-          {copy.siteName}
+          {/* The tile variant, not the ink-only one: at this size the ink-only
+              mark collapses into a blob, exactly as the asset kit warns.
+              A plain <img> on purpose — next/image cannot optimise an SVG, and
+              a static export has no image server to optimise it with. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={assetPath('/brand/favicon.svg')}
+            alt=""
+            width={26}
+            height={26}
+            className="h-[26px] w-[26px] rounded-[6px]"
+          />
+          <span className="font-display text-lg tracking-tight">{copy.siteName}</span>
         </Link>
 
         <nav

@@ -14,6 +14,7 @@ import {
 } from '@/lib/schematic'
 import { schematicViewModel } from '@/lib/schematic/view-model'
 import { denominations } from '@/data/denominations'
+import { BRAND_RASTER_ALLOWLIST } from './brand-assets'
 
 /**
  * The compliance checks, as a library so tests and the build script run exactly
@@ -31,6 +32,8 @@ export interface RepoFile {
   /** Repository-relative path, forward slashes. */
   readonly path: string
   readonly read: () => string
+  /** SHA-256 of the file's bytes. Required to clear the raster allow-list. */
+  readonly hash?: () => string
 }
 
 /* ------------------------------------------------------------------ *
@@ -43,13 +46,36 @@ export function checkAssetPolicy(files: readonly RepoFile[]): Violation[] {
   const violations: Violation[] = []
   for (const file of files) {
     const lower = file.path.toLowerCase()
-    if (RASTER_EXTENSIONS.some((ext) => lower.endsWith(ext))) {
+    if (!RASTER_EXTENSIONS.some((ext) => lower.endsWith(ext))) continue
+
+    const pinned = BRAND_RASTER_ALLOWLIST[file.path]
+    if (pinned === undefined) {
       violations.push({
         check: 'asset-policy',
         where: file.path,
         message:
           'raster image in the repository. All note artwork is original authored SVG, and a ' +
           'photograph of a note must never exist here. Draw it better instead.',
+      })
+      continue
+    }
+
+    // Allowed only as the exact reviewed bytes. Without a hash we cannot tell
+    // a brand mark from a photograph, so we refuse rather than assume.
+    const actual = file.hash?.()
+    if (actual === undefined) {
+      violations.push({
+        check: 'asset-policy',
+        where: file.path,
+        message: 'allow-listed raster could not be hashed, so its contents are unverified.',
+      })
+    } else if (actual !== pinned) {
+      violations.push({
+        check: 'asset-policy',
+        where: file.path,
+        message:
+          `allow-listed raster does not match its pinned hash. Expected ${pinned.slice(0, 12)}…, ` +
+          `found ${actual.slice(0, 12)}…. Review the new image and update the pin deliberately.`,
       })
     }
   }
@@ -283,7 +309,7 @@ export function checkExportSurface(files: readonly RepoFile[]): Violation[] {
   for (const file of files) {
     if (!file.path.startsWith('public/')) continue
 
-    if (!/\.(svg|txt|ico|webmanifest|xml)$/.test(file.path)) {
+    if (!/\.(svg|png|txt|ico|webmanifest|xml)$/.test(file.path)) {
       violations.push({
         check: 'export-surface',
         where: file.path,
@@ -291,6 +317,16 @@ export function checkExportSurface(files: readonly RepoFile[]): Violation[] {
       })
       continue
     }
+    if (file.path.endsWith('.png') && !file.path.startsWith('public/brand/')) {
+      violations.push({
+        check: 'export-surface',
+        where: file.path,
+        message: 'raster is only publishable as a pinned brand asset',
+      })
+      continue
+    }
+    // Brand assets are allowed here; their bytes are pinned by the asset policy.
+    if (file.path.startsWith('public/brand/')) continue
     if (!file.path.endsWith('.svg')) continue
 
     if (!file.path.startsWith('public/mekanisme/')) {
