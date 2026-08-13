@@ -5,7 +5,8 @@
  * with a criminal penalty attached. It is never bypassed, never given a skip
  * flag, and no assertion in it is ever weakened to make something pass.
  */
-import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
 import {
   checkAnatomyMarking,
@@ -26,6 +27,27 @@ import {
 const ROOT = process.cwd()
 const SKIP_DIRS = new Set(['node_modules', '.next', 'out', '.git', '.vercel'])
 
+/**
+ * The invariant is about what is *in the repository*, so the scan follows git
+ * rather than the filesystem. Untracked working files — a brand asset kit, a
+ * scratch directory — are not in the repository and are not the subject.
+ *
+ * Generated output under public/ is added back explicitly: it is not tracked,
+ * but it is published, so the export-surface check has to see it.
+ */
+function trackedFiles(): RepoFile[] | null {
+  try {
+    const listing = execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' })
+    const paths = listing.split('\0').filter((entry) => entry.length > 0)
+    if (paths.length === 0) return null
+    return paths
+      .filter((path) => existsSync(join(ROOT, path)))
+      .map((path) => ({ path, read: () => readFileSync(join(ROOT, path), 'utf8') }))
+  } catch {
+    return null
+  }
+}
+
 function walk(dir: string, collected: RepoFile[] = []): RepoFile[] {
   for (const entry of readdirSync(dir)) {
     if (SKIP_DIRS.has(entry)) continue
@@ -43,7 +65,13 @@ function walk(dir: string, collected: RepoFile[] = []): RepoFile[] {
 }
 
 function main(): void {
-  const files = walk(ROOT)
+  // Tracked files where git can tell us, the whole tree otherwise, plus the
+  // generated publish surface either way.
+  const tracked = trackedFiles()
+  const published = existsSync(join(ROOT, 'public')) ? walk(join(ROOT, 'public')) : []
+  const byPath = new Map<string, RepoFile>()
+  for (const file of [...(tracked ?? walk(ROOT)), ...published]) byPath.set(file.path, file)
+  const files = [...byPath.values()]
   const manifest = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as {
     dependencies?: Record<string, string>
     devDependencies?: Record<string, string>

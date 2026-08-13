@@ -6,3 +6,7 @@ out/
 .env*
 !.env.example
 public/mekanisme/
+
+# Brand asset kit: source exports, not part of the site.
+# The assets the site actually uses are vector, and live in public/brand.
+exports/
