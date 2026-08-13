@@ -212,6 +212,53 @@ export function checkSizeConstraint(rendered: readonly RenderedSchematic[]): Vio
 }
 
 /* ------------------------------------------------------------------ *
+ * 3b. The export surface carries mechanism diagrams and nothing else.
+ * ------------------------------------------------------------------ */
+
+/**
+ * PRD §2: on-screen educational display is the carve-out; a downloadable note
+ * file is not. So nothing reachable as a file may carry note artwork — no
+ * schematic, no marking, no note outline. Only mechanism diagrams ship.
+ */
+export function checkExportSurface(files: readonly RepoFile[]): Violation[] {
+  const violations: Violation[] = []
+  for (const file of files) {
+    if (!file.path.startsWith('public/')) continue
+
+    if (!/\.(svg|txt|ico|webmanifest|xml)$/.test(file.path)) {
+      violations.push({
+        check: 'export-surface',
+        where: file.path,
+        message: 'unexpected file type on the public export surface',
+      })
+      continue
+    }
+    if (!file.path.endsWith('.svg')) continue
+
+    if (!file.path.startsWith('public/mekanisme/')) {
+      violations.push({
+        check: 'export-surface',
+        where: file.path,
+        message: 'only mechanism diagrams are published; other artwork is not exportable',
+      })
+      continue
+    }
+
+    const markup = file.read()
+    for (const marker of ['data-spesimen', 'data-schematic', 'data-loupe']) {
+      if (markup.includes(marker)) {
+        violations.push({
+          check: 'export-surface',
+          where: file.path,
+          message: `carries note artwork (${marker}); no export path emits a note`,
+        })
+      }
+    }
+  }
+  return violations
+}
+
+/* ------------------------------------------------------------------ *
  * 4. No capture, no verdict, no runtime network.
  * ------------------------------------------------------------------ */
 

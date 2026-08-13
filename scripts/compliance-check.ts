@@ -10,6 +10,7 @@ import { join, relative, sep } from 'node:path'
 import {
   checkAssetPolicy,
   checkDependencies,
+  checkExportSurface,
   checkLoupeRegions,
   checkMarkingImplementation,
   checkSizeConstraint,
@@ -57,6 +58,7 @@ function main(): void {
     ],
     ['size constraint — never near actual banknote size', checkSizeConstraint(rendered)],
     ['loupe regions — a detail, never a whole note', checkLoupeRegions()],
+    ['export surface — mechanism diagrams only, never a note', checkExportSurface(files)],
     ['source policy — no capture, no camera, no runtime network', checkSourcePolicy(files)],
     ['marking implementation — geometry, never an overlay', checkMarkingImplementation(files)],
     ['dependencies — no imaging, camera, or ML packages', checkDependencies(manifest)],

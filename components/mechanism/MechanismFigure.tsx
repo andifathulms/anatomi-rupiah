@@ -1,5 +1,6 @@
 import { mechanismSvg, type MechanismId } from '@/lib/art/mechanisms'
 import type { CheckChannel } from '@/lib/content/schema'
+import { mechanismDownloadPath } from '@/lib/paths'
 
 /**
  * A mechanism illustration with its numbered steps beside it — the engraver's
@@ -14,6 +15,8 @@ export interface MechanismFigureProps {
   readonly alt: string
   readonly caption: string
   readonly steps: readonly string[]
+  /** Label for the diagram download. Sharing emits diagrams only — PRD §2. */
+  readonly downloadLabel: string
 }
 
 const CHANNEL_RULE: Record<CheckChannel, string> = {
@@ -23,7 +26,14 @@ const CHANNEL_RULE: Record<CheckChannel, string> = {
   mesin: 'border-mesin',
 }
 
-export function MechanismFigure({ id, channel, alt, caption, steps }: MechanismFigureProps) {
+export function MechanismFigure({
+  id,
+  channel,
+  alt,
+  caption,
+  steps,
+  downloadLabel,
+}: MechanismFigureProps) {
   return (
     <figure className={`border-t-4 bg-proof-deep/40 ${CHANNEL_RULE[channel]}`}>
       <div
@@ -46,6 +56,15 @@ export function MechanismFigure({ id, channel, alt, caption, steps }: MechanismF
             </li>
           ))}
         </ol>
+        <p className="mt-5 border-t border-engraving/10 pt-4">
+          <a
+            href={mechanismDownloadPath(id)}
+            download={`${id}.svg`}
+            className="font-mono text-xs uppercase tracking-wider text-engraving-soft underline underline-offset-4 hover:text-engraving"
+          >
+            {downloadLabel}
+          </a>
+        </p>
       </figcaption>
     </figure>
   )

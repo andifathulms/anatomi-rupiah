@@ -5,7 +5,8 @@
   "description": "Banknote security-feature explainer. Mechanisms illustrated, notes never reproduced.",
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm compliance:check && pnpm content:validate && next build",
+    "export:mechanisms": "tsx --tsconfig scripts/tsconfig.json scripts/export-mechanisms.ts",
+    "build": "pnpm export:mechanisms && pnpm compliance:check && pnpm content:validate && next build",
     "postbuild": "tsx --tsconfig scripts/tsconfig.json scripts/postbuild.ts",
     "preview": "node scripts/preview.mjs",
     "compliance:check": "tsx --tsconfig scripts/tsconfig.json scripts/compliance-check.ts",
