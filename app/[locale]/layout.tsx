@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   description:
     'Penjelasan mekanisme unsur pengaman uang Rupiah. Skema, bertanda SPESIMEN, tidak menentukan keaslian.',
   robots: { index: true, follow: true },
-  manifest: assetPath('/manifest.webmanifest'),
+  manifest: assetPath('/site.webmanifest'),
   icons: {
     icon: [{ url: assetPath('/brand/favicon.svg'), type: 'image/svg+xml' }],
     apple: [{ url: assetPath('/brand/apple-touch-icon-180.png'), sizes: '180x180' }],

@@ -8,6 +8,7 @@
 import { existsSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DEFAULT_LOCALE } from '@/lib/i18n'
+import { buildManifest } from '@/lib/brand/manifest'
 
 const OUT = join(process.cwd(), 'out')
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '/anatomi-rupiah'
@@ -19,6 +20,7 @@ function main(): void {
   }
 
   writeFileSync(join(OUT, '.nojekyll'), '')
+  writeFileSync(join(OUT, 'site.webmanifest'), buildManifest(BASE_PATH))
 
   const target = `${BASE_PATH}/${DEFAULT_LOCALE}/`
   writeFileSync(
@@ -39,7 +41,7 @@ function main(): void {
 `,
   )
 
-  console.log(`postbuild — .nojekyll written, / redirects to ${target}`)
+  console.log(`postbuild — .nojekyll and site.webmanifest written, / redirects to ${target}`)
 }
 
 main()
