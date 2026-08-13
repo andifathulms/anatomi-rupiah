@@ -7,7 +7,7 @@
   -->
   <g stroke="#1A1F26" stroke-width="1.6" stroke-linecap="round">
     <!-- 1 · light behind the note -->
-    <g stroke="#C08A2E">
+    <g stroke="#C08A2E" class="rays">
       <path d="M18 52H62M18 70H62M18 88H62M18 106H62" />
       <path d="M56 46l8 6-8 6M56 64l8 6-8 6M56 82l8 6-8 6M56 100l8 6-8 6" fill="none" />
     </g>

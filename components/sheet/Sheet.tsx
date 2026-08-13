@@ -78,9 +78,9 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
         </div>
       </fieldset>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[auto_minmax(0,1fr)]">
         <div>
-          <div className="overflow-x-auto border border-engraving/15 bg-proof p-6">
+          <div className="w-fit max-w-full overflow-x-auto border border-engraving/15 bg-proof p-6 shadow-sheet">
             <Schematic model={note.schematic} activeFeatureId={marker?.featureId} />
           </div>
           <p className="numeric mt-3 text-xs text-engraving-faint">

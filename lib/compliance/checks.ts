@@ -4,7 +4,7 @@ import { Loupe } from '@/components/loupe/Loupe'
 import { Schematic } from '@/components/sheet/Schematic'
 import { assertRegionIsADetail } from '@/lib/schematic/loupe'
 import { sheetNotes } from '@/lib/schematic/sheet'
-import { anatomyViewModel } from '@/lib/hero/anatomy'
+import { MAX_MAGNIFICATION, anatomyViewModel } from '@/lib/hero/anatomy'
 import { hasBakedMark } from '@/lib/spesimen'
 import {
   FORBIDDEN_SCALE_BAND,
@@ -167,13 +167,22 @@ export function checkAnatomyMarking(): Violation[] {
     }
   }
 
-  const scale = model.widthPx / (151 * PX_PER_MM)
-  if (isInsideForbiddenBand(scale) || scale > MAX_SCHEMATIC_SCALE) {
-    violations.push({
-      check: 'anatomy-marking',
-      where: 'hero anatomy',
-      message: `renders at ${(scale * 100).toFixed(1)}% of actual size, above the cap.`,
-    })
+  // Both the drawn size and the apparent size. A layer translated toward the
+  // viewer is magnified by perspective, and the cap governs what is seen.
+  const drawn = model.widthPx / (151 * PX_PER_MM)
+  const apparent = (model.widthPx * MAX_MAGNIFICATION) / (151 * PX_PER_MM)
+
+  for (const [name, scale] of [
+    ['drawn', drawn],
+    ['apparent, after perspective magnification', apparent],
+  ] as const) {
+    if (isInsideForbiddenBand(scale) || scale > MAX_SCHEMATIC_SCALE) {
+      violations.push({
+        check: 'anatomy-marking',
+        where: `hero anatomy · ${name}`,
+        message: `renders at ${(scale * 100).toFixed(1)}% of actual size, above the cap.`,
+      })
+    }
   }
 
   return violations

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import type { AnatomyViewModel } from '@/lib/hero/anatomy'
+import { PERSPECTIVE_PX, type AnatomyViewModel } from '@/lib/hero/anatomy'
 import { ENGRAVING, PROOF, SPESIMEN_INK } from '@/lib/tokens'
 import type { CheckChannel } from '@/lib/content/schema'
 
@@ -70,14 +70,18 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
   const urlFor = (featureId: string) => linkFor(featureId)?.url ?? '#'
 
   return (
-    <div className="relative">
+    <div className="relative w-full lg:w-auto">
       <div
         ref={frame}
         onPointerMove={handlePointer}
         onPointerLeave={() => setTilt(REST_TILT)}
-        className="flex items-center justify-center py-10 sm:py-16"
-        style={{ perspective: '1400px', perspectiveOrigin: '50% 45%' }}
+        className="flex items-center justify-center overflow-hidden py-4 sm:py-12 lg:py-16"
+        style={{ perspective: `${PERSPECTIVE_PX}px`, perspectiveOrigin: '50% 45%' }}
       >
+        {/* Scaled DOWN on narrow screens so the fanned stack never overflows.
+            Only ever downward, so the apparent size stays under the cap the
+            gate checked. */}
+        <div className="scale-[0.62] sm:scale-90 lg:scale-100">
         <div
           data-anatomy="exploded"
           className="relative transition-transform duration-300 ease-out"
@@ -88,8 +92,9 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
             transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           }}
         >
-          {model.layers.map((layer) => {
+          {model.layers.map((layer, index) => {
             const isActive = active === layer.featureId
+            const dimmed = active !== undefined && !isActive
             return (
               <Link
                 key={layer.featureId}
@@ -101,12 +106,15 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
                 aria-label={labelFor(layer.featureId)}
                 className="absolute inset-0 block rounded-[3px] outline-offset-8"
                 style={{
-                  transform: `translateZ(${layer.depth}px)`,
+                  // Fanned as well as stacked, so every layer stays readable
+                  // instead of hiding behind the one in front of it.
+                  transform: `translate3d(0, ${-index * 9}px, ${layer.depth}px)`,
                   transformStyle: 'preserve-3d',
                   filter: isActive
-                    ? 'drop-shadow(0 18px 26px rgba(26,31,38,0.28))'
-                    : 'drop-shadow(0 10px 18px rgba(26,31,38,0.14))',
-                  transition: 'filter 200ms ease-out',
+                    ? 'drop-shadow(0 20px 28px rgba(26,31,38,0.30))'
+                    : 'drop-shadow(0 10px 18px rgba(26,31,38,0.16))',
+                  opacity: dimmed ? 0.45 : 1,
+                  transition: 'filter 200ms ease-out, opacity 200ms ease-out',
                 }}
               >
                 <svg
@@ -116,7 +124,9 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
                   aria-hidden="true"
                   focusable="false"
                 >
-                  <path d={layer.outlineD} fill={PROOF} fillOpacity={0.88} />
+                  {/* Translucent, so the stack reads as layers of one note
+                      rather than a pile of opaque cards. */}
+                  <path d={layer.outlineD} fill={PROOF} fillOpacity={index === 0 ? 0.94 : 0.7} />
                   <path
                     d={layer.outlineD}
                     fill={layer.ink}
@@ -149,6 +159,7 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
               </Link>
             )
           })}
+        </div>
         </div>
       </div>
 

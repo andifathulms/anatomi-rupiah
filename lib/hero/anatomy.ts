@@ -21,6 +21,23 @@ import { CHANNEL_INK } from '@/lib/tokens'
 const NOTE = { widthMm: 151, heightMm: 65 } as const
 const RADIUS = 3
 
+/**
+ * 3D perspective, shared with the component so there is one source of truth.
+ *
+ * This matters for compliance, not just for looks. A layer translated toward
+ * the viewer is *magnified* by perspective / (perspective - z). The size cap
+ * governs what a reader actually sees, so the base width is divided by that
+ * magnification before it is used — otherwise a stack drawn at 70% would
+ * present its front layer at around 76%, inside the reproduction band.
+ */
+export const PERSPECTIVE_PX = 1800
+export const LAYER_DEPTH_PX = 46
+const LAYER_COUNT = 5
+const MAX_DEPTH_PX = LAYER_DEPTH_PX * (LAYER_COUNT - 1)
+
+/** How much the frontmost layer is enlarged by perspective. */
+export const MAX_MAGNIFICATION = PERSPECTIVE_PX / (PERSPECTIVE_PX - MAX_DEPTH_PX)
+
 export interface AnatomyLayer {
   /** Feature this layer belongs to; the layer links to its explainer. */
   readonly featureId: string
@@ -86,9 +103,13 @@ const OPTICAL_DETAIL =
   'M14 8h30M14 12h20M14 16h26'
 
 export function anatomyViewModel(): AnatomyViewModel {
-  const widthPx = schematicWidthPx(NOTE)
-  // The hero is a schematic like any other, and is checked like any other.
+  // Divide out the perspective magnification, so the *apparent* width of the
+  // frontmost layer — the thing a reader sees — stays under the cap.
+  const widthPx = Math.floor(schematicWidthPx(NOTE) / MAX_MAGNIFICATION)
+
+  // Checked twice: the drawn width, and the largest width it can present at.
   assertSchematicWidth(widthPx, NOTE)
+  assertSchematicWidth(widthPx * MAX_MAGNIFICATION, NOTE)
 
   const artwork = bakeSpesimen(OUTLINE, { width: NOTE.widthMm, height: NOTE.heightMm })
 
@@ -105,19 +126,19 @@ export function anatomyViewModel(): AnatomyViewModel {
       featureId: 'tanda-air',
       channel: 'diterawang',
       ink: CHANNEL_INK.diterawang,
-      depth: 0,
+      depth: LAYER_DEPTH_PX * 0,
       detailD: WATERMARK_DETAIL,
       fillOpacity: 0.14,
-      // Back layer carries the mark.
-      markD: artwork.markD,
-      markStrokeWidth: artwork.markStrokeWidth,
+      // Back layer carries the smaller marking.
+      markD: artwork.marginMarkD,
+      markStrokeWidth: artwork.marginMarkStrokeWidth,
     },
     {
       ...base,
       featureId: 'benang-pengaman',
       channel: 'diterawang',
       ink: CHANNEL_INK.diterawang,
-      depth: 26,
+      depth: LAYER_DEPTH_PX * 1,
       detailD: THREAD_DETAIL,
       detailWidth: 1.8,
     },
@@ -126,7 +147,7 @@ export function anatomyViewModel(): AnatomyViewModel {
       featureId: 'gambar-saling-isi',
       channel: 'diterawang',
       ink: CHANNEL_INK.diterawang,
-      depth: 52,
+      depth: LAYER_DEPTH_PX * 2,
       detailD: RECTOVERSO_DETAIL,
       detailDashed: true,
     },
@@ -135,7 +156,7 @@ export function anatomyViewModel(): AnatomyViewModel {
       featureId: 'cetak-intaglio',
       channel: 'diraba',
       ink: CHANNEL_INK.diraba,
-      depth: 78,
+      depth: LAYER_DEPTH_PX * 3,
       detailD: INTAGLIO_DETAIL,
       detailWidth: 1.6,
     },
@@ -144,20 +165,23 @@ export function anatomyViewModel(): AnatomyViewModel {
       featureId: 'tinta-berubah-warna',
       channel: 'dilihat',
       ink: CHANNEL_INK.dilihat,
-      depth: 104,
+      depth: LAYER_DEPTH_PX * 4,
       detailD: OPTICAL_DETAIL,
       detailWidth: 1.4,
-      // Front layer carries it too, so the stack is marked from any angle.
-      markD: artwork.marginMarkD,
-      markStrokeWidth: artwork.marginMarkStrokeWidth,
+      // The large marking goes in front, where no layer can occlude it.
+      markD: artwork.markD,
+      markStrokeWidth: artwork.markStrokeWidth,
     },
   ]
 
   return {
     viewBox: `0 0 ${NOTE.widthMm} ${NOTE.heightMm}`,
     widthPx,
-    heightPx: schematicHeightPx(NOTE),
-    scalePercent: Math.round((widthPx / (NOTE.widthMm * (96 / 25.4))) * 100),
+    heightPx: Math.floor(schematicHeightPx(NOTE) / MAX_MAGNIFICATION),
+    /** Stated openly in the UI as the largest scale the stack can present at. */
+    scalePercent: Math.round(
+      ((widthPx * MAX_MAGNIFICATION) / (NOTE.widthMm * (96 / 25.4))) * 100,
+    ),
     layers,
   }
 }

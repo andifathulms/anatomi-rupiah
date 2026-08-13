@@ -6,29 +6,41 @@ import { ROUTES, href, type Locale } from '@/lib/i18n'
 import { parsePathname } from '@/lib/i18n/path'
 import { SITE } from '@/lib/i18n/copy'
 
+/**
+ * Sticky, and horizontally scrollable on narrow screens rather than collapsed
+ * behind a menu button. Seven destinations is few enough to show, and a
+ * visible row beats a hidden one — nothing here is worth a tap to discover.
+ */
 export function SiteHeader({ locale }: { readonly locale: Locale }) {
   const copy = SITE[locale]
   const other: Locale = locale === 'id' ? 'en' : 'id'
   const { segment } = parsePathname(usePathname())
 
   return (
-    <header className="border-b border-engraving/15">
-      <div className="mx-auto flex max-w-sheet flex-wrap items-baseline gap-x-6 gap-y-3 px-5 py-4">
-        <Link href={href(locale, '')} className="font-display text-lg tracking-tight">
+    <header className="sticky top-0 z-30 border-b border-engraving/12 bg-proof/85 backdrop-blur-sm supports-[backdrop-filter]:bg-proof/70">
+      <div className="mx-auto flex max-w-sheet items-center gap-4 px-5 py-3">
+        <Link
+          href={href(locale, '')}
+          className="shrink-0 font-display text-lg tracking-tight"
+          aria-label={copy.siteName}
+        >
           {copy.siteName}
         </Link>
 
-        <nav aria-label={locale === 'id' ? 'Navigasi utama' : 'Main navigation'} className="flex-1">
-          <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+        <nav
+          aria-label={locale === 'id' ? 'Navigasi utama' : 'Main navigation'}
+          className="min-w-0 flex-1"
+        >
+          <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {ROUTES.filter((route) => route.segment !== '').map((route) => (
-              <li key={route.segment}>
+              <li key={route.segment} className="shrink-0">
                 <Link
                   href={href(locale, route.segment)}
                   aria-current={route.segment === segment ? 'page' : undefined}
                   className={
                     route.segment === segment
-                      ? 'text-engraving underline decoration-diterawang decoration-2 underline-offset-4'
-                      : 'text-engraving-soft hover:text-engraving'
+                      ? 'block rounded-full bg-engraving px-3 py-1.5 text-sm text-proof'
+                      : 'block rounded-full px-3 py-1.5 text-sm text-engraving-soft hover:bg-proof-deep hover:text-engraving'
                   }
                 >
                   {route.label[locale]}
@@ -40,7 +52,7 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
 
         <Link
           href={href(other, segment)}
-          className="font-mono text-xs uppercase tracking-widest text-engraving-soft hover:text-engraving"
+          className="shrink-0 rounded-full border border-engraving/20 px-2.5 py-1 font-mono text-xs uppercase tracking-widest text-engraving-soft hover:border-engraving hover:text-engraving"
           lang={other}
         >
           {other.toUpperCase()}

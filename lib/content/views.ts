@@ -19,6 +19,8 @@ function citationKey(citation: Citation): string {
 export interface FeatureCardView {
   readonly id: string
   readonly name: string
+  /** Which authored drawing previews this feature on the index. */
+  readonly illustration: MechanismId
   readonly channel: CheckChannel
   readonly channelLabel: string
   readonly summary: string
@@ -30,6 +32,11 @@ export function featureCards(locale: Locale): readonly FeatureCardView[] {
   return features.map((feature) => ({
     id: feature.id,
     name: feature.name[locale],
+    illustration: isMechanismId(feature.mechanism.illustration)
+      ? feature.mechanism.illustration
+      : (() => {
+          throw new Error(`feature "${feature.id}" names a drawing that does not exist`)
+        })(),
     channel: feature.channel,
     channelLabel: CHANNEL_LABEL[feature.channel][locale],
     summary: say(feature.summary, locale),

@@ -88,16 +88,14 @@
 }
 
 /*
- * Mechanism animation.
- *
- * Applied from here rather than inside the .svg files, so the artwork in
- * art/mechanisms stays pure geometry — it is authored work and it is also
- * downloadable on its own, where a static diagram is the right thing.
+ * Mechanism animation is opt-in per drawing, via a class authored into the
+ * artwork. A selector matching on stroke colour would animate whatever shared
+ * that hue — for these drawings, the security thread as readily as a light ray.
+ * The rule below moves light towards the note, and nothing else.
  */
 @layer utilities {
-  .mech svg [stroke='#C08A2E'] path,
-  .mech-rays path {
-    animation: ray-travel 3.2s ease-in-out infinite;
+  .mech .rays path {
+    animation: ray-travel 3.4s ease-in-out infinite;
   }
 }
 

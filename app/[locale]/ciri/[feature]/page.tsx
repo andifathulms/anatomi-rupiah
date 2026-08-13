@@ -5,8 +5,24 @@ import { UvToggle } from '@/components/channel/UvToggle'
 import { CitationList } from '@/components/mechanism/CitationList'
 import { DEMO } from '@/lib/i18n/demo'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
+import Link from 'next/link'
 import { featureDetail, featureIds } from '@/lib/content/views'
-import { LOCALES, isLocale } from '@/lib/i18n'
+import { LOCALES, href, isLocale } from '@/lib/i18n'
+import type { CheckChannel } from '@/lib/content/schema'
+
+const CHANNEL_ACCENT: Record<CheckChannel, string> = {
+  dilihat: 'border-dilihat',
+  diraba: 'border-diraba',
+  diterawang: 'border-diterawang',
+  mesin: 'border-mesin',
+}
+
+const CHANNEL_TEXT: Record<CheckChannel, string> = {
+  dilihat: 'text-dilihat-deep',
+  diraba: 'text-diraba-deep',
+  diterawang: 'text-diterawang-deep',
+  mesin: 'text-mesin-deep',
+}
 
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) => featureIds().map((feature) => ({ locale, feature })))
@@ -34,11 +50,20 @@ export default function FeaturePage({
 
   return (
     <article className="py-14">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
-        {detail.channelLabel}
-      </p>
-      <h1 className="mt-3 max-w-3xl font-display text-4xl leading-tight">{detail.name}</h1>
-      <p className="mt-5 max-w-prose text-lg leading-relaxed text-engraving-soft">{detail.summary}</p>
+      <Link
+        href={href(locale, 'ciri')}
+        className="text-sm text-engraving-faint underline underline-offset-4 hover:text-engraving"
+      >
+        ← {locale === 'id' ? 'Semua ciri' : 'All features'}
+      </Link>
+
+      <div className={`mt-5 border-l-4 pl-5 sm:pl-7 ${CHANNEL_ACCENT[detail.channel]}`}>
+        <p className={`font-mono text-[0.6875rem] uppercase tracking-[0.24em] ${CHANNEL_TEXT[detail.channel]}`}>
+          {detail.channelLabel}
+        </p>
+        <h1 className="mt-3 max-w-3xl font-display text-title">{detail.name}</h1>
+        <p className="mt-5 max-w-prose text-lede text-engraving-soft">{detail.summary}</p>
+      </div>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <MechanismFigure
@@ -51,7 +76,7 @@ export default function FeaturePage({
         />
 
         <section aria-labelledby="periksa">
-          <h2 id="periksa" className="font-display text-2xl">
+          <h2 id="periksa" className="font-display text-section">
             {locale === 'id' ? 'Apa yang diamati' : 'What to observe'}
           </h2>
           <ul className="mt-5 space-y-4">

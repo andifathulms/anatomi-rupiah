@@ -39,13 +39,14 @@ export default function HomePage({ params }: { readonly params: { readonly local
 
   return (
     <div>
-      <section className="pt-12 sm:pt-16">
+      <section className="grid items-center gap-6 pt-10 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14">
+        <div>
         <p className="eyebrow">{copy.kicker}</p>
         <h1 className="mt-5 max-w-4xl font-display text-hero">{copy.title}</h1>
         <p className="mt-6 max-w-2xl text-lede text-engraving">{copy.answer}</p>
         <p className="mt-4 max-w-prose leading-relaxed text-engraving-soft">{copy.lede}</p>
 
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-7 flex flex-wrap gap-3">
           <Link
             href={href(locale, 'tigad')}
             className="border border-engraving bg-engraving px-5 py-2.5 text-sm text-proof shadow-sheet hover:bg-engraving-soft"
@@ -58,6 +59,7 @@ export default function HomePage({ params }: { readonly params: { readonly local
           >
             {copy.startCta}
           </Link>
+        </div>
         </div>
 
         <AnatomyStack

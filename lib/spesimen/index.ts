@@ -96,7 +96,9 @@ export function bakeSpesimen(outlineD: string, box: ArtworkBox): BakedArtwork {
   // As large as the artwork allows, struck along its longest run: unmistakable,
   // not incidental — and wholly inside the artwork, so none of it is clipped.
   const primary: Wordmark = buildWordmark(SPESIMEN_WORD, {
-    capHeight: fittedCapHeight(box, rotationDeg) * 0.94,
+    // Short of the maximum fit: still far above the coverage floor, and it
+    // marks the artwork without burying what the artwork is showing.
+    capHeight: fittedCapHeight(box, rotationDeg) * 0.78,
     centerX: box.width / 2,
     centerY: box.height / 2,
     rotationDeg,
