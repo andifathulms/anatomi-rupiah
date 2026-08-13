@@ -27,17 +27,17 @@ export interface SheetProps {
 }
 
 const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat',
-  diraba: 'text-diraba',
-  diterawang: 'text-diterawang',
-  mesin: 'text-mesin',
+  dilihat: 'text-dilihat-deep',
+  diraba: 'text-diraba-deep',
+  diterawang: 'text-diterawang-deep',
+  mesin: 'text-mesin-deep',
 }
 
 const CHANNEL_BG: Record<CheckChannel, string> = {
-  dilihat: 'bg-dilihat',
-  diraba: 'bg-diraba',
-  diterawang: 'bg-diterawang',
-  mesin: 'bg-mesin',
+  dilihat: 'bg-dilihat-deep',
+  diraba: 'bg-diraba-deep',
+  diterawang: 'bg-diterawang-deep',
+  mesin: 'bg-mesin-deep',
 }
 
 export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {

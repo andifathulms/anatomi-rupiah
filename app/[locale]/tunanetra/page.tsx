@@ -35,7 +35,7 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
 
   return (
     <div className="py-14">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-diraba">
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-diraba-deep">
         {detail.channelLabel}
       </p>
       <h1 className="mt-3 font-display text-4xl leading-tight">{detail.name}</h1>
