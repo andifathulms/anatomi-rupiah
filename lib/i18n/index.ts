@@ -19,16 +19,60 @@ export function isLocale(value: string): value is Locale {
 export interface Route {
   readonly segment: string
   readonly label: Record<Locale, string>
+  /** One-line gloss shown as a hover title — the nav label alone doesn't say what's there. */
+  readonly hint: Record<Locale, string>
 }
 
 export const ROUTES: readonly Route[] = [
-  { segment: '', label: { id: 'Beranda', en: 'Home' } },
-  { segment: 'lembar', label: { id: 'Lembar', en: 'The sheet' } },
-  { segment: 'ciri', label: { id: 'Ciri', en: 'Features' } },
-  { segment: 'tigad', label: { id: '3D', en: '3D' } },
-  { segment: 'tunanetra', label: { id: 'Kode tuna netra', en: 'Kode tuna netra' } },
-  { segment: 'tokoh', label: { id: 'Tokoh & motif', en: 'Figures & motifs' } },
-  { segment: 'hukum', label: { id: 'Hukum & metode', en: 'Legal & method' } },
+  { segment: '', label: { id: 'Beranda', en: 'Home' }, hint: { id: 'Kembali ke beranda', en: 'Back to the homepage' } },
+  {
+    segment: 'lembar',
+    label: { id: 'Lembar', en: 'The sheet' },
+    hint: {
+      id: 'Skema tiap pecahan, dengan penanda ciri dan tampilan diperbesar',
+      en: 'A schematic of each denomination, with feature markers and a magnified view',
+    },
+  },
+  {
+    segment: 'ciri',
+    label: { id: 'Ciri', en: 'Features' },
+    hint: {
+      id: 'Delapan ciri pengaman, tiap satu dijelaskan sebagai mekanisme',
+      en: 'Eight security features, each explained as a mechanism',
+    },
+  },
+  {
+    segment: 'tigad',
+    label: { id: '3D', en: '3D' },
+    hint: {
+      id: 'Jalan tiga langkah: dilihat, diraba, diterawang',
+      en: 'The three-step walkthrough: dilihat, diraba, diterawang',
+    },
+  },
+  {
+    segment: 'tunanetra',
+    label: { id: 'Kode tuna netra', en: 'Kode tuna netra' },
+    hint: {
+      id: 'Kode raba untuk mengenali pecahan tanpa melihat',
+      en: 'The tactile code for identifying a denomination by touch',
+    },
+  },
+  {
+    segment: 'tokoh',
+    label: { id: 'Tokoh & motif', en: 'Figures & motifs' },
+    hint: {
+      id: 'Tokoh dan gambar di balik tiap pecahan',
+      en: 'The figures and motifs behind each denomination',
+    },
+  },
+  {
+    segment: 'hukum',
+    label: { id: 'Hukum & metode', en: 'Legal & method' },
+    hint: {
+      id: 'Dasar hukum dan metode di balik situs ini',
+      en: 'The legal basis and method behind this site',
+    },
+  },
 ]
 
 export function href(locale: Locale, segment: string): string {

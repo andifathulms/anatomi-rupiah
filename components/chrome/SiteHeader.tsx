@@ -50,6 +50,7 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
                 <Link
                   href={href(locale, route.segment)}
                   aria-current={route.segment === segment ? 'page' : undefined}
+                  title={route.hint[locale]}
                   className={
                     route.segment === segment
                       ? 'block rounded-full bg-engraving px-3 py-1.5 text-sm text-proof'
@@ -65,11 +66,13 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
 
         <Link
           href={href(other, segment)}
-          className="shrink-0 rounded-full border border-engraving/20 px-2.5 py-1 font-mono text-xs uppercase tracking-widest text-engraving-soft hover:border-engraving hover:text-engraving"
+          className="shrink-0 rounded-full border border-engraving/30 bg-proof-deep px-2.5 py-1 font-mono text-xs uppercase tracking-widest text-engraving hover:border-engraving hover:bg-engraving hover:text-proof"
           lang={other}
         >
           {other.toUpperCase()}
-          <span className="sr-only"> — {copy.languageLabel}</span>
+          <span className="ml-1 hidden font-sans normal-case tracking-normal sm:inline">
+            · {copy.languageLabel}
+          </span>
         </Link>
       </div>
     </header>
