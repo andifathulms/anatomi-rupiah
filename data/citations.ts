@@ -19,6 +19,17 @@ export const BI_UANG_100K: Citation = {
   accessed: ACCESSED,
 }
 
+/** Any note's own page in BI's Gambar Uang catalogue. */
+export function biUang(pageId: number, title: string, locator?: string): Citation {
+  return {
+    publisher: 'Bank Indonesia',
+    title: `Gambar Uang — ${title}`,
+    url: `https://www.bi.go.id/id/rupiah/gambar-uang/Detail-Uang.aspx?Bahan=Kertas&ID=${pageId}`,
+    locator,
+    accessed: ACCESSED,
+  }
+}
+
 export const BI_GAMBAR_UANG: Citation = {
   publisher: 'Bank Indonesia',
   title: 'Rupiah — Gambar Uang',

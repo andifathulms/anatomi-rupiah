@@ -92,11 +92,14 @@ function claimsOf(item: Content): ReadonlyArray<readonly [string, Claim]> {
     }
     case 'denomination': {
       const note: Denomination = item
+      const kode = note.kodeTunaNetra
       return [
         ...note.placements.map(
           (p, i) => [`denomination:${note.id}.placements[${i}].note`, p.note] as const,
         ),
-        [`denomination:${note.id}.kodeTunaNetra`, note.kodeTunaNetra.description],
+        ...(kode === undefined
+          ? []
+          : ([[`denomination:${note.id}.kodeTunaNetra`, kode.description]] as const)),
       ]
     }
     case 'figure': {
@@ -154,14 +157,14 @@ export function validateContent(items: readonly unknown[]): ContentIssue[] {
 
   for (const item of parsed) {
     if (item.type !== 'denomination') continue
-    if (!figureIds.has(item.figureId)) {
+    if (item.figureId !== undefined && !figureIds.has(item.figureId)) {
       issues.push({
         kind: 'reference',
         where: `denomination:${item.id}.figureId`,
         message: `no figure "${item.figureId}"`,
       })
     }
-    if (!motifIds.has(item.motifId)) {
+    if (item.motifId !== undefined && !motifIds.has(item.motifId)) {
       issues.push({
         kind: 'reference',
         where: `denomination:${item.id}.motifId`,

@@ -10,10 +10,12 @@ import { join, relative, sep } from 'node:path'
 import {
   checkAssetPolicy,
   checkDependencies,
+  checkLoupeRegions,
   checkMarkingImplementation,
   checkSizeConstraint,
   checkSourcePolicy,
   checkSpesimenPresence,
+  renderAllLoupes,
   renderAllSchematics,
   type RepoFile,
   type Violation,
@@ -45,11 +47,16 @@ function main(): void {
     devDependencies?: Record<string, string>
   }
   const rendered = renderAllSchematics()
+  const loupes = renderAllLoupes()
 
   const groups: ReadonlyArray<readonly [string, Violation[]]> = [
     ['asset policy — no raster note imagery', checkAssetPolicy(files)],
-    ['spesimen presence — marking baked into every schematic', checkSpesimenPresence(rendered)],
+    [
+      'spesimen presence — marking baked into every schematic and loupe',
+      [...checkSpesimenPresence(rendered), ...checkSpesimenPresence(loupes)],
+    ],
     ['size constraint — never near actual banknote size', checkSizeConstraint(rendered)],
+    ['loupe regions — a detail, never a whole note', checkLoupeRegions()],
     ['source policy — no capture, no camera, no runtime network', checkSourcePolicy(files)],
     ['marking implementation — geometry, never an overlay', checkMarkingImplementation(files)],
     ['dependencies — no imaging, camera, or ML packages', checkDependencies(manifest)],
@@ -68,7 +75,10 @@ function main(): void {
     }
   }
 
-  console.log(`\ncompliance:check — ${rendered.length} schematics rendered, ${files.length} files scanned`)
+  console.log(
+    `\ncompliance:check — ${rendered.length} schematics and ${loupes.length} loupe details rendered, ` +
+      `${files.length} files scanned`,
+  )
 
   if (failed > 0) {
     console.error(`compliance:check FAILED with ${failed} violation(s). The build does not proceed.\n`)

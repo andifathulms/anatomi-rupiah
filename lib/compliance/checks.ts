@@ -1,6 +1,9 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
+import { Loupe } from '@/components/loupe/Loupe'
 import { Schematic } from '@/components/sheet/Schematic'
+import { assertRegionIsADetail } from '@/lib/schematic/loupe'
+import { sheetNotes } from '@/lib/schematic/sheet'
 import { hasBakedMark } from '@/lib/spesimen'
 import {
   FORBIDDEN_SCALE_BAND,
@@ -61,12 +64,17 @@ export function checkAssetPolicy(files: readonly RepoFile[]): Violation[] {
  * from M0 onward rather than from the first denomination authored.
  */
 const REFERENCE_SIZES: ReadonlyArray<{ readonly caption: string; readonly widthMm: number }> = [
-  { caption: 'Rp1.000', widthMm: 141 },
-  { caption: 'Rp5.000', widthMm: 143 },
-  { caption: 'Rp10.000', widthMm: 145 },
-  { caption: 'Rp20.000', widthMm: 147 },
-  { caption: 'Rp50.000', widthMm: 149 },
-  { caption: 'Rp100.000', widthMm: 151 },
+  { caption: 'ref 121mm', widthMm: 121 },
+  { caption: 'ref 126mm', widthMm: 126 },
+  { caption: 'ref 131mm', widthMm: 131 },
+  { caption: 'ref 136mm', widthMm: 136 },
+  { caption: 'ref 141mm', widthMm: 141 },
+  { caption: 'ref 143mm', widthMm: 143 },
+  { caption: 'ref 145mm', widthMm: 145 },
+  { caption: 'ref 146mm', widthMm: 146 },
+  { caption: 'ref 147mm', widthMm: 147 },
+  { caption: 'ref 149mm', widthMm: 149 },
+  { caption: 'ref 151mm', widthMm: 151 },
 ]
 
 interface RenderedSchematic {
@@ -96,6 +104,57 @@ export function renderAllSchematics(): RenderedSchematic[] {
       widthMm: entry.size.widthMm,
     }
   })
+}
+
+/**
+ * Every magnified detail the sheet can open. A loupe view is artwork too, so it
+ * is held to the same marking rule as the schematic — and to the rule that it
+ * must never amount to a whole note.
+ */
+export function renderAllLoupes(): RenderedSchematic[] {
+  return sheetNotes('id').flatMap((note) =>
+    note.markers.map((marker) => ({
+      caption: `${note.caption} · ${marker.featureName}`,
+      markup: renderToStaticMarkup(
+        createElement(Loupe, {
+          model: marker.loupe,
+          channel: marker.channel,
+          label: marker.featureName,
+        }),
+      ),
+      // A loupe is a detail, not a note: it is checked against the region rule
+      // below rather than against the full-note size cap.
+      widthPx: 0,
+      widthMm: marker.loupe.regionWidthMm,
+    })),
+  )
+}
+
+export function checkLoupeRegions(): Violation[] {
+  const violations: Violation[] = []
+  for (const note of sheetNotes('id')) {
+    const size = { widthMm: note.widthMm, heightMm: note.heightMm }
+    for (const marker of note.markers) {
+      try {
+        assertRegionIsADetail(
+          {
+            xMm: 0,
+            yMm: 0,
+            widthMm: marker.loupe.regionWidthMm,
+            heightMm: marker.loupe.regionHeightMm,
+          },
+          size,
+        )
+      } catch (error) {
+        violations.push({
+          check: 'loupe-region',
+          where: `${note.caption} · ${marker.featureName}`,
+          message: error instanceof Error ? error.message : 'region rejected',
+        })
+      }
+    }
+  }
+  return violations
 }
 
 export function checkSpesimenPresence(rendered: readonly RenderedSchematic[]): Violation[] {

@@ -1,4 +1,6 @@
 import type { Denomination } from '@/lib/content/schema'
+import { te2016 } from './te-2016'
+import { te2022 } from './te-2022'
 
-/** Per-note feature placement. Filled in at M2 — see PRD §10. */
-export const denominations: readonly Denomination[] = []
+/** Current series first, then the 2016 series, which is still legal tender. */
+export const denominations: readonly Denomination[] = [...te2022, ...te2016]

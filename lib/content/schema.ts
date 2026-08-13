@@ -90,14 +90,19 @@ export const denominationSchema = z.object({
     heightMm: z.number().positive(),
     citations: z.array(citationSchema).min(1),
   }),
-  figureId: slugSchema,
-  motifId: slugSchema,
+  /** Optional until the figure is written and cited — M4. */
+  figureId: slugSchema.optional(),
+  /** Optional until the motif is written and cited — M4. */
+  motifId: slugSchema.optional(),
   placements: z.array(placementSchema).min(1),
-  kodeTunaNetra: z.object({
-    /** Count of raised marks on each edge. */
-    marks: z.number().int().nonnegative(),
-    description: claimSchema,
-  }),
+  /** Optional until the blind code is written and cited — M3. */
+  kodeTunaNetra: z
+    .object({
+      /** Count of raised mark pairs along each edge. */
+      marks: z.number().int().nonnegative(),
+      description: claimSchema,
+    })
+    .optional(),
 })
 export type Denomination = z.infer<typeof denominationSchema>
 
