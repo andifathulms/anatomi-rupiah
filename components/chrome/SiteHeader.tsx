@@ -40,7 +40,10 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
           aria-label={locale === 'id' ? 'Navigasi utama' : 'Main navigation'}
           className="min-w-0 flex-1"
         >
-          <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {/* Scrollbar left visible on purpose: at widths where not every
+              item fits, it's the only cue that more of the nav exists
+              off to the side. */}
+          <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 py-1">
             {ROUTES.filter((route) => route.segment !== '').map((route) => (
               <li key={route.segment} className="shrink-0">
                 <Link
