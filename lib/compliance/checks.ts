@@ -15,6 +15,7 @@ import {
 import { schematicViewModel } from '@/lib/schematic/view-model'
 import { denominations } from '@/data/denominations'
 import { BRAND_RASTER_ALLOWLIST } from './brand-assets'
+import { PHOTO_RASTER_ALLOWLIST } from './photo-assets'
 
 /**
  * The compliance checks, as a library so tests and the build script run exactly
@@ -48,14 +49,15 @@ export function checkAssetPolicy(files: readonly RepoFile[]): Violation[] {
     const lower = file.path.toLowerCase()
     if (!RASTER_EXTENSIONS.some((ext) => lower.endsWith(ext))) continue
 
-    const pinned = BRAND_RASTER_ALLOWLIST[file.path]
+    const pinned = BRAND_RASTER_ALLOWLIST[file.path] ?? PHOTO_RASTER_ALLOWLIST[file.path]
     if (pinned === undefined) {
       violations.push({
         check: 'asset-policy',
         where: file.path,
         message:
           'raster image in the repository. All note artwork is original authored SVG, and a ' +
-          'photograph of a note must never exist here. Draw it better instead.',
+          'photograph of a note must never exist here. Figure and motif photographs are the one ' +
+          'exception (CLAUDE.md invariant 13) and must be pinned in lib/compliance/photo-assets.ts.',
       })
       continue
     }
@@ -309,7 +311,7 @@ export function checkExportSurface(files: readonly RepoFile[]): Violation[] {
   for (const file of files) {
     if (!file.path.startsWith('public/')) continue
 
-    if (!/\.(svg|png|txt|ico|webmanifest|xml)$/.test(file.path)) {
+    if (!/\.(svg|png|jpg|jpeg|txt|ico|webmanifest|xml)$/.test(file.path)) {
       violations.push({
         check: 'export-surface',
         where: file.path,
@@ -317,16 +319,26 @@ export function checkExportSurface(files: readonly RepoFile[]): Violation[] {
       })
       continue
     }
-    if (file.path.endsWith('.png') && !file.path.startsWith('public/brand/')) {
+    // Figure and motif photographs — CLAUDE.md invariant 13 — are the other
+    // raster exception here, alongside brand assets; both are pinned by the
+    // asset policy, neither is note artwork.
+    const isPinnedPhotoDir = file.path.startsWith('public/tokoh/') || file.path.startsWith('public/motif/')
+    if (
+      /\.(png|jpe?g)$/.test(file.path) &&
+      !file.path.startsWith('public/brand/') &&
+      !isPinnedPhotoDir
+    ) {
       violations.push({
         check: 'export-surface',
         where: file.path,
-        message: 'raster is only publishable as a pinned brand asset',
+        message: 'raster is only publishable as a pinned brand asset or figure/motif photograph',
       })
       continue
     }
-    // Brand assets are allowed here; their bytes are pinned by the asset policy.
+    // Brand assets and pinned photographs are allowed here; their bytes are
+    // pinned by the asset policy.
     if (file.path.startsWith('public/brand/')) continue
+    if (isPinnedPhotoDir) continue
     if (!file.path.endsWith('.svg')) continue
 
     if (!file.path.startsWith('public/mekanisme/')) {
