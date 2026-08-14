@@ -62,6 +62,7 @@ export interface HomeCopy {
   readonly title: string
   readonly lede: string
   readonly answer: string
+  readonly anatomyConcept: string
   readonly anatomyCaption: string
   readonly anatomyHint: string
   readonly plainHeading: string
@@ -88,6 +89,8 @@ export const HOME: Record<Locale, HomeCopy> = {
       'Situs ini menunjukkan cara kerja pengaman pada uang Rupiah — dan cara memeriksanya sendiri.',
     lede:
       'Hampir semua orang Indonesia hafal tiga kata itu. Jauh lebih sedikit yang bisa menjelaskan apa sebenarnya tanda air itu, mengapa cetakannya terasa timbul, atau apa yang dikerjakan benang pengaman di dalam kertas. Di sini semuanya dibongkar lapis demi lapis.',
+    anatomyConcept:
+      'Uang tersusun dari lapisan yang berbeda-beda; tiap ciri pengaman bekerja pada satu lapisan tertentu.',
     anatomyCaption: 'Skema terurai, bertanda SPESIMEN, digambar pada',
     anatomyHint: 'Gerakkan kursor untuk memutar. Pilih satu lapisan untuk membacanya.',
     plainHeading: 'Singkatnya',
@@ -149,6 +152,8 @@ export const HOME: Record<Locale, HomeCopy> = {
       'This site shows how the security features of Rupiah banknotes work — and how to check them yourself.',
     lede:
       'Almost every Indonesian can recite those three words. Far fewer could say what a watermark actually is, why the printing feels raised, or what the security thread is doing inside the paper. Here it is taken apart, layer by layer.',
+    anatomyConcept:
+      'A note is built from distinct layers; each security feature works within one specific layer.',
     anatomyCaption: 'Exploded schematic, marked SPESIMEN, drawn at',
     anatomyHint: 'Move the pointer to turn it. Choose a layer to read about it.',
     plainHeading: 'In short',

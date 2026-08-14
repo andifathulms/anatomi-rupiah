@@ -29,6 +29,7 @@ export interface AnatomyStackProps {
     readonly label: string
     readonly url: string
   }>
+  readonly concept: string
   readonly caption: string
   readonly hint: string
 }
@@ -42,7 +43,7 @@ const CHANNEL_TEXT: Record<CheckChannel, string> = {
 
 const REST_TILT = { x: 14, y: -22 }
 
-export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps) {
+export function AnatomyStack({ model, links, concept, caption, hint }: AnatomyStackProps) {
   const frame = useRef<HTMLDivElement>(null)
   const [tilt, setTilt] = useState(REST_TILT)
   const [still, setStill] = useState(false)
@@ -71,6 +72,9 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
 
   return (
     <div className="relative w-full lg:w-auto">
+      <p className="max-w-xs text-center text-sm leading-relaxed text-engraving-soft lg:mx-auto">
+        {concept}
+      </p>
       <div
         ref={frame}
         onPointerMove={handlePointer}

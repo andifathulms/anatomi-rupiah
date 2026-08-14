@@ -74,6 +74,7 @@ export default function HomePage({ params }: { readonly params: { readonly local
         <AnatomyStack
           model={anatomy}
           links={layerLinks}
+          concept={copy.anatomyConcept}
           caption={copy.anatomyCaption}
           hint={copy.anatomyHint}
         />
