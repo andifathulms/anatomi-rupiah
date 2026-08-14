@@ -1,5 +1,57 @@
-import type { Claim, Figure } from '@/lib/content/schema'
+import type { Claim, Figure, Photo } from '@/lib/content/schema'
 import { ENSIKLOPEDIA_PAHLAWAN, biUang } from '../citations'
+
+/**
+ * Portrait photographs — CLAUDE.md invariant 13. Sourced from Wikimedia
+ * Commons, license quoted verbatim from each file's own page, resized to a
+ * 1200px longest edge (originals are several thousand pixels and several
+ * megabytes — far past what a portrait on this site needs). Hashes pinned in
+ * lib/compliance/photo-assets.ts.
+ *
+ * Tjut Meutia has none: no photograph of her survives — she died in 1910 as
+ * a resistance fighter in a remote part of Aceh — and the one Commons file
+ * bearing her name is a 2020 government-commissioned digital portrait, not a
+ * photograph. Invariant 8 does not bend for tidiness; neither does this.
+ */
+const PHOTOS: Readonly<Record<string, Photo>> = {
+  'soekarno-hatta': {
+    path: 'tokoh/soekarno-hatta.jpg',
+    license: 'Public domain in Indonesia (Law 28/2014, Article 43 — government publication)',
+    credit: 'Perpustakaan Presiden RI (kepustakaan-presiden.pnri.go.id)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Soekarno_and_Hatta.jpg',
+  },
+  'djuanda-kartawidjaja': {
+    path: 'tokoh/djuanda-kartawidjaja.jpg',
+    license: 'Public domain (PD-IDGov, PD-1996)',
+    credit: 'Government of Indonesia, via Perpustakaan Presiden RI',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Djuanda_Kartawidjaja.jpg',
+  },
+  'gssj-ratulangi': {
+    path: 'tokoh/gssj-ratulangi.jpg',
+    license: 'Public domain in Indonesia (government publication)',
+    credit: 'Perpustakaan Nasional RI',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Sam_Ratulangi.jpg',
+  },
+  'frans-kaisiepo': {
+    path: 'tokoh/frans-kaisiepo.jpg',
+    license: 'Public domain in Indonesia (Law 28/2014, Article 43)',
+    credit: 'Perpustakaan Nasional RI',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Frans_Kaisiepo_1977.jpg',
+  },
+  'idham-chalid': {
+    path: 'tokoh/idham-chalid.jpg',
+    license: 'Public domain in Indonesia (PD-IDGov, Law 28/2014 Article 43)',
+    credit: 'Departemen Sosial RI',
+    sourceUrl:
+      'https://commons.wikimedia.org/wiki/File:Idham_Chalid,_Minister_of_Social_Affairs_of_Indonesia.jpg',
+  },
+  'mohammad-hoesni-thamrin': {
+    path: 'tokoh/mohammad-hoesni-thamrin.jpg',
+    license: 'Public domain in Indonesia (PD-IDGov, Law 28/2014 Article 43)',
+    credit: 'Kementerian Pendidikan dan Kebudayaan RI',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mohammad_Husni_Thamrin.jpg',
+  },
+}
 
 /**
  * The figures on the front of each note.
@@ -166,6 +218,7 @@ export const figures: readonly Figure[] = SEEDS.map((seed) => ({
   name: seed.name,
   ...(seed.lifespan === undefined ? {} : { lifespan: seed.lifespan }),
   claims: claimsFor(seed),
+  ...(PHOTOS[seed.id] === undefined ? {} : { photo: PHOTOS[seed.id] }),
 }))
 
 /** Figures whose biography is still unwritten, named openly on the page. */
