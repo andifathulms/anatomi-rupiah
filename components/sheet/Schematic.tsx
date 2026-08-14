@@ -1,3 +1,4 @@
+import type { KeyboardEvent } from 'react'
 import type { SchematicViewModel } from '@/lib/schematic/view-model'
 import { CHANNEL_INK, ENGRAVING, ENGRAVING_FAINT, PROOF, SPESIMEN_INK } from '@/lib/tokens'
 
@@ -15,9 +16,17 @@ import { CHANNEL_INK, ENGRAVING, ENGRAVING_FAINT, PROOF, SPESIMEN_INK } from '@/
 export interface SchematicProps {
   readonly model: SchematicViewModel
   readonly activeFeatureId?: string
+  /**
+   * When provided, the on-note markers become real controls rather than
+   * lookalikes of the clickable badges used everywhere else on the sheet
+   * (the margin list, MechanismFigure). Without it they stay presentational —
+   * critique 2026-08-14 (P1) found the drawing's own numbered dots had no
+   * click handler while sharing the exact visual grammar of ones that did.
+   */
+  readonly onSelectFeature?: (featureId: string) => void
 }
 
-export function Schematic({ model, activeFeatureId }: SchematicProps) {
+export function Schematic({ model, activeFeatureId, onSelectFeature }: SchematicProps) {
   return (
     <svg
       viewBox={model.viewBox}
@@ -51,7 +60,25 @@ export function Schematic({ model, activeFeatureId }: SchematicProps) {
         />
 
         {model.markers.map((marker) => (
-          <g key={marker.featureId} data-marker={marker.featureId}>
+          <g
+            key={marker.featureId}
+            data-marker={marker.featureId}
+            {...(onSelectFeature === undefined
+              ? {}
+              : {
+                  role: 'button' as const,
+                  tabIndex: 0,
+                  cursor: 'pointer',
+                  'aria-pressed': marker.featureId === activeFeatureId,
+                  'aria-label': marker.label,
+                  onClick: () => onSelectFeature(marker.featureId),
+                  onKeyDown: (event: KeyboardEvent<SVGGElement>) => {
+                    if (event.key !== 'Enter' && event.key !== ' ') return
+                    event.preventDefault()
+                    onSelectFeature(marker.featureId)
+                  },
+                })}
+          >
             <path
               d={marker.regionD}
               fill="none"
