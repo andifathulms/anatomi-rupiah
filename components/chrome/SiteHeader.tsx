@@ -51,6 +51,7 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
                   href={href(locale, route.segment)}
                   aria-current={route.segment === segment ? 'page' : undefined}
                   title={route.hint[locale]}
+                  aria-label={`${route.label[locale]} — ${route.hint[locale]}`}
                   className={
                     route.segment === segment
                       ? 'block rounded-full bg-engraving px-3 py-1.5 text-sm text-proof'
