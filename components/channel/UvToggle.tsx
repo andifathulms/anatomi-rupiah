@@ -23,8 +23,7 @@ export function UvToggle({ copy }: { readonly copy: DemoCopy }) {
       <div className="mt-6 flex flex-wrap items-center gap-8">
         <svg
           viewBox="0 0 200 120"
-          width="240"
-          height="144"
+          className="h-auto w-full max-w-xs shrink"
           role="img"
           aria-label={lampOn ? copy.uvLamp : copy.uvOrdinary}
         >
