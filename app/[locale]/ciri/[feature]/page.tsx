@@ -10,6 +10,7 @@ import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
 import Link from 'next/link'
 import { featureDetail, featureIds } from '@/lib/content/views'
 import { LOCALES, href, isLocale } from '@/lib/i18n'
+import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
 const CHANNEL_ACCENT: Record<CheckChannel, string> = {
@@ -36,8 +37,15 @@ export function generateMetadata({
   readonly params: { readonly locale: string; readonly feature: string }
 }): Metadata {
   if (!isLocale(params.locale)) return {}
-  const detail = featureDetail(params.locale, params.feature)
-  return { title: detail?.name ?? 'Ciri' }
+  const locale = params.locale
+  const detail = featureDetail(locale, params.feature)
+  if (detail === undefined) return {}
+  return pageMetadata({
+    locale,
+    segment: `ciri/${params.feature}`,
+    title: detail.name,
+    description: detail.summary,
+  })
 }
 
 export default function FeaturePage({

@@ -5,6 +5,7 @@ import { CitationLines } from '@/components/mechanism/CitationList'
 import { denominationChecklist, denominationIds } from '@/lib/content/views'
 import { LOCALES, href, isLocale } from '@/lib/i18n'
 import { PERIKSA } from '@/lib/i18n/periksa'
+import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
 const CHANNEL_ACCENT: Record<CheckChannel, string> = {
@@ -31,8 +32,15 @@ export function generateMetadata({
   readonly params: { readonly locale: string; readonly denomination: string }
 }): Metadata {
   if (!isLocale(params.locale)) return {}
-  const checklist = denominationChecklist(params.locale, params.denomination)
-  return { title: checklist?.label ?? 'Periksa' }
+  const locale = params.locale
+  const checklist = denominationChecklist(locale, params.denomination)
+  if (checklist === undefined) return {}
+  return pageMetadata({
+    locale,
+    segment: `lembar/${params.denomination}`,
+    title: checklist.label,
+    description: `${checklist.label} — ${PERIKSA[locale].lede}`,
+  })
 }
 
 export default function DenominationChecklistPage({
