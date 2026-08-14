@@ -35,6 +35,8 @@ export interface AnatomyStackProps {
 }
 
 const REST_TILT = { x: 14, y: -22 }
+/** Vertical fan offset per layer, in px — see the centring comment below. */
+const FAN_STEP_PX = 9
 
 export function AnatomyStack({ model, links, concept, caption, hint }: AnatomyStackProps) {
   const frame = useRef<HTMLDivElement>(null)
@@ -72,7 +74,7 @@ export function AnatomyStack({ model, links, concept, caption, hint }: AnatomySt
         ref={frame}
         onPointerMove={handlePointer}
         onPointerLeave={() => setTilt(REST_TILT)}
-        className="flex items-center justify-center overflow-hidden py-4 sm:py-12 lg:py-16"
+        className="flex items-center justify-center overflow-hidden pb-4 pt-8 sm:pb-12 sm:pt-16 lg:pb-16 lg:pt-20"
         style={{ perspective: `${PERSPECTIVE_PX}px`, perspectiveOrigin: '50% 45%' }}
       >
         {/* Scaled DOWN on narrow screens so the fanned stack never overflows.
@@ -86,7 +88,13 @@ export function AnatomyStack({ model, links, concept, caption, hint }: AnatomySt
             width: model.widthPx,
             height: model.heightPx,
             transformStyle: 'preserve-3d',
-            transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+            // The fan below only ever shifts layers upward (translateY is
+            // always <= 0), so the stack's visual centre drifts toward the
+            // top of this box as more layers are added — at a wide tilt
+            // angle the top layer could poke past the frame's
+            // overflow-hidden edge. Shifting the whole assembly down by half
+            // the fan's total span re-centres it before the tilt is applied.
+            transform: `translateY(${(FAN_STEP_PX * (model.layers.length - 1)) / 2}px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           }}
         >
           {model.layers.map((layer, index) => {
@@ -105,7 +113,7 @@ export function AnatomyStack({ model, links, concept, caption, hint }: AnatomySt
                 style={{
                   // Fanned as well as stacked, so every layer stays readable
                   // instead of hiding behind the one in front of it.
-                  transform: `translate3d(0, ${-index * 9}px, ${layer.depth}px)`,
+                  transform: `translate3d(0, ${-index * FAN_STEP_PX}px, ${layer.depth}px)`,
                   transformStyle: 'preserve-3d',
                   filter: isActive
                     ? 'drop-shadow(0 20px 28px rgba(26,31,38,0.30))'
