@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Loupe } from '@/components/loupe/Loupe'
 import { CitationLines } from '@/components/mechanism/CitationList'
 import { Schematic } from '@/components/sheet/Schematic'
@@ -33,6 +33,14 @@ const CHANNEL_TEXT: Record<CheckChannel, string> = {
   mesin: 'text-mesin-deep',
 }
 
+/** Same four channel meanings, read against the near-black selected-marker background. */
+const CHANNEL_TEXT_ON_INK: Record<CheckChannel, string> = {
+  dilihat: 'text-dilihat-tint',
+  diraba: 'text-diraba-tint',
+  diterawang: 'text-diterawang-tint',
+  mesin: 'text-mesin-tint',
+}
+
 const CHANNEL_BG: Record<CheckChannel, string> = {
   dilihat: 'bg-dilihat-deep',
   diraba: 'bg-diraba-deep',
@@ -43,6 +51,21 @@ const CHANNEL_BG: Record<CheckChannel, string> = {
 export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
   const [noteId, setNoteId] = useState(notes[0]?.id ?? '')
   const [featureId, setFeatureId] = useState<string | undefined>(undefined)
+  const loupeHeadingRef = useRef<HTMLHeadingElement>(null)
+
+  // Selecting a marker reveals the loupe result via aria-live, but a live
+  // region alone doesn't move a sighted reader's eye or a screen reader's
+  // focus to content that may be scrolled out of view — it just announces
+  // into the void. Bring it into view and move focus there deliberately
+  // (critique 2026-08-14, P2), respecting prefers-reduced-motion.
+  useEffect(() => {
+    if (featureId === undefined) return
+    const heading = loupeHeadingRef.current
+    if (heading === null) return
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    heading.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+    heading.focus()
+  }, [featureId])
 
   const note = notes.find((candidate) => candidate.id === noteId) ?? notes[0]
   if (note === undefined) return null
@@ -50,38 +73,55 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
   const marker = note.markers.find((candidate) => candidate.featureId === featureId)
   const mechanism = marker === undefined ? undefined : mechanisms[marker.illustration]
 
+  const selectFeature = (candidate: string) => {
+    setFeatureId(candidate === featureId ? undefined : candidate)
+  }
+
+  // Grouped by emission year rather than one flat row of ten — a reader who
+  // doesn't already know which note they're holding gets an oriented choice
+  // (current series vs. still-valid older series) instead of a 10-way recall
+  // test before the sheet has taught them anything (critique 2026-08-14, P1).
+  const current2022 = notes.filter((candidate) => candidate.emisi === 2022)
+  const legacy2016 = notes.filter((candidate) => candidate.emisi !== 2022)
+
   return (
     <div>
       <fieldset className="mt-10">
         <legend className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
           {copy.chooseNote}
         </legend>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {notes.map((candidate) => (
-            <button
-              key={candidate.id}
-              type="button"
-              onClick={() => {
-                setNoteId(candidate.id)
-                setFeatureId(undefined)
-              }}
-              aria-pressed={candidate.id === note.id}
-              className={
-                candidate.id === note.id
-                  ? 'numeric border border-engraving bg-engraving px-3 py-1.5 text-sm text-proof'
-                  : 'numeric border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving'
-              }
-            >
-              {candidate.caption}
-            </button>
-          ))}
-        </div>
+
+        <NoteGroup
+          heading={copy.emisiCurrent}
+          candidates={current2022}
+          activeId={note.id}
+          onSelect={(candidate) => {
+            setNoteId(candidate)
+            setFeatureId(undefined)
+          }}
+        />
+        {legacy2016.length > 0 && (
+          <NoteGroup
+            heading={copy.emisi2016}
+            candidates={legacy2016}
+            activeId={note.id}
+            onSelect={(candidate) => {
+              setNoteId(candidate)
+              setFeatureId(undefined)
+            }}
+            className="mt-4"
+          />
+        )}
       </fieldset>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[auto_minmax(0,1fr)]">
         <div>
           <div className="w-fit max-w-full overflow-x-auto border border-engraving/15 bg-proof p-6 shadow-sheet">
-            <Schematic model={note.schematic} activeFeatureId={marker?.featureId} />
+            <Schematic
+              model={note.schematic}
+              activeFeatureId={marker?.featureId}
+              onSelectFeature={selectFeature}
+            />
           </div>
           <p className="numeric mt-3 text-xs text-engraving-faint">
             {copy.scaleNote} {note.schematic.scalePercent}% · {note.widthMm} × {note.heightMm} mm
@@ -102,14 +142,17 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
               <li key={candidate.featureId}>
                 <button
                   type="button"
-                  onClick={() =>
-                    setFeatureId(candidate.featureId === featureId ? undefined : candidate.featureId)
-                  }
+                  onClick={() => selectFeature(candidate.featureId)}
                   aria-pressed={candidate.featureId === featureId}
-                  className={`flex w-full items-baseline gap-3 border-l-4 px-3 py-3 text-left ${
+                  // Selected state reads as a solid ink fill, deliberately not
+                  // the border-l-4 grammar used elsewhere for channel-taxonomy
+                  // accents (DESIGN.md's "The Taxonomy Rule") — that grammar
+                  // means "this belongs to a checking channel," not "this is
+                  // selected," and the two must not collide (critique 2026-08-14).
+                  className={`flex w-full items-baseline gap-3 px-3 py-3 text-left transition-colors ${
                     candidate.featureId === featureId
-                      ? 'border-engraving bg-proof-deep'
-                      : 'border-transparent hover:bg-proof-deep/60'
+                      ? 'bg-engraving text-proof'
+                      : 'hover:bg-proof-deep/60'
                   }`}
                 >
                   <span
@@ -120,7 +163,11 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
                   <span>
                     <span className="block text-sm">{candidate.featureName}</span>
                     <span
-                      className={`block font-mono text-label uppercase tracking-wider ${CHANNEL_TEXT[candidate.channel]}`}
+                      className={`block font-mono text-label uppercase tracking-wider ${
+                        candidate.featureId === featureId
+                          ? CHANNEL_TEXT_ON_INK[candidate.channel]
+                          : CHANNEL_TEXT[candidate.channel]
+                      }`}
                     >
                       {candidate.channelLabel}
                     </span>
@@ -136,7 +183,11 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
       </div>
 
       <section className="mt-12 border-t-2 border-engraving/20 pt-8" aria-live="polite">
-        <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+        <h2
+          ref={loupeHeadingRef}
+          tabIndex={-1}
+          className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint"
+        >
           {copy.loupeHeading}
         </h2>
 
@@ -189,6 +240,42 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
           </div>
         )}
       </section>
+    </div>
+  )
+}
+
+interface NoteGroupProps {
+  readonly heading: string
+  readonly candidates: readonly SheetNoteView[]
+  readonly activeId: string
+  readonly onSelect: (id: string) => void
+  readonly className?: string
+}
+
+/** One emission-year group of denomination pills, with its own heading. */
+function NoteGroup({ heading, candidates, activeId, onSelect, className }: NoteGroupProps) {
+  if (candidates.length === 0) return null
+
+  return (
+    <div className={className}>
+      <p className="numeric text-xs text-engraving-faint">{heading}</p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {candidates.map((candidate) => (
+          <button
+            key={candidate.id}
+            type="button"
+            onClick={() => onSelect(candidate.id)}
+            aria-pressed={candidate.id === activeId}
+            className={
+              candidate.id === activeId
+                ? 'numeric border border-engraving bg-engraving px-3 py-1.5 text-sm text-proof'
+                : 'numeric border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving'
+            }
+          >
+            {candidate.caption}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
