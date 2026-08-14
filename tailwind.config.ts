@@ -79,10 +79,6 @@ const config: Config = {
           '50%': { opacity: '1' },
           '100%': { transform: 'translateX(6px)', opacity: '0.15' },
         },
-        'thread-draw': {
-          '0%': { strokeDashoffset: '120' },
-          '100%': { strokeDashoffset: '0' },
-        },
         'lift-in': {
           '0%': { opacity: '0', transform: 'translateY(12px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
@@ -90,7 +86,6 @@ const config: Config = {
       },
       animation: {
         'ray-travel': 'ray-travel 3.2s ease-in-out infinite',
-        'thread-draw': 'thread-draw 2.4s ease-out forwards',
         'lift-in': 'lift-in 0.5s ease-out both',
       },
     },

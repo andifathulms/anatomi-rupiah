@@ -29,7 +29,6 @@
     ],
     "motion": [
       { "name": "ray-travel", "value": "3.2s ease-in-out infinite", "purpose": "Light-ray sweep inside mechanism diagrams that opt in via the .mech .rays path class." },
-      { "name": "thread-draw", "value": "2.4s ease-out forwards", "purpose": "Security-thread stroke reveal in mechanism diagrams." },
       { "name": "lift-in", "value": "0.5s ease-out both, translateY(12px) to translateY(0)", "purpose": "Quiet arrival fade/lift for sections and cards entering view." },
       { "name": "card-shadow-transition", "value": "200ms, shadow property only", "purpose": "Sheet-to-Lift elevation change on .card-interactive hover/focus-within." },
       { "name": "reduced-motion-override", "value": "prefers-reduced-motion: reduce sets all animation/transition durations to 0.01ms and scroll-behavior to auto", "purpose": "Full motion opt-out; also required so no feature ever simulates the diraba touch check via animation." }
