@@ -38,7 +38,7 @@ export const PHOTO_RASTER_ALLOWLIST: Readonly<Record<string, string>> = {
   'public/motif/raja-ampat.jpg': '1c741dc02308122bf81550f7d911d9fe08d9fc844e50a4a45766356dcc764a82',
   'public/motif/taman-nasional-komodo.jpg':
     '2d851b09bfc0e655d0bfe8d0b0a9183d48ce5f13c2d7eca6e5e9a0ad481fed58',
-  'public/motif/derawan.jpg': '6fe1cf7990e89fc0a808f295c87392de9ce8d5f8e1cb949b8487fa88b099d69d',
+  'public/motif/derawan.jpg': '4231e5299fad37e7edc12462aab3890622e902ab822130368801c55bbe877b2b',
   'public/motif/taman-nasional-wakatobi.jpg':
     'c52801db937371006ff73874ccef70e0e10cd7d0173098d4e9c3e5db1c9594be',
   'public/motif/gunung-bromo.jpg': 'da53e0f1b334a3cc69bbde9c54c1926bdc31fb8867ffe42b532b6581ae302f77',

@@ -73,8 +73,8 @@ const PHOTOS: Readonly<Record<string, Photo>> = {
   derawan: {
     path: 'motif/derawan.jpg',
     license: 'CC BY-SA 4.0',
-    credit: 'Iwandimas84',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Derawan_islands.jpg',
+    credit: 'Avrian Priyono',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Manimbora_Island.jpg',
   },
   'taman-nasional-wakatobi': {
     path: 'motif/taman-nasional-wakatobi.jpg',
