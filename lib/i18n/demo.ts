@@ -18,6 +18,7 @@ export interface DemoCopy {
   readonly uvDisclaimer: string
   readonly lightHeading: string
   readonly lightBody: string
+  readonly lightTransmission: string
   readonly lightMove: string
   readonly lightDisclaimer: string
   readonly glUnavailable: string
@@ -51,6 +52,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
     lightHeading: 'Meja cahaya',
     lightBody:
       'Gerakkan sumber cahaya di belakang lembar. Terangnya mengikuti ketebalan bahan: makin tebal bagian yang dilewati, makin sedikit cahaya yang sampai ke mata.',
+    lightTransmission: 'Cahaya yang tembus di titik ini',
     lightMove: 'Geser cahaya',
     lightDisclaimer:
       'Bentuk pada peragaan ini sengaja dibuat abstrak — sebuah lensa dan satu cincin ornamen — bukan gambar pahlawan dan bukan tanda air pada uang mana pun. Yang diperagakan adalah hubungannya: terang mengikuti ketebalan.',
@@ -86,6 +88,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
     lightHeading: 'Light table',
     lightBody:
       'Move the light source behind the sheet. Brightness follows thickness: the more material the light crossed, the less of it reaches your eye.',
+    lightTransmission: 'Light transmitted at this point',
     lightMove: 'Move the light',
     lightDisclaimer:
       'The shape here is deliberately abstract — a lens and an ornament ring — not a portrait and not the watermark of any note. What is demonstrated is the relationship: brightness follows thickness.',

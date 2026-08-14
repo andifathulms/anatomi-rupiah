@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useRef, useState } from 'react'
+import { transmissionAt } from '@/lib/optics/transmission'
 import { DITERAWANG, INSPECT, PROOF_DEEP, rgbTriplet } from '@/lib/tokens'
 import { LIGHT_TABLE_FRAGMENT } from '@/lib/webgl/shaders'
 import { GlPanel } from './GlPanel'
@@ -46,6 +47,8 @@ export function LightTable({ copy }: { readonly copy: DemoCopy }) {
       Math.min(1, Math.max(0, y + dy)),
     ])
 
+  const transmissionPercent = Math.round(transmissionAt(light[0], light[1]) * 100)
+
   return (
     <section
       className="mt-10 border-t-4 border-diterawang bg-proof-deep/40 p-5"
@@ -80,6 +83,10 @@ export function LightTable({ copy }: { readonly copy: DemoCopy }) {
           }
         />
       </div>
+
+      <p className="numeric mt-3 text-sm text-engraving-soft">
+        {copy.lightTransmission}: ≈{transmissionPercent}%
+      </p>
 
       {/* Keyboard control, so the demonstration is not pointer-only. */}
       <div className="mt-3 flex flex-wrap items-center gap-2">
