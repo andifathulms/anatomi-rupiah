@@ -21,6 +21,18 @@ function PhotoCredit({ photo, locale }: { readonly photo: Photo; readonly locale
   )
 }
 
+/** Shown where no licensed photograph was found — honest about the gap
+ * instead of silently leaving a blank space in the grid. */
+function PhotoPlaceholder({ locale, className }: { readonly locale: Locale; readonly className: string }) {
+  return (
+    <div
+      className={`flex items-center justify-center border border-dashed border-engraving/25 bg-proof-deep/40 p-3 text-center font-mono text-label leading-snug text-engraving-faint ${className}`}
+    >
+      {locale === 'id' ? 'Belum ada foto berlisensi' : 'No licensed photograph yet'}
+    </div>
+  )
+}
+
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
@@ -85,19 +97,23 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
             </h2>
 
             {note.figureName !== undefined && (
-              <div className="mt-4 sm:flex sm:gap-6">
-                {note.figurePhoto !== undefined && (
-                  <div className="shrink-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={assetPath(`/${note.figurePhoto.path}`)}
-                      alt={note.figureName}
-                      className="h-40 w-40 rounded-sm border border-engraving/15 object-cover"
-                    />
-                    <PhotoCredit photo={note.figurePhoto} locale={locale} />
-                  </div>
-                )}
-                <div className="mt-4 sm:mt-0">
+              <div className="mt-4 sm:grid sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-start sm:gap-6">
+                <div className="w-40 shrink-0">
+                  {note.figurePhoto === undefined ? (
+                    <PhotoPlaceholder locale={locale} className="aspect-square w-40" />
+                  ) : (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={assetPath(`/${note.figurePhoto.path}`)}
+                        alt={note.figureName}
+                        className="h-40 w-40 rounded-sm border border-engraving/15 object-cover"
+                      />
+                      <PhotoCredit photo={note.figurePhoto} locale={locale} />
+                    </>
+                  )}
+                </div>
+                <div className="mt-4 min-w-0 sm:mt-0">
                   <h3 className="font-display text-2xl">{note.figureName}</h3>
                   {note.figureLifespan !== undefined && (
                     <p className="numeric mt-1 text-sm text-engraving-faint">{note.figureLifespan}</p>
@@ -115,7 +131,9 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
               <ul className="mt-8 grid gap-px bg-engraving/10 sm:grid-cols-3">
                 {note.motifs.map((motif) => (
                   <li key={motif.id} className="bg-proof p-5">
-                    {motif.photo !== undefined && (
+                    {motif.photo === undefined ? (
+                      <PhotoPlaceholder locale={locale} className="mb-3 aspect-[4/3] w-full" />
+                    ) : (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={assetPath(`/${motif.photo.path}`)}
