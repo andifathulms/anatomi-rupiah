@@ -101,6 +101,17 @@ export default function LocaleLayout({
   return (
     <html lang={locale} className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="min-h-screen">
+        {/* Reveal (components/chrome/Reveal.tsx) renders its arrival state as
+            opacity-0 until an IntersectionObserver flips it — with no
+            JavaScript at all (disabled, blocked, or a runtime error earlier
+            on the page), nearly every below-the-fold section on seven pages
+            would stay permanently invisible. This is the no-JS floor: it
+            only ever exists in a page that never executed JS in the first
+            place, so it can't fight the working reveal-then-settle animation
+            (critique 2026-08-14, P1). */}
+        <noscript>
+          <style>{'.js-reveal{opacity:1 !important;transform:none !important}'}</style>
+        </noscript>
         <a
           href="#isi"
           className="sr-only focus:not-sr-only focus:m-3 focus:inline-block focus:rounded focus:bg-engraving focus:px-3 focus:py-2 focus:text-proof"

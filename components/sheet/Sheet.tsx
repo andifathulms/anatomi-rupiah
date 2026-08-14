@@ -7,6 +7,7 @@ import { CitationLines } from '@/components/mechanism/CitationList'
 import { Schematic } from '@/components/sheet/Schematic'
 import type { SheetNoteView } from '@/lib/schematic/sheet'
 import type { LembarCopy } from '@/lib/i18n/lembar'
+import { CHANNEL_TEXT_DEEP } from '@/lib/channelClasses'
 import { href, type Locale } from '@/lib/i18n'
 import type { CheckChannel } from '@/lib/content/schema'
 
@@ -24,13 +25,6 @@ export interface SheetProps {
   readonly mechanisms: Readonly<Record<string, string>>
   readonly copy: LembarCopy
   readonly locale: Locale
-}
-
-const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat-deep',
-  diraba: 'text-diraba-deep',
-  diterawang: 'text-diterawang-deep',
-  mesin: 'text-mesin-deep',
 }
 
 /** Same four channel meanings, read against the near-black selected-marker background. */
@@ -87,7 +81,7 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
   return (
     <div>
       <fieldset className="mt-10">
-        <legend className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+        <legend className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
           {copy.chooseNote}
         </legend>
 
@@ -116,7 +110,17 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[auto_minmax(0,1fr)]">
         <div>
-          <div className="w-fit max-w-full overflow-x-auto border border-engraving/15 bg-proof p-6 shadow-sheet">
+          {/* Scales the drawing down to fit narrow viewports instead of only
+              offering horizontal scroll: on a ~375px phone the full-width
+              intrinsic schematic (up to 70% of actual note size, per the
+              compliance cap) clipped markers on the right edge off-screen
+              with no visible cue to scroll for them (critique 2026-08-14,
+              P1). The intrinsic width/height stay exactly what the size
+              constraint computed — only the CSS display size shrinks. */}
+          <div
+            className="w-full overflow-x-auto border border-engraving/15 bg-proof p-6 shadow-sheet [&>svg]:h-auto [&>svg]:w-full"
+            style={{ maxWidth: note.schematic.widthPx }}
+          >
             <Schematic
               model={note.schematic}
               activeFeatureId={marker?.featureId}
@@ -134,7 +138,7 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
         </div>
 
         <div>
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+          <h2 className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
             {copy.calloutsHeading}
           </h2>
           <ul className="mt-4 space-y-px">
@@ -153,7 +157,11 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
                   className={`flex w-full items-baseline gap-3 px-3 py-3 text-left transition-colors ${
                     candidate.featureId === featureId
                       ? 'bg-engraving text-proof'
-                      : 'hover:bg-proof-deep/60'
+                      : // /25, not /60: diterawang-deep's channel label reads at
+                        // 4.34:1 against the stronger blend, just under WCAG AA
+                        // (critique 2026-08-14) — /25 keeps a visible hover cue
+                        // while clearing 4.5:1 for all four channel colors.
+                        'hover:bg-proof-deep/25'
                   }`}
                 >
                   <span
@@ -167,7 +175,7 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
                       className={`block font-mono text-label uppercase tracking-wider ${
                         candidate.featureId === featureId
                           ? CHANNEL_TEXT_ON_INK[candidate.channel]
-                          : CHANNEL_TEXT[candidate.channel]
+                          : CHANNEL_TEXT_DEEP[candidate.channel]
                       }`}
                     >
                       {candidate.channelLabel}
@@ -187,7 +195,7 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
         <h2
           ref={loupeHeadingRef}
           tabIndex={-1}
-          className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint"
+          className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint"
         >
           {copy.loupeHeading}
         </h2>
@@ -219,7 +227,7 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
               </p>
 
               {/* Placement is a claim about the world, so it shows its sources. */}
-              <h4 className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+              <h4 className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
                 {copy.sourcesLabel}
               </h4>
               <CitationLines
@@ -269,8 +277,8 @@ function NoteGroup({ heading, candidates, activeId, onSelect, className }: NoteG
             aria-pressed={candidate.id === activeId}
             className={
               candidate.id === activeId
-                ? 'numeric border border-engraving bg-engraving px-3 py-1.5 text-sm text-proof'
-                : 'numeric border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving'
+                ? 'numeric inline-flex min-h-11 items-center border border-engraving bg-engraving px-3 py-1.5 text-sm text-proof'
+                : 'numeric inline-flex min-h-11 items-center border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving'
             }
           >
             {candidate.caption}

@@ -42,7 +42,11 @@ export function Reveal({
   return (
     <div
       ref={ref}
-      className={`transition duration-500 ease-out ${
+      // js-reveal is a stable hook, not a Tailwind utility: the root layout's
+      // <noscript> block forces it visible when no JS ever ran to flip
+      // `shown`, so the reveal-then-settle animation and the no-JS floor
+      // never fight each other (critique 2026-08-14, P1).
+      className={`js-reveal transition duration-500 ease-out ${
         shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
       } ${className ?? ''}`}
     >

@@ -63,6 +63,7 @@ export function Schematic({ model, activeFeatureId, onSelectFeature }: Schematic
           <g
             key={marker.featureId}
             data-marker={marker.featureId}
+            className={onSelectFeature === undefined ? undefined : 'group'}
             {...(onSelectFeature === undefined
               ? {}
               : {
@@ -85,6 +86,33 @@ export function Schematic({ model, activeFeatureId, onSelectFeature }: Schematic
               stroke={CHANNEL_INK[marker.channel]}
               strokeWidth={model.strokeWidth * (marker.featureId === activeFeatureId ? 2.2 : 1.2)}
             />
+            {onSelectFeature !== undefined && (
+              <>
+                {/* Invisible, larger than the drawn dot: a ~44px touch target
+                    without growing what the eye sees (critique 2026-08-14, P1
+                    — the visible r=3.2 dot alone measured ~17px, well under a
+                    usable tap size). */}
+                <circle
+                  cx={marker.anchorX}
+                  cy={marker.anchorY}
+                  r={8}
+                  fill="transparent"
+                  pointerEvents="all"
+                />
+                {/* Hover/focus ring — the margin list already has a hover
+                    background; the on-note markers had no feedback at all
+                    before a click landed. */}
+                <circle
+                  cx={marker.anchorX}
+                  cy={marker.anchorY}
+                  r={5.4}
+                  fill="none"
+                  stroke={CHANNEL_INK[marker.channel]}
+                  strokeWidth={0.6}
+                  className="opacity-0 transition-opacity duration-150 group-hover:opacity-70 group-focus-visible:opacity-70"
+                />
+              </>
+            )}
             <circle
               cx={marker.anchorX}
               cy={marker.anchorY}
