@@ -82,7 +82,7 @@ export const PERTUNI_BLIND_CODE: Citation = {
  * Directorate of History and Traditional Values, Directorate General of Culture.
  * Used for the figures on the notes, and the only biography source cited here.
  */
-export function ENSIKLOPEDIA_PAHLAWAN(entry: string): Citation {
+export function ensiklopediaPahlawan(entry: string): Citation {
   return {
     publisher: 'Direktorat Sejarah dan Nilai Tradisional, Direktorat Jenderal Kebudayaan',
     title: 'Julinar Said dan Triana Wulandari, Ensiklopedi Pahlawan Nasional (1995)',

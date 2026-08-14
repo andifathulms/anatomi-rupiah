@@ -1,5 +1,5 @@
 import type { Claim, Figure, Photo } from '@/lib/content/schema'
-import { ENSIKLOPEDIA_PAHLAWAN, biUang } from '../citations'
+import { ensiklopediaPahlawan, biUang } from '../citations'
 
 /**
  * Portrait photographs — CLAUDE.md invariant 13. Sourced from Wikimedia
@@ -203,10 +203,10 @@ function claimsFor(seed: Seed): Claim[] {
   ]
 
   if (seed.bio !== undefined && seed.entry !== undefined) {
-    claims.push({ text: seed.bio, citations: [ENSIKLOPEDIA_PAHLAWAN(seed.entry)] })
+    claims.push({ text: seed.bio, citations: [ensiklopediaPahlawan(seed.entry)] })
   }
   if (seed.honour !== undefined && seed.entry !== undefined) {
-    claims.push({ text: seed.honour, citations: [ENSIKLOPEDIA_PAHLAWAN(seed.entry)] })
+    claims.push({ text: seed.honour, citations: [ensiklopediaPahlawan(seed.entry)] })
   }
 
   return claims
