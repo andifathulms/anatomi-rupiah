@@ -68,7 +68,11 @@ export function MakerSignature({ locale }: { readonly locale: Locale }) {
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-      <p className="text-sm text-engraving-faint">
+      {/* engraving-soft, not engraving-faint: this sits on the footer's
+          proof-deep surface, not the page's default proof stock — faint
+          against deep measures 4.23:1, below WCAG AA (critique 2026-08-14,
+          P1). engraving-soft clears it comfortably. */}
+      <p className="text-sm text-engraving-soft">
         {locale === 'id' ? 'Dirancang & dibangun oleh' : 'Designed & built by'}{' '}
         <a
           href={MAKER.portfolio}

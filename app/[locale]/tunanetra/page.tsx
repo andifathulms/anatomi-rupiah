@@ -55,7 +55,7 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
   return (
     <div className="py-14">
       <div className="animate-lift-in">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-diraba-deep">
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-diraba-deep">
           {detail.channelLabel}
         </p>
         <h1 className="mt-3 font-display text-4xl leading-tight">{detail.name}</h1>
@@ -136,7 +136,11 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
                   <td className="numeric py-3 pr-4 text-engraving-soft">TE {row.emisi}</td>
                   <td className="numeric py-3 pr-4">
                     <span className="mr-2">{row.marks}</span>
-                    <span aria-hidden="true" className="text-diraba">
+                    {/* diraba-deep, not the base diraba: the base tone reads
+                        at 3.87:1 against proof stock, below WCAG AA even
+                        though this glyph run is aria-hidden decoration
+                        (critique 2026-08-14). */}
+                    <span aria-hidden="true" className="text-diraba-deep">
                       {'▮▮ '.repeat(row.marks).trim()}
                     </span>
                   </td>
