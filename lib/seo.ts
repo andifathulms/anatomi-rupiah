@@ -10,6 +10,18 @@ import { assetPath } from '@/lib/paths'
  * from copy already rendered on the page, never re-typed here.
  */
 
+/**
+ * The one place the production origin is written down. metadataBase (root
+ * layout) resolves every relative canonical/OG URL against this already;
+ * sitemap.ts and robots.ts need it directly, since MetadataRoute entries
+ * must be fully qualified.
+ */
+export const SITE_ORIGIN = 'https://andifathulms.github.io/'
+
+export function absoluteUrl(path: string): string {
+  return new URL(path, SITE_ORIGIN).toString()
+}
+
 const OG_IMAGE = {
   url: assetPath('/brand/og-1200x630.png'),
   width: 1200,

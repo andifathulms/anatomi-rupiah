@@ -6,6 +6,7 @@ import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { LOCALES, isLocale } from '@/lib/i18n'
 import { assetPath } from '@/lib/paths'
+import { SITE_ORIGIN } from '@/lib/seo'
 import { SITE } from '@/lib/i18n/copy'
 
 /**
@@ -38,13 +39,6 @@ const mono = Space_Mono({
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
-
-/**
- * Social scrapers need absolute URLs; this makes Next emit them.
- * Origin only — assetPath already supplies the basePath, and including it here
- * too would double it.
- */
-const SITE_ORIGIN = 'https://andifathulms.github.io/'
 
 /**
  * The site-wide fallback — used as-is by routes that don't set their own
