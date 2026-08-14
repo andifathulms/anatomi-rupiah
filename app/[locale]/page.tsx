@@ -60,7 +60,7 @@ export default function HomePage({ params }: { readonly params: { readonly local
           </span>
         </p>
         <h1 className="mt-5 max-w-4xl font-display text-hero">{copy.title}</h1>
-        <p className="mt-4 max-w-2xl font-display text-title text-engraving">{copy.answer}</p>
+        <p className="mt-4 max-w-2xl font-display text-lede text-engraving">{copy.answer}</p>
         <p className="mt-4 max-w-prose leading-relaxed text-engraving-soft">{copy.lede}</p>
 
         <div className="mt-7 flex flex-wrap gap-3">
