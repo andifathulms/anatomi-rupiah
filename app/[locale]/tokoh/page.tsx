@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Reveal } from '@/components/chrome/Reveal'
+import { CitationLines } from '@/components/mechanism/CitationList'
 import { figuresWithoutBiography, notePeople } from '@/lib/content/tokoh'
 import { LOCALES, isLocale, routeLabel, type Locale } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/seo'
@@ -45,20 +47,25 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
 
   return (
     <div className="py-14">
-      <h1 className="font-display text-4xl leading-tight">
-        {locale === 'id' ? 'Tokoh & motif' : 'Figures & motifs'}
-      </h1>
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{ledeFor(locale)}</p>
+      <div className="animate-lift-in">
+        <h1 className="font-display text-4xl leading-tight">
+          {locale === 'id' ? 'Tokoh & motif' : 'Figures & motifs'}
+        </h1>
+        <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">
+          {ledeFor(locale)}
+        </p>
 
-      <p className="mt-6 max-w-prose border-l-2 border-engraving/20 pl-3 text-sm leading-relaxed text-engraving-faint">
-        {locale === 'id'
-          ? `Riwayat hidup bersumber dari Ensiklopedi Pahlawan Nasional (1995) terbitan Direktorat Jenderal Kebudayaan. Ensiklopedia itu memuat sembilan puluh tokoh dan tidak mencakup ${missing.join(' dan ')}; riwayat keduanya karena itu belum ditulis di sini, bukan diringkas dari sumber yang tidak dapat ditelusuri.`
-          : `Biographies come from the Ensiklopedi Pahlawan Nasional (1995), published by the Directorate General of Culture. It covers ninety figures and does not include ${missing.join(' or ')}, so their biographies are left unwritten here rather than summarised from a source a reader could not follow.`}
-      </p>
+        <p className="mt-6 max-w-prose border-l-2 border-engraving/20 pl-3 text-sm leading-relaxed text-engraving-faint">
+          {locale === 'id'
+            ? `Riwayat hidup bersumber dari Ensiklopedi Pahlawan Nasional (1995) terbitan Direktorat Jenderal Kebudayaan. Ensiklopedia itu memuat sembilan puluh tokoh dan tidak mencakup ${missing.join(' dan ')}; riwayat keduanya karena itu belum ditulis di sini, bukan diringkas dari sumber yang tidak dapat ditelusuri.`
+            : `Biographies come from the Ensiklopedi Pahlawan Nasional (1995), published by the Directorate General of Culture. It covers ninety figures and does not include ${missing.join(' or ')}, so their biographies are left unwritten here rather than summarised from a source a reader could not follow.`}
+        </p>
+      </div>
 
       <div className="mt-14 space-y-14">
         {notes.map((note) => (
-          <section key={note.id} aria-labelledby={note.id} className="rule pt-8">
+          <Reveal key={note.id}>
+          <section aria-labelledby={note.id} className="rule pt-8">
             <h2 id={note.id} className="numeric font-mono text-sm tracking-wider text-engraving-faint">
               {note.caption}
             </h2>
@@ -91,28 +98,13 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
               </ul>
             )}
 
-            <ul className="mt-5 space-y-1 text-xs text-engraving-faint">
-              {note.citations.map((citation) => (
-                <li key={`${citation.title}-${citation.locator ?? ''}`}>
-                  {citation.publisher} — {citation.title}
-                  {citation.locator !== undefined && `, ${citation.locator}`}
-                  {citation.url !== undefined && (
-                    <>
-                      {' '}
-                      <a
-                        href={citation.url}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="underline underline-offset-2"
-                      >
-                        ↗<span className="sr-only">{locale === 'id' ? 'sumber' : 'source'}</span>
-                      </a>
-                    </>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <CitationLines
+              citations={note.citations}
+              locale={locale}
+              className="mt-5 space-y-1 text-xs text-engraving-faint"
+            />
           </section>
+          </Reveal>
         ))}
       </div>
     </div>
