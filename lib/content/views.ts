@@ -57,7 +57,6 @@ export interface FeatureDetailView {
   readonly summary: string
   readonly observe: readonly string[]
   readonly illustration: MechanismId
-  readonly illustrationAlt: string
   readonly caption: string
   readonly steps: readonly string[]
   readonly limitation?: string
@@ -95,7 +94,6 @@ export function featureDetail(locale: Locale, id: string): FeatureDetailView | u
     summary: say(feature.summary, locale),
     observe: feature.observe.map((claim) => say(claim, locale)),
     illustration,
-    illustrationAlt: say(feature.mechanism.caption, locale),
     caption: say(feature.mechanism.caption, locale),
     steps: feature.mechanism.steps.map((claim) => say(claim, locale)),
     limitation: feature.limitation?.[locale],

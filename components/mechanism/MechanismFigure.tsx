@@ -11,8 +11,6 @@ import { mechanismDownloadPath } from '@/lib/paths'
 export interface MechanismFigureProps {
   readonly id: MechanismId
   readonly channel: CheckChannel
-  /** Localized description of the drawing, for readers who cannot see it. */
-  readonly alt: string
   readonly caption: string
   readonly steps: readonly string[]
   /** Label for the diagram download. Sharing emits diagrams only — PRD §2. */
@@ -29,7 +27,6 @@ const CHANNEL_RULE: Record<CheckChannel, string> = {
 export function MechanismFigure({
   id,
   channel,
-  alt,
   caption,
   steps,
   downloadLabel,
@@ -37,8 +34,11 @@ export function MechanismFigure({
   return (
     <figure className={`border-t-4 bg-proof-deep/40 ${CHANNEL_RULE[channel]}`}>
       <div
-        role="img"
-        aria-label={alt}
+        // Decorative: the figcaption right below states the same thing as
+        // real, readable text, and the numbered steps carry the actual
+        // detail. Labelling this as its own image would announce the same
+        // sentence to screen reader users twice in a row.
+        aria-hidden="true"
         className="[&>svg]:h-auto [&>svg]:w-full"
         // Authored artwork from art/mechanisms, read at build time and checked
         // to be inert. No user input reaches this.

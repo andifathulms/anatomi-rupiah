@@ -179,9 +179,10 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
 
             {mechanism !== undefined && (
               <div
+                // Decorative: the h3 beside it already names this feature,
+                // so a role="img" label here would repeat the same text.
+                aria-hidden="true"
                 className="[&>svg]:h-auto [&>svg]:w-full"
-                role="img"
-                aria-label={marker.featureName}
                 dangerouslySetInnerHTML={{ __html: mechanism }}
               />
             )}

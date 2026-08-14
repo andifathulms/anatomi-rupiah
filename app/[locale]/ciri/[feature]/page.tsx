@@ -71,7 +71,6 @@ export default function FeaturePage({
         <MechanismFigure
           id={detail.illustration}
           channel={detail.channel}
-          alt={detail.illustrationAlt}
           caption={detail.caption}
           steps={detail.steps}
           downloadLabel={locale === 'id' ? 'Unduh diagram (SVG)' : 'Download diagram (SVG)'}
