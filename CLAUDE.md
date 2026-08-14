@@ -9,7 +9,7 @@ Read `PRD.md` before starting any task — **§2 and §4 are not optional contex
 1. **UU 7/2011 Pasal 24 ayat (1) permits imitating Rupiah for education *with the word spesimen applied*.** Violation carries up to a year and a Rp200 million fine. Every note-like rendering carries the mark, baked into the artwork. This is the one risk in this repository with a criminal penalty attached.
 2. **Explain how to *check* a feature, never how to *make* one.** If a sentence would help someone produce a convincing fake rather than spot one, it does not ship.
 3. **Never render an authenticity verdict.** Authority to determine whether Rupiah is genuine rests with Bank Indonesia. No scanner, no camera input, no "is this real" path.
-4. **Illustrate mechanisms; do not reproduce notes.** No photographs anywhere in the repository. Original vector only, schematic, never at actual size.
+4. **Illustrate mechanisms; do not reproduce notes.** No photographs of banknotes or note-like renderings anywhere in the repository — those stay original vector, schematic, never at actual size, permanently. This does *not* extend to content that isn't a depiction of currency: photographs are permitted for figure portraits (`/tokoh`) and motif subjects (the dance, landscape, and flower on each note's reverse), each with its licence and source recorded at the point of use. See invariant 13.
 
 ---
 
@@ -68,6 +68,9 @@ data/
   denominations/            # per-note feature placement + citations
   figures/                  # hero biographies + citations
   motifs/                   # reverse-side subjects + citations
+public/
+  tokoh/                    # figure portrait photographs — invariant 13
+  motif/                    # motif subject photographs — invariant 13
 tests/
   compliance/
   content/
@@ -79,7 +82,7 @@ tests/
 
 2. **Every schematic carries the mark.** Asserted by test on rendered output. A schematic without SPESIMEN fails the build — no exceptions for "work in progress" or "internal only".
 
-3. **No raster banknote imagery in the repository.** No `.png`, `.jpg`, `.webp` of notes, not in `art/`, not in `public/`, not in tests, not in the README. The asset check enforces it. All note artwork is original authored SVG.
+3. **No raster banknote imagery in the repository.** No `.png`, `.jpg`, `.webp` of notes, not in `art/`, not in `public/`, not in tests, not in the README. The asset check enforces it. All note artwork is original authored SVG. (Figure and motif photographs are the one deliberate exception — invariant 13 — and are allowlisted in the asset check by path, not by loosening what counts as "of a note".)
 
 4. **Schematics are never photorealistic and never at actual size.** Render dimensions are constrained away from real banknote dimensions, asserted at build. Schematic is a legal requirement, not an aesthetic preference — do not "improve" it toward realism.
 
@@ -98,6 +101,8 @@ tests/
 11. **Zero network requests at runtime.** No font CDN, no analytics, no remote assets.
 
 12. **Nothing is computed in a component.**
+
+13. **Photographs of figures and motifs carry a recorded licence and source, and never depict a note.** Public domain or a compatible free licence only (e.g. Wikimedia Commons PD/CC-BY-SA with the specific licence noted) — never an unverified web image. This is the one exception to invariant 3, and it does not widen it: a photograph of a person or a flower is not a photograph of currency, and the asset-policy check must keep treating the two differently, not be loosened generally.
 
 ## Working style
 
