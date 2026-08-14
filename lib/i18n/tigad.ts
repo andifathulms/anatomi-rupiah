@@ -25,6 +25,9 @@ export interface TigadCopy {
   readonly verdictHeading: string
   readonly verdictBody: string
   readonly featuresLabel: string
+  readonly exampleHeading: string
+  readonly exampleIntro: string
+  readonly exampleSourcesLabel: string
 }
 
 export const TIGAD: Record<Locale, TigadCopy> = {
@@ -69,6 +72,10 @@ export const TIGAD: Record<Locale, TigadCopy> = {
     verdictBody:
       'Situs ini tidak menyimpulkan apa pun tentang selembar uang tertentu, dan tidak akan pernah melakukannya. Bila ada yang meragukan, bawa uang itu ke bank atau ke kantor Bank Indonesia. Kewenangan menentukan keaslian Rupiah ada pada Bank Indonesia.',
     featuresLabel: 'Ciri pada langkah ini',
+    exampleHeading: 'Pada pecahan ini',
+    exampleIntro:
+      'Kalau ada Rp100.000 (TE 2022) di tangan, inilah persisnya yang akan Anda temukan pada langkah ini — bukan aturan umum, tapi pecahan yang sama dari awal sampai akhir.',
+    exampleSourcesLabel: 'Sumber',
   },
   en: {
     title: '3D — Dilihat, Diraba, Diterawang',
@@ -111,5 +118,9 @@ export const TIGAD: Record<Locale, TigadCopy> = {
     verdictBody:
       'This site draws no conclusion about any particular note, and never will. If something troubles you, take the note to a bank or to a Bank Indonesia office. The authority to determine whether Rupiah is genuine rests with Bank Indonesia.',
     featuresLabel: 'Features checked at this step',
+    exampleHeading: 'On this note',
+    exampleIntro:
+      'If you have a Rp100,000 note (TE 2022) in hand, this is exactly what you would find at this step — not the general rule, but that one denomination, start to finish.',
+    exampleSourcesLabel: 'Sources',
   },
 }

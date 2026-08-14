@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { featureCards } from '@/lib/content/views'
+import { CitationLines } from '@/components/mechanism/CitationList'
+import { denominationChecklist, featureCards } from '@/lib/content/views'
 import { LOCALES, isLocale } from '@/lib/i18n'
 import { TIGAD } from '@/lib/i18n/tigad'
 import type { CheckChannel } from '@/lib/content/schema'
@@ -16,6 +17,10 @@ export const metadata: Metadata = {
 
 const ORDER: readonly CheckChannel[] = ['dilihat', 'diraba', 'diterawang']
 
+/** The one note this page walks through concretely, start to finish — the
+ * richest TE2022 denomination, so all four channels have something to show. */
+const EXAMPLE_DENOMINATION_ID = 'seratus-ribu-2022'
+
 const CHANNEL_RULE: Record<CheckChannel, string> = {
   dilihat: 'border-dilihat',
   diraba: 'border-diraba',
@@ -28,16 +33,25 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
   const locale = params.locale
   const copy = TIGAD[locale]
   const cards = featureCards(locale)
+  const example =
+    denominationChecklist(locale, EXAMPLE_DENOMINATION_ID) ??
+    (() => {
+      throw new Error(`tigad page names a denomination that does not exist: ${EXAMPLE_DENOMINATION_ID}`)
+    })()
 
   return (
     <div className="py-14">
       <h1 className="font-display text-4xl leading-tight">{copy.title}</h1>
       <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{copy.lede}</p>
+      <p className="mt-3 max-w-prose text-sm leading-relaxed text-engraving-soft">
+        {copy.exampleIntro}
+      </p>
 
       <ol className="mt-14 space-y-12">
         {ORDER.map((channel) => {
           const step = copy.steps[channel]
           const stepFeatures = cards.filter((card) => card.channel === channel)
+          const exampleGroup = example.byChannel.find((group) => group.channel === channel)
           return (
             <li key={channel} className={`border-l-4 pl-6 ${CHANNEL_RULE[channel]}`}>
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
@@ -63,6 +77,29 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
                   </li>
                 ))}
               </ul>
+
+              {exampleGroup !== undefined && exampleGroup.items.length > 0 && (
+                <div className="mt-6 border-l-2 border-engraving/15 pl-4">
+                  <h3 className="font-mono text-label uppercase tracking-wider text-engraving-faint">
+                    {copy.exampleHeading}
+                  </h3>
+                  <ul className="mt-2 space-y-4">
+                    {exampleGroup.items.map((item) => (
+                      <li key={item.featureId}>
+                        <p className="text-sm leading-relaxed">{item.note}</p>
+                        <p className="mt-1 font-mono text-label uppercase tracking-wider text-engraving-faint">
+                          {copy.exampleSourcesLabel}
+                        </p>
+                        <CitationLines
+                          citations={item.citations}
+                          locale={locale}
+                          className="mt-1 space-y-1 text-xs text-engraving-faint"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               {channel === 'diraba' && (
                 <aside className="mt-8 max-w-prose border-l-4 border-diraba bg-proof-deep/60 p-5">
@@ -100,6 +137,33 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
               </li>
             ))}
         </ul>
+
+        {(() => {
+          const exampleGroup = example.byChannel.find((group) => group.channel === 'mesin')
+          if (exampleGroup === undefined || exampleGroup.items.length === 0) return null
+          return (
+            <div className="mt-6 border-l-2 border-engraving/15 pl-4">
+              <h3 className="font-mono text-label uppercase tracking-wider text-engraving-faint">
+                {copy.exampleHeading}
+              </h3>
+              <ul className="mt-2 space-y-4">
+                {exampleGroup.items.map((item) => (
+                  <li key={item.featureId}>
+                    <p className="text-sm leading-relaxed">{item.note}</p>
+                    <p className="mt-1 font-mono text-label uppercase tracking-wider text-engraving-faint">
+                      {copy.exampleSourcesLabel}
+                    </p>
+                    <CitationLines
+                      citations={item.citations}
+                      locale={locale}
+                      className="mt-1 space-y-1 text-xs text-engraving-faint"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        })()}
       </section>
 
       <section className="mt-16 max-w-prose" aria-labelledby="sesudah">
