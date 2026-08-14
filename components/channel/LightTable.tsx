@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from 'react'
 import { transmissionAt } from '@/lib/optics/transmission'
 import { DITERAWANG, INSPECT, PROOF_DEEP, rgbTriplet } from '@/lib/tokens'
 import { LIGHT_TABLE_FRAGMENT } from '@/lib/webgl/shaders'
+import { DemoShell } from './DemoShell'
 import { GlPanel } from './GlPanel'
 import type { DemoCopy } from '@/lib/i18n/demo'
 
@@ -50,17 +51,13 @@ export function LightTable({ copy }: { readonly copy: DemoCopy }) {
   const transmissionPercent = Math.round(transmissionAt(light[0], light[1]) * 100)
 
   return (
-    <section
-      className="mt-10 border-t-4 border-diterawang bg-proof-deep/40 p-5"
-      aria-labelledby="terawang"
+    <DemoShell
+      channel="diterawang"
+      headingId="terawang"
+      heading={copy.lightHeading}
+      body={copy.lightBody}
+      disclaimer={copy.lightDisclaimer}
     >
-      <h2 id="terawang" className="font-display text-xl">
-        {copy.lightHeading}
-      </h2>
-      <p className="mt-2 max-w-prose text-sm leading-relaxed text-engraving-soft">
-        {copy.lightBody}
-      </p>
-
       <div
         ref={frame}
         onPointerMove={(event) => {
@@ -110,10 +107,6 @@ export function LightTable({ copy }: { readonly copy: DemoCopy }) {
           </button>
         ))}
       </div>
-
-      <p className="mt-5 max-w-prose text-xs leading-relaxed text-engraving-faint">
-        {copy.lightDisclaimer}
-      </p>
-    </section>
+    </DemoShell>
   )
 }

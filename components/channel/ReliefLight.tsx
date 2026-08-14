@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { DIRABA, PROOF, rgbTriplet } from '@/lib/tokens'
 import { RELIEF_FRAGMENT } from '@/lib/webgl/shaders'
+import { DemoShell } from './DemoShell'
 import { GlPanel } from './GlPanel'
 import type { DemoCopy } from '@/lib/i18n/demo'
 
@@ -37,14 +38,13 @@ export function ReliefLight({
   )
 
   return (
-    <section className="mt-10 border-t-4 border-diraba bg-proof-deep/40 p-5" aria-labelledby="relief">
-      <h2 id="relief" className="font-display text-xl">
-        {copy.reliefHeading}
-      </h2>
-      <p className="mt-2 max-w-prose text-sm leading-relaxed text-engraving-soft">
-        {copy.reliefBody}
-      </p>
-
+    <DemoShell
+      channel="diraba"
+      headingId="relief"
+      heading={copy.reliefHeading}
+      body={copy.reliefBody}
+      disclaimer={copy.reliefDisclaimer}
+    >
       <div className="mt-6 aspect-[5/2] w-full max-w-lg overflow-hidden rounded-sm border border-engraving/12">
         <GlPanel
           fragment={RELIEF_FRAGMENT}
@@ -73,10 +73,6 @@ export function ReliefLight({
         className="mt-2 w-full max-w-lg accent-diraba"
       />
       <p className="numeric mt-1 text-sm text-engraving-soft">{azimuth}°</p>
-
-      <p className="mt-5 max-w-prose text-xs leading-relaxed text-engraving-faint">
-        {copy.reliefDisclaimer}
-      </p>
-    </section>
+    </DemoShell>
   )
 }

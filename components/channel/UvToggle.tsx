@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ENGRAVING, MESIN, PROOF_DEEP } from '@/lib/tokens'
+import { DemoShell } from './DemoShell'
 import type { DemoCopy } from '@/lib/i18n/demo'
 
 /**
@@ -14,12 +15,13 @@ export function UvToggle({ copy }: { readonly copy: DemoCopy }) {
   const [lampOn, setLampOn] = useState(false)
 
   return (
-    <section className="mt-10 border-t-4 border-mesin bg-proof-deep/40 p-5" aria-labelledby="uv">
-      <h2 id="uv" className="font-display text-xl">
-        {copy.uvHeading}
-      </h2>
-      <p className="mt-2 max-w-prose text-sm leading-relaxed text-engraving-soft">{copy.uvBody}</p>
-
+    <DemoShell
+      channel="mesin"
+      headingId="uv"
+      heading={copy.uvHeading}
+      body={copy.uvBody}
+      disclaimer={copy.uvDisclaimer}
+    >
       <div className="mt-6 flex flex-wrap items-center gap-8">
         <svg
           viewBox="0 0 200 120"
@@ -62,10 +64,6 @@ export function UvToggle({ copy }: { readonly copy: DemoCopy }) {
           </button>
         </div>
       </div>
-
-      <p className="mt-6 max-w-prose text-xs leading-relaxed text-engraving-faint">
-        {copy.uvDisclaimer}
-      </p>
-    </section>
+    </DemoShell>
   )
 }

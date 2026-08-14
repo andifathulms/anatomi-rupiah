@@ -11,6 +11,7 @@ import {
 } from '@/lib/optics/colour-shift'
 import { ENGRAVING, ENGRAVING_FAINT, PROOF, rgbTriplet } from '@/lib/tokens'
 import { THIN_FILM_FRAGMENT } from '@/lib/webgl/shaders'
+import { DemoShell } from './DemoShell'
 import { GlPanel } from './GlPanel'
 import type { DemoCopy } from '@/lib/i18n/demo'
 
@@ -83,12 +84,13 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
   const opd = Math.round(pathDifferenceNm(angle, FILM_THICKNESS))
 
   return (
-    <section className="mt-10 border-t-4 border-dilihat bg-proof-deep/40 p-5" aria-labelledby="tilt">
-      <h2 id="tilt" className="font-display text-xl">
-        {copy.tiltHeading}
-      </h2>
-      <p className="mt-2 max-w-prose text-sm leading-relaxed text-engraving-soft">{copy.tiltBody}</p>
-
+    <DemoShell
+      channel="dilihat"
+      headingId="tilt"
+      heading={copy.tiltHeading}
+      body={copy.tiltBody}
+      disclaimer={usingFallback ? copy.tiltDisclaimerFallback : copy.tiltDisclaimer}
+    >
       <div className="mt-6 flex flex-wrap items-center gap-8">
         <div className="aspect-[4/3] w-full max-w-xs">
           <GlPanel
@@ -156,10 +158,6 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
           )}
         </div>
       </div>
-
-      <p className="mt-6 max-w-prose text-xs leading-relaxed text-engraving-faint">
-        {usingFallback ? copy.tiltDisclaimerFallback : copy.tiltDisclaimer}
-      </p>
-    </section>
+    </DemoShell>
   )
 }
