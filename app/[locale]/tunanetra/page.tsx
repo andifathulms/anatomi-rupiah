@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ReliefLight } from '@/components/channel/ReliefLight'
+import { Reveal } from '@/components/chrome/Reveal'
 import { CitationList } from '@/components/mechanism/CitationList'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
 import { blindCodeGaps, blindCodeRows } from '@/lib/content/tunanetra'
@@ -53,14 +54,16 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
 
   return (
     <div className="py-14">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-diraba-deep">
-        {detail.channelLabel}
-      </p>
-      <h1 className="mt-3 font-display text-4xl leading-tight">{detail.name}</h1>
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{ledeFor(locale)}</p>
-      <p className="mt-4 max-w-prose leading-relaxed text-engraving-soft">{detail.summary}</p>
+      <div className="animate-lift-in">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-diraba-deep">
+          {detail.channelLabel}
+        </p>
+        <h1 className="mt-3 font-display text-4xl leading-tight">{detail.name}</h1>
+        <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{ledeFor(locale)}</p>
+        <p className="mt-4 max-w-prose leading-relaxed text-engraving-soft">{detail.summary}</p>
+      </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+      <Reveal className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <MechanismFigure
           id={detail.illustration}
           channel={detail.channel}
@@ -90,10 +93,13 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
             </aside>
           )}
         </section>
-      </div>
+      </Reveal>
 
-      <ReliefLight copy={DEMO[locale]} ridges={4} />
+      <Reveal>
+        <ReliefLight copy={DEMO[locale]} ridges={4} />
+      </Reveal>
 
+      <Reveal>
       <section className="mt-16" aria-labelledby="tabel">
         <h2 id="tabel" className="font-display text-2xl">
           {locale === 'id' ? 'Jumlah pasangan garis' : 'Number of line pairs'}
@@ -149,6 +155,7 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
           </p>
         )}
       </section>
+      </Reveal>
 
       <p className="mt-10 max-w-prose text-sm text-engraving-faint">
         {locale === 'id' ? 'Lihat juga ' : 'See also '}
