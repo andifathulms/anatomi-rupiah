@@ -6,6 +6,7 @@ import { CHANNEL_BLURB, CHANNEL_LABEL, LOCALES, href, isLocale } from '@/lib/i18
 import { HOME } from '@/lib/i18n/copy'
 import { CHANNEL_ORDER, featuresById } from '@/lib/content'
 import { anatomyViewModel } from '@/lib/hero/anatomy'
+import { CHANNEL_TEXT_DEEP } from '@/lib/channelClasses'
 import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
@@ -28,13 +29,6 @@ const CHANNEL_CARD: Record<CheckChannel, string> = {
   diraba: 'border-t-diraba bg-diraba-tint/40',
   diterawang: 'border-t-diterawang bg-diterawang-tint/40',
   mesin: 'border-t-mesin bg-mesin-tint/40',
-}
-
-const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat-deep',
-  diraba: 'text-diraba-deep',
-  diterawang: 'text-diterawang-deep',
-  mesin: 'text-mesin-deep',
 }
 
 export default function HomePage({ params }: { readonly params: { readonly locale: string } }) {
@@ -66,13 +60,13 @@ export default function HomePage({ params }: { readonly params: { readonly local
         <div className="mt-7 flex flex-wrap gap-3">
           <Link
             href={href(locale, 'tigad')}
-            className="border border-engraving bg-engraving px-5 py-2.5 text-sm text-proof shadow-sheet hover:bg-engraving-soft"
+            className="inline-flex min-h-11 items-center border border-engraving bg-engraving px-5 py-2.5 text-sm text-proof shadow-sheet hover:bg-engraving-soft"
           >
             {copy.startPaths[0]?.title}
           </Link>
           <Link
             href={href(locale, 'ciri')}
-            className="border border-engraving/30 px-5 py-2.5 text-sm hover:border-engraving"
+            className="inline-flex min-h-11 items-center border border-engraving/30 px-5 py-2.5 text-sm hover:border-engraving"
           >
             {copy.startCta}
           </Link>
@@ -114,7 +108,7 @@ export default function HomePage({ params }: { readonly params: { readonly local
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {CHANNEL_ORDER.map((channel) => (
             <li key={channel} className={`card border-t-4 p-6 ${CHANNEL_CARD[channel]}`}>
-              <h3 className={`font-display text-lg ${CHANNEL_TEXT[channel]}`}>
+              <h3 className={`font-display text-lg ${CHANNEL_TEXT_DEEP[channel]}`}>
                 {CHANNEL_LABEL[channel][locale]}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-engraving-soft">

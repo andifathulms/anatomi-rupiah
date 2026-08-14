@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { PERSPECTIVE_PX, type AnatomyViewModel } from '@/lib/hero/anatomy'
 import { ENGRAVING, PROOF, SPESIMEN_INK } from '@/lib/tokens'
-import type { CheckChannel } from '@/lib/content/schema'
+import { CHANNEL_TEXT_DEEP } from '@/lib/channelClasses'
 
 /**
  * The exploded anatomy, in CSS 3D.
@@ -32,13 +32,6 @@ export interface AnatomyStackProps {
   readonly concept: string
   readonly caption: string
   readonly hint: string
-}
-
-const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat-deep',
-  diraba: 'text-diraba-deep',
-  diterawang: 'text-diterawang-deep',
-  mesin: 'text-mesin-deep',
 }
 
 const REST_TILT = { x: 14, y: -22 }
@@ -182,7 +175,7 @@ export function AnatomyStack({ model, links, concept, caption, hint }: AnatomySt
               // users aren't asked to tab through the same 8 destinations
               // twice.
               tabIndex={-1}
-              className={`flex items-baseline gap-2 text-sm ${CHANNEL_TEXT[layer.channel]} ${
+              className={`flex items-baseline gap-2 text-sm ${CHANNEL_TEXT_DEEP[layer.channel]} ${
                 active === layer.featureId ? 'underline underline-offset-4' : ''
               }`}
             >

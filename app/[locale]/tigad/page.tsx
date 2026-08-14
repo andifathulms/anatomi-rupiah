@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { Reveal } from '@/components/chrome/Reveal'
 import { CitationLines } from '@/components/mechanism/CitationList'
 import { denominationChecklist, featureCards } from '@/lib/content/views'
+import { CHANNEL_BORDER } from '@/lib/channelClasses'
 import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { TIGAD } from '@/lib/i18n/tigad'
 import { pageMetadata } from '@/lib/seo'
@@ -34,13 +35,6 @@ const ORDER: readonly CheckChannel[] = ['dilihat', 'diraba', 'diterawang']
  * richest TE2022 denomination, so all four channels have something to show. */
 const EXAMPLE_DENOMINATION_ID = 'seratus-ribu-2022'
 
-const CHANNEL_RULE: Record<CheckChannel, string> = {
-  dilihat: 'border-dilihat',
-  diraba: 'border-diraba',
-  diterawang: 'border-diterawang',
-  mesin: 'border-mesin',
-}
-
 export default function TigadPage({ params }: { readonly params: { readonly locale: string } }) {
   if (!isLocale(params.locale)) notFound()
   const locale = params.locale
@@ -69,8 +63,8 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
           const exampleGroup = example.byChannel.find((group) => group.channel === channel)
           return (
             <li key={channel}>
-            <Reveal className={`border-l-4 pl-6 ${CHANNEL_RULE[channel]}`}>
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+            <Reveal className={`border-l-4 pl-6 ${CHANNEL_BORDER[channel]}`}>
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
                 {step.ordinal}
               </p>
               <h2 className="mt-2 font-display text-3xl">{step.title}</h2>
@@ -86,7 +80,7 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
                   <li key={card.id}>
                     <Link
                       href={card.url}
-                      className="inline-block border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
+                      className="inline-flex min-h-11 items-center border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
                     >
                       {card.name}
                     </Link>
@@ -125,7 +119,7 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
 
       <Reveal>
       <section className="mt-16 max-w-prose border-l-4 border-mesin pl-6" aria-labelledby="keempat">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
           {copy.steps.mesin.ordinal}
         </p>
         <h2 id="keempat" className="mt-2 font-display text-3xl">
@@ -139,7 +133,7 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
               <li key={card.id}>
                 <Link
                   href={card.url}
-                  className="inline-block border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
+                  className="inline-flex min-h-11 items-center border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
                 >
                   {card.name}
                 </Link>

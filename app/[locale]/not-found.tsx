@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE, href } from '@/lib/i18n'
 export default function NotFound() {
   return (
     <div className="py-24">
-      <p className="font-mono text-xs uppercase tracking-[0.25em] text-engraving-faint">404</p>
+      <p className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">404</p>
       <h1 className="mt-4 font-display text-4xl leading-tight">Halaman tidak ditemukan</h1>
       <p className="mt-5 max-w-prose leading-relaxed text-engraving-soft">
         Halaman yang Anda cari tidak ada di sini.{' '}

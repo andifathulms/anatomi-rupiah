@@ -6,6 +6,7 @@ import { CHANNEL_LABEL, LOCALES, isLocale, routeLabel, type Locale } from '@/lib
 import { featureCards } from '@/lib/content/views'
 import { mechanismSvg } from '@/lib/art/mechanisms'
 import { CHANNEL_ORDER } from '@/lib/content'
+import { CHANNEL_BORDER_TOP, CHANNEL_TEXT_DEEP } from '@/lib/channelClasses'
 import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
@@ -34,13 +35,6 @@ export function generateMetadata({
   })
 }
 
-const CHANNEL_ACCENT: Record<CheckChannel, string> = {
-  dilihat: 'border-t-dilihat',
-  diraba: 'border-t-diraba',
-  diterawang: 'border-t-diterawang',
-  mesin: 'border-t-mesin',
-}
-
 const CHANNEL_SWATCH: Record<CheckChannel, string> = {
   dilihat: 'bg-dilihat',
   diraba: 'bg-diraba',
@@ -53,13 +47,6 @@ const CHANNEL_WASH: Record<CheckChannel, string> = {
   diraba: 'bg-diraba-tint/50',
   diterawang: 'bg-diterawang-tint/50',
   mesin: 'bg-mesin-tint/50',
-}
-
-const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat-deep',
-  diraba: 'text-diraba-deep',
-  diterawang: 'text-diterawang-deep',
-  mesin: 'text-mesin-deep',
 }
 
 export default function CiriIndexPage({ params }: { readonly params: { readonly locale: string } }) {
@@ -84,7 +71,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
                 aria-hidden="true"
                 className={`h-3 w-3 rounded-full ${CHANNEL_SWATCH[channel]}`}
               />
-              <span className={CHANNEL_TEXT[channel]}>{CHANNEL_LABEL[channel][locale]}</span>
+              <span className={CHANNEL_TEXT_DEEP[channel]}>{CHANNEL_LABEL[channel][locale]}</span>
             </li>
           ))}
         </ul>
@@ -96,7 +83,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
             <Reveal className="h-full">
             <Link
               href={card.url}
-              className={`card-interactive group flex h-full flex-col border-t-4 ${CHANNEL_ACCENT[card.channel]}`}
+              className={`card-interactive group flex h-full flex-col border-t-4 ${CHANNEL_BORDER_TOP[card.channel]}`}
             >
               <div
                 className={`mech overflow-hidden border-b border-engraving/10 ${CHANNEL_WASH[card.channel]} [&>svg]:h-auto [&>svg]:w-full [&>svg]:transition-transform [&>svg]:duration-300 group-hover:[&>svg]:scale-[1.04]`}
@@ -105,7 +92,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
                 dangerouslySetInnerHTML={{ __html: mechanismSvg(card.illustration) }}
               />
               <div className="flex flex-1 flex-col p-5">
-                <p className={`font-mono text-label uppercase tracking-[0.2em] ${CHANNEL_TEXT[card.channel]}`}>
+                <p className={`font-mono text-label uppercase tracking-[0.24em] ${CHANNEL_TEXT_DEEP[card.channel]}`}>
                   {card.channelLabel}
                 </p>
                 <h2 className="mt-2 font-display text-xl group-hover:underline group-hover:underline-offset-4">

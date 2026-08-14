@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CHANNEL_BORDER } from '@/lib/channelClasses'
 import type { CheckChannel } from '@/lib/content/schema'
 
 /**
@@ -8,13 +9,6 @@ import type { CheckChannel } from '@/lib/content/schema'
  * paragraph, and closing disclaimer — this pulls that wrapper out so the four
  * components differ only in the interactive content they actually differ on.
  */
-
-const BORDER_CHANNEL: Record<CheckChannel, string> = {
-  dilihat: 'border-dilihat',
-  diraba: 'border-diraba',
-  diterawang: 'border-diterawang',
-  mesin: 'border-mesin',
-}
 
 export function DemoShell({
   channel,
@@ -33,7 +27,7 @@ export function DemoShell({
 }) {
   return (
     <section
-      className={`mt-10 border-t-4 bg-proof-deep/40 p-5 ${BORDER_CHANNEL[channel]}`}
+      className={`mt-10 border-t-4 bg-proof-deep/40 p-5 ${CHANNEL_BORDER[channel]}`}
       aria-labelledby={headingId}
     >
       <h2 id={headingId} className="font-display text-xl">

@@ -10,23 +10,9 @@ import { DEMO } from '@/lib/i18n/demo'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
 import Link from 'next/link'
 import { featureDetail, featureIds } from '@/lib/content/views'
+import { CHANNEL_BORDER, CHANNEL_TEXT_DEEP } from '@/lib/channelClasses'
 import { LOCALES, href, isLocale } from '@/lib/i18n'
 import { pageMetadata } from '@/lib/seo'
-import type { CheckChannel } from '@/lib/content/schema'
-
-const CHANNEL_ACCENT: Record<CheckChannel, string> = {
-  dilihat: 'border-dilihat',
-  diraba: 'border-diraba',
-  diterawang: 'border-diterawang',
-  mesin: 'border-mesin',
-}
-
-const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat-deep',
-  diraba: 'text-diraba-deep',
-  diterawang: 'text-diterawang-deep',
-  mesin: 'text-mesin-deep',
-}
 
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) => featureIds().map((feature) => ({ locale, feature })))
@@ -68,8 +54,8 @@ export default function FeaturePage({
         ← {locale === 'id' ? 'Semua ciri' : 'All features'}
       </Link>
 
-      <div className={`animate-lift-in mt-5 border-l-4 pl-5 sm:pl-7 ${CHANNEL_ACCENT[detail.channel]}`}>
-        <p className={`font-mono text-label uppercase tracking-[0.24em] ${CHANNEL_TEXT[detail.channel]}`}>
+      <div className={`animate-lift-in mt-5 border-l-4 pl-5 sm:pl-7 ${CHANNEL_BORDER[detail.channel]}`}>
+        <p className={`font-mono text-label uppercase tracking-[0.24em] ${CHANNEL_TEXT_DEEP[detail.channel]}`}>
           {detail.channelLabel}
         </p>
         <h1 className="mt-3 max-w-3xl font-display text-title">{detail.name}</h1>
@@ -114,7 +100,7 @@ export default function FeaturePage({
 
           {detail.carriedBy.length > 0 && (
             <div className="mt-8 border-t border-engraving/15 pt-5">
-              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+              <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
                 {locale === 'id' ? 'Muncul pada' : 'Appears on'}
               </h3>
               <ul className="mt-3 flex flex-wrap gap-2">
@@ -122,7 +108,7 @@ export default function FeaturePage({
                   <li key={denomination.id}>
                     <Link
                       href={denomination.url}
-                      className="numeric border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
+                      className="numeric inline-flex min-h-11 items-center border border-engraving/25 px-3 py-1.5 text-sm hover:border-engraving"
                     >
                       {denomination.label}
                     </Link>

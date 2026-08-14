@@ -1,4 +1,5 @@
 import { mechanismSvg, type MechanismId } from '@/lib/art/mechanisms'
+import { CHANNEL_BORDER } from '@/lib/channelClasses'
 import type { CheckChannel } from '@/lib/content/schema'
 import { mechanismDownloadPath } from '@/lib/paths'
 
@@ -17,13 +18,6 @@ export interface MechanismFigureProps {
   readonly downloadLabel: string
 }
 
-const CHANNEL_RULE: Record<CheckChannel, string> = {
-  dilihat: 'border-dilihat',
-  diraba: 'border-diraba',
-  diterawang: 'border-diterawang',
-  mesin: 'border-mesin',
-}
-
 export function MechanismFigure({
   id,
   channel,
@@ -32,14 +26,21 @@ export function MechanismFigure({
   downloadLabel,
 }: MechanismFigureProps) {
   return (
-    <figure className={`border-t-4 bg-proof-deep/40 ${CHANNEL_RULE[channel]}`}>
+    <figure className={`border-t-4 bg-proof-deep/40 ${CHANNEL_BORDER[channel]}`}>
       <div
         // Decorative: the figcaption right below states the same thing as
         // real, readable text, and the numbered steps carry the actual
         // detail. Labelling this as its own image would announce the same
         // sentence to screen reader users twice in a row.
         aria-hidden="true"
-        className="[&>svg]:h-auto [&>svg]:w-full"
+        // "mech" opts this render into app/globals.css's .mech .rays path
+        // rule — previously only the Ciri-index thumbnail carried it, so the
+        // tanda-air rays animated as a small teaser but sat static on its own
+        // full-size explainer page, where the moving light communicates the
+        // transmitted-light mechanism best (critique 2026-08-14, P2). Inert
+        // for every other mechanism: only tanda-air's artwork defines a
+        // "rays" group for the rule to match.
+        className="mech [&>svg]:h-auto [&>svg]:w-full"
         // Authored artwork from art/mechanisms, read at build time and checked
         // to be inert. No user input reaches this.
         dangerouslySetInnerHTML={{ __html: mechanismSvg(id) }}

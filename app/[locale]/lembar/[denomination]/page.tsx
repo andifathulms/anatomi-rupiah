@@ -3,24 +3,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { CitationLines } from '@/components/mechanism/CitationList'
 import { denominationChecklist, denominationIds } from '@/lib/content/views'
+import { CHANNEL_BORDER_TOP, CHANNEL_TEXT_DEEP } from '@/lib/channelClasses'
 import { LOCALES, href, isLocale } from '@/lib/i18n'
 import { PERIKSA } from '@/lib/i18n/periksa'
 import { pageMetadata } from '@/lib/seo'
-import type { CheckChannel } from '@/lib/content/schema'
-
-const CHANNEL_ACCENT: Record<CheckChannel, string> = {
-  dilihat: 'border-t-dilihat',
-  diraba: 'border-t-diraba',
-  diterawang: 'border-t-diterawang',
-  mesin: 'border-t-mesin',
-}
-
-const CHANNEL_TEXT: Record<CheckChannel, string> = {
-  dilihat: 'text-dilihat-deep',
-  diraba: 'text-diraba-deep',
-  diterawang: 'text-diterawang-deep',
-  mesin: 'text-mesin-deep',
-}
 
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) => denominationIds().map((denomination) => ({ locale, denomination })))
@@ -70,8 +56,8 @@ export default function DenominationChecklistPage({
 
       <div className="mt-10 space-y-10">
         {checklist.byChannel.map((group) => (
-          <section key={group.channel} className={`border-t-4 pt-4 ${CHANNEL_ACCENT[group.channel]}`}>
-            <h2 className={`font-mono text-xs uppercase tracking-[0.24em] ${CHANNEL_TEXT[group.channel]}`}>
+          <section key={group.channel} className={`border-t-4 pt-4 ${CHANNEL_BORDER_TOP[group.channel]}`}>
+            <h2 className={`font-mono text-xs uppercase tracking-[0.24em] ${CHANNEL_TEXT_DEEP[group.channel]}`}>
               {group.channelLabel}
             </h2>
             <ul className="mt-4 space-y-5">
