@@ -46,32 +46,51 @@ export function generateStaticParams() {
  */
 const SITE_ORIGIN = 'https://andifathulms.github.io/'
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_ORIGIN),
-  title: {
-    default: 'Anatomi Rupiah',
-    template: '%s · Anatomi Rupiah',
-  },
-  description:
-    'Penjelasan mekanisme unsur pengaman uang Rupiah. Skema, bertanda SPESIMEN, tidak menentukan keaslian.',
-  robots: { index: true, follow: true },
-  manifest: assetPath('/site.webmanifest'),
-  icons: {
-    icon: [{ url: assetPath('/brand/favicon.svg'), type: 'image/svg+xml' }],
-    apple: [{ url: assetPath('/brand/apple-touch-icon-180.png'), sizes: '180x180' }],
-  },
-  openGraph: {
-    type: 'website',
-    siteName: 'Anatomi Rupiah',
-    title: 'Anatomi Rupiah',
-    description:
-      'Cara kerja unsur pengaman uang Rupiah, dan cara memeriksanya. Skema bertanda SPESIMEN.',
-    images: [{ url: assetPath('/brand/og-1200x630.png'), width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    images: [assetPath('/brand/og-1200x630.png')],
-  },
+/**
+ * The site-wide fallback — used as-is by routes that don't set their own
+ * (chiefly /_not-found) and merged under whatever a page overrides. Locale-
+ * aware, unlike the static object this replaces: that one was Indonesian
+ * text shown even on /en pages, because a plain `metadata` export can't vary
+ * by the very locale param it's named after.
+ *
+ * The description is SITE.tagline, not a separate hand-written sentence —
+ * previously this and the openGraph description were two different
+ * hand-written strings for the same claim, and only one of them was ever
+ * shown.
+ */
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  const locale = isLocale(params.locale) ? params.locale : 'id'
+  const copy = SITE[locale]
+
+  return {
+    metadataBase: new URL(SITE_ORIGIN),
+    title: {
+      default: copy.siteName,
+      template: `%s · ${copy.siteName}`,
+    },
+    description: copy.tagline,
+    robots: { index: true, follow: true },
+    manifest: assetPath('/site.webmanifest'),
+    icons: {
+      icon: [{ url: assetPath('/brand/favicon.svg'), type: 'image/svg+xml' }],
+      apple: [{ url: assetPath('/brand/apple-touch-icon-180.png'), sizes: '180x180' }],
+    },
+    openGraph: {
+      type: 'website',
+      siteName: copy.siteName,
+      title: copy.siteName,
+      description: copy.tagline,
+      images: [{ url: assetPath('/brand/og-1200x630.png'), width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [assetPath('/brand/og-1200x630.png')],
+    },
+  }
 }
 
 export default function LocaleLayout({
