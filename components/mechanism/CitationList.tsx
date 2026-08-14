@@ -32,7 +32,10 @@ export function CitationLines({
                 className="underline underline-offset-4"
               >
                 ↗
-                <span className="sr-only">{locale === 'id' ? 'buka sumber' : 'open source'}</span>
+                <span className="sr-only">
+                  {locale === 'id' ? 'buka sumber: ' : 'open source: '}
+                  {citation.title}
+                </span>
               </a>
             </>
           )}
