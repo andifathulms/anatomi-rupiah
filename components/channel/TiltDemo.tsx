@@ -143,7 +143,7 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
             <button
               type="button"
               onClick={enableOrientation}
-              className="mt-4 border border-engraving/30 px-3 py-1.5 text-sm hover:border-engraving"
+              className="mt-4 inline-flex min-h-11 items-center border border-engraving/30 px-3 py-1.5 text-sm hover:border-engraving"
             >
               {copy.tiltUseDevice}
             </button>

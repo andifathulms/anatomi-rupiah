@@ -65,7 +65,7 @@ export function LightTable({ copy }: { readonly copy: DemoCopy }) {
           else if (event.pointerType !== 'mouse') move(event.clientX, event.clientY)
         }}
         onPointerDown={(event) => move(event.clientX, event.clientY)}
-        className="mt-6 aspect-[2/1] w-full max-w-lg overflow-hidden rounded-sm"
+        className="mt-6 aspect-[2/1] w-full max-w-lg overflow-hidden"
         style={{ backgroundColor: INSPECT }}
       >
         <GlPanel
@@ -101,7 +101,7 @@ export function LightTable({ copy }: { readonly copy: DemoCopy }) {
             type="button"
             onClick={() => nudge(dx, dy)}
             aria-label={`${copy.lightMove} ${glyph}`}
-            className="h-7 w-7 border border-engraving/25 text-sm hover:border-engraving"
+            className="h-11 w-11 border border-engraving/25 text-sm hover:border-engraving active:bg-proof-deep"
           >
             {glyph}
           </button>

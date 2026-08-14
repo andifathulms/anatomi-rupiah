@@ -54,7 +54,7 @@ export default function SumberPage({ params }: { readonly params: { readonly loc
                     href={source.url}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="underline underline-offset-4"
+                    className="relative inline-block underline underline-offset-4 before:absolute before:-inset-2.5 before:content-['']"
                   >
                     ↗<span className="sr-only">{copy.openLabel}</span>
                   </a>

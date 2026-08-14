@@ -29,7 +29,12 @@ export function CitationLines({
                 href={citation.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="underline underline-offset-4"
+                // The visible glyph is one character; the hit area is
+                // widened well past it with an invisible pseudo-element
+                // rather than padding, so the inline text flow doesn't
+                // shift (critique 2026-08-14, P1 — this is the
+                // highest-frequency small tap target on the site).
+                className="relative inline-block underline underline-offset-4 before:absolute before:-inset-2.5 before:content-['']"
               >
                 ↗
                 <span className="sr-only">
@@ -54,7 +59,7 @@ export function CitationList({
 }) {
   return (
     <section className="rule mt-14 pt-6" aria-labelledby="sumber">
-      <h2 id="sumber" className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
+      <h2 id="sumber" className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
         {locale === 'id' ? 'Sumber' : 'Sources'}
       </h2>
       <CitationLines citations={citations} locale={locale} />

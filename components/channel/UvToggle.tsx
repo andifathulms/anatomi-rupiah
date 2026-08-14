@@ -56,8 +56,8 @@ export function UvToggle({ copy }: { readonly copy: DemoCopy }) {
             aria-pressed={lampOn}
             className={
               lampOn
-                ? 'border border-mesin bg-mesin px-4 py-2 text-sm text-proof'
-                : 'border border-engraving/30 px-4 py-2 text-sm hover:border-engraving'
+                ? 'inline-flex min-h-11 items-center border border-mesin bg-mesin px-4 py-2 text-sm text-proof'
+                : 'inline-flex min-h-11 items-center border border-engraving/30 px-4 py-2 text-sm hover:border-engraving'
             }
           >
             {lampOn ? copy.uvLamp : copy.uvOrdinary}

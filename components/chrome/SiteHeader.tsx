@@ -53,8 +53,8 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
                   aria-label={`${route.label[locale]} — ${route.hint[locale]}`}
                   className={
                     route.segment === segment
-                      ? 'block rounded-full bg-engraving px-3 py-1.5 text-sm text-proof'
-                      : 'block rounded-full px-3 py-1.5 text-sm text-engraving-soft hover:bg-proof-deep hover:text-engraving'
+                      ? 'inline-flex min-h-11 items-center rounded-full bg-engraving px-3 py-1.5 text-sm text-proof'
+                      : 'inline-flex min-h-11 items-center rounded-full px-3 py-1.5 text-sm text-engraving-soft hover:bg-proof-deep hover:text-engraving'
                   }
                 >
                   {route.label[locale]}
@@ -66,7 +66,7 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
 
         <Link
           href={href(other, segment)}
-          className="shrink-0 rounded-full border border-engraving/30 bg-proof-deep px-2.5 py-1 font-mono text-xs uppercase tracking-widest text-engraving hover:border-engraving hover:bg-engraving hover:text-proof"
+          className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full border border-engraving/30 bg-proof-deep px-2.5 py-1 font-mono text-xs uppercase tracking-widest text-engraving hover:border-engraving hover:bg-engraving hover:text-proof"
           lang={other}
         >
           {other.toUpperCase()}

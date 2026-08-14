@@ -45,7 +45,7 @@ export function ReliefLight({
       body={copy.reliefBody}
       disclaimer={copy.reliefDisclaimer}
     >
-      <div className="mt-6 aspect-[5/2] w-full max-w-lg overflow-hidden rounded-sm border border-engraving/12">
+      <div className="mt-6 aspect-[5/2] w-full max-w-lg overflow-hidden border border-engraving/12">
         <GlPanel
           fragment={RELIEF_FRAGMENT}
           uniforms={uniforms}
