@@ -73,4 +73,8 @@ export const tintaBerubahWarna: Feature = {
       },
     ],
   },
+  limitation: {
+    id: 'Situs ini menjelaskan mengapa warnanya bergeser, bukan tinta mana yang menyebabkannya. Rincian bahan itu berguna bagi pemalsu, bukan bagi pemeriksa.',
+    en: 'This site explains why the colour shifts, not which ink makes it happen. That detail would help a forger, not a checker.',
+  },
 }

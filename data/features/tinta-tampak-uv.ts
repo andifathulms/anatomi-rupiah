@@ -63,7 +63,7 @@ export const tintaTampakUv: Feature = {
     ],
   },
   limitation: {
-    id: 'Pemeriksaan ini memerlukan lampu ultraviolet. Situs ini menggambarkan hasilnya, tetapi layar tidak memancarkan ultraviolet dan tidak bisa menggantikan lampunya.',
-    en: 'This check needs an ultraviolet lamp. This site illustrates the result, but a screen emits no ultraviolet and cannot stand in for the lamp.',
+    id: 'Pemeriksaan ini memerlukan lampu ultraviolet. Situs ini menggambarkan hasilnya, tetapi layar tidak memancarkan ultraviolet dan tidak bisa menggantikan lampunya. Situs ini juga tidak menyebut bahan yang memendar itu — itu berguna bagi pemalsu, bukan bagi pemeriksa.',
+    en: 'This check needs an ultraviolet lamp. This site illustrates the result, but a screen emits no ultraviolet and cannot stand in for the lamp. Nor does this site name what glows — that would help a forger, not a checker.',
   },
 }
