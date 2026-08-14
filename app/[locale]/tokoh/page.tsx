@@ -1,15 +1,33 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { figuresWithoutBiography, notePeople } from '@/lib/content/tokoh'
-import { LOCALES, isLocale } from '@/lib/i18n'
+import { LOCALES, isLocale, routeLabel, type Locale } from '@/lib/i18n'
+import { pageMetadata } from '@/lib/seo'
 import type { Motif } from '@/lib/content/schema'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: 'Tokoh & motif',
+function ledeFor(locale: Locale): string {
+  return locale === 'id'
+    ? 'Di sisi depan seorang pahlawan nasional; di sisi belakang sebuah tarian daerah, satu pemandangan alam, dan satu bunga. Kebanyakan orang membawanya setiap hari tanpa tahu apa yang digambarkan.'
+    : 'A national hero on the front; a regional dance, a landscape, and a flower on the back. Most people carry these daily without knowing what they depict.'
+}
+
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'tokoh',
+    title: routeLabel('tokoh', locale),
+    description: ledeFor(locale),
+  })
 }
 
 const KIND_LABEL: Record<Motif['kind'], { readonly id: string; readonly en: string }> = {
@@ -30,11 +48,7 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
       <h1 className="font-display text-4xl leading-tight">
         {locale === 'id' ? 'Tokoh & motif' : 'Figures & motifs'}
       </h1>
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">
-        {locale === 'id'
-          ? 'Di sisi depan seorang pahlawan nasional; di sisi belakang sebuah tarian daerah, satu pemandangan alam, dan satu bunga. Kebanyakan orang membawanya setiap hari tanpa tahu apa yang digambarkan.'
-          : 'A national hero on the front; a regional dance, a landscape, and a flower on the back. Most people carry these daily without knowing what they depict.'}
-      </p>
+      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{ledeFor(locale)}</p>
 
       <p className="mt-6 max-w-prose border-l-2 border-engraving/20 pl-3 text-sm leading-relaxed text-engraving-faint">
         {locale === 'id'

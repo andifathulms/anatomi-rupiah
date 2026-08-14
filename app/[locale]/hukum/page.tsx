@@ -1,14 +1,26 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { LOCALES, isLocale } from '@/lib/i18n'
+import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { HUKUM } from '@/lib/i18n/hukum'
+import { pageMetadata } from '@/lib/seo'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: 'Dasar hukum & metode',
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'hukum',
+    title: routeLabel('hukum', locale),
+    description: HUKUM[locale].lede,
+  })
 }
 
 export default function HukumPage({ params }: { readonly params: { readonly locale: string } }) {

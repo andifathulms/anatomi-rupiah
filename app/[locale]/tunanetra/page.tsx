@@ -6,15 +6,33 @@ import { CitationList } from '@/components/mechanism/CitationList'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
 import { blindCodeGaps, blindCodeRows } from '@/lib/content/tunanetra'
 import { featureDetail } from '@/lib/content/views'
-import { LOCALES, href, isLocale } from '@/lib/i18n'
+import { LOCALES, href, isLocale, routeLabel, type Locale } from '@/lib/i18n'
 import { DEMO } from '@/lib/i18n/demo'
+import { pageMetadata } from '@/lib/seo'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: 'Kode tuna netra',
+function ledeFor(locale: Locale): string {
+  return locale === 'id'
+    ? 'Uang Rupiah membawa tanda yang dirancang untuk dibaca tanpa penglihatan. Hampir tidak ada orang awas di Indonesia yang tahu tanda itu ada.'
+    : 'Rupiah notes carry marks designed to be read without sight. Almost no sighted person in Indonesia knows they are there.'
+}
+
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'tunanetra',
+    title: routeLabel('tunanetra', locale),
+    description: ledeFor(locale),
+  })
 }
 
 export default function TunanetraPage({ params }: { readonly params: { readonly locale: string } }) {
@@ -39,11 +57,7 @@ export default function TunanetraPage({ params }: { readonly params: { readonly 
         {detail.channelLabel}
       </p>
       <h1 className="mt-3 font-display text-4xl leading-tight">{detail.name}</h1>
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">
-        {locale === 'id'
-          ? 'Uang Rupiah membawa tanda yang dirancang untuk dibaca tanpa penglihatan. Hampir tidak ada orang awas di Indonesia yang tahu tanda itu ada.'
-          : 'Rupiah notes carry marks designed to be read without sight. Almost no sighted person in Indonesia knows they are there.'}
-      </p>
+      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{ledeFor(locale)}</p>
       <p className="mt-4 max-w-prose leading-relaxed text-engraving-soft">{detail.summary}</p>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">

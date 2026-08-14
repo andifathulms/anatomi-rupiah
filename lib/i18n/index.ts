@@ -87,6 +87,13 @@ export function href(locale: Locale, segment: string): string {
   return segment === '' ? `/${locale}` : `/${locale}/${segment}`
 }
 
+/** The nav label for a top-level route, by segment — the same string the
+ * header already shows, so a page's <title> never drifts from its own nav
+ * entry or gets left in Indonesian on the English site. */
+export function routeLabel(segment: string, locale: Locale): string {
+  return ROUTES.find((route) => route.segment === segment)?.label[locale] ?? segment
+}
+
 export const CHANNEL_LABEL: Record<'dilihat' | 'diraba' | 'diterawang' | 'mesin', Record<Locale, string>> = {
   dilihat: { id: 'Dilihat', en: 'Dilihat — seen' },
   diraba: { id: 'Diraba', en: 'Diraba — felt' },

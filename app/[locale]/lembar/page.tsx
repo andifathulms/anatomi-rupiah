@@ -3,15 +3,27 @@ import { notFound } from 'next/navigation'
 import { Sheet } from '@/components/sheet/Sheet'
 import { MECHANISM_IDS, mechanismSvg } from '@/lib/art/mechanisms'
 import { sheetNotes } from '@/lib/schematic/sheet'
-import { LOCALES, isLocale } from '@/lib/i18n'
+import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { LEMBAR } from '@/lib/i18n/lembar'
+import { pageMetadata } from '@/lib/seo'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: 'Lembar',
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'lembar',
+    title: routeLabel('lembar', locale),
+    description: LEMBAR[locale].lede,
+  })
 }
 
 /** Artwork is read on the server at build time and handed over as markup. */

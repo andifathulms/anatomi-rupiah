@@ -3,16 +3,28 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { CitationLines } from '@/components/mechanism/CitationList'
 import { denominationChecklist, featureCards } from '@/lib/content/views'
-import { LOCALES, isLocale } from '@/lib/i18n'
+import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { TIGAD } from '@/lib/i18n/tigad'
+import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: '3D',
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'tigad',
+    title: routeLabel('tigad', locale),
+    description: TIGAD[locale].lede,
+  })
 }
 
 const ORDER: readonly CheckChannel[] = ['dilihat', 'diraba', 'diterawang']

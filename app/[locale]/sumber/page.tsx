@@ -1,15 +1,27 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { allSources } from '@/lib/content/views'
-import { LOCALES, isLocale } from '@/lib/i18n'
+import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { SUMBER } from '@/lib/i18n/sumber'
+import { pageMetadata } from '@/lib/seo'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: 'Sumber',
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'sumber',
+    title: routeLabel('sumber', locale),
+    description: SUMBER[locale].lede,
+  })
 }
 
 export default function SumberPage({ params }: { readonly params: { readonly locale: string } }) {

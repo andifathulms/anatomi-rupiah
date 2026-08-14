@@ -1,18 +1,36 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { CHANNEL_LABEL, LOCALES, isLocale } from '@/lib/i18n'
+import { CHANNEL_LABEL, LOCALES, isLocale, routeLabel, type Locale } from '@/lib/i18n'
 import { featureCards } from '@/lib/content/views'
 import { mechanismSvg } from '@/lib/art/mechanisms'
 import { CHANNEL_ORDER } from '@/lib/content'
+import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  title: 'Ciri',
+function ledeFor(locale: Locale): string {
+  return locale === 'id'
+    ? 'Tiap ciri digambar sebagai potongan melintang: apa yang terjadi pada bahannya, dan apa yang harus Anda amati. Tidak ada satu pun foto uang di sini.'
+    : 'Each feature is drawn in cross-section: what happens in the material, and what you should observe. There is not one photograph of a note here.'
+}
+
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  const locale = params.locale
+  return pageMetadata({
+    locale,
+    segment: 'ciri',
+    title: routeLabel('ciri', locale),
+    description: ledeFor(locale),
+  })
 }
 
 const CHANNEL_ACCENT: Record<CheckChannel, string> = {
@@ -54,11 +72,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
       <h1 className="mt-4 font-display text-title">
         {locale === 'id' ? 'Ciri dan cara kerjanya' : 'The features and how they work'}
       </h1>
-      <p className="mt-5 max-w-prose text-lede text-engraving-soft">
-        {locale === 'id'
-          ? 'Tiap ciri digambar sebagai potongan melintang: apa yang terjadi pada bahannya, dan apa yang harus Anda amati. Tidak ada satu pun foto uang di sini.'
-          : 'Each feature is drawn in cross-section: what happens in the material, and what you should observe. There is not one photograph of a note here.'}
-      </p>
+      <p className="mt-5 max-w-prose text-lede text-engraving-soft">{ledeFor(locale)}</p>
 
       {/* The legend, so the colour coding is learnable rather than guessable. */}
       <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2">

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { AnatomyStack } from '@/components/hero/AnatomyStack'
@@ -5,10 +6,21 @@ import { CHANNEL_BLURB, CHANNEL_LABEL, LOCALES, href, isLocale } from '@/lib/i18
 import { HOME } from '@/lib/i18n/copy'
 import { CHANNEL_ORDER, featuresById } from '@/lib/content'
 import { anatomyViewModel } from '@/lib/hero/anatomy'
+import { pageMetadata } from '@/lib/seo'
 import type { CheckChannel } from '@/lib/content/schema'
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
+}
+
+export function generateMetadata({
+  params,
+}: {
+  readonly params: { readonly locale: string }
+}): Metadata {
+  if (!isLocale(params.locale)) return {}
+  // No title: the root layout's default ("Anatomi Rupiah") applies untemplated.
+  return pageMetadata({ locale: params.locale, segment: '', description: HOME[params.locale].answer })
 }
 
 const CHANNEL_CARD: Record<CheckChannel, string> = {
