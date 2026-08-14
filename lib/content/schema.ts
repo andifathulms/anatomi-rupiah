@@ -106,6 +106,22 @@ export const denominationSchema = z.object({
 })
 export type Denomination = z.infer<typeof denominationSchema>
 
+/**
+ * A photograph of a person or place — never a note. CLAUDE.md invariant 13:
+ * the one exception to "no photographs", and only because a portrait or a
+ * flower is not a depiction of currency. License is recorded verbatim from
+ * the source, not paraphrased, and sourceUrl must resolve to where that
+ * license claim can be checked.
+ */
+export const photoSchema = z.object({
+  /** Repo-relative path under public/, e.g. "tokoh/soekarno.jpg". */
+  path: z.string().min(1),
+  license: z.string().min(1),
+  credit: z.string().min(1),
+  sourceUrl: z.string().url(),
+})
+export type Photo = z.infer<typeof photoSchema>
+
 export const figureSchema = z.object({
   type: z.literal('figure'),
   id: slugSchema,
@@ -113,6 +129,7 @@ export const figureSchema = z.object({
   /** Omitted until dates can be cited to a source that can be followed. */
   lifespan: z.string().min(1).optional(),
   claims: z.array(claimSchema).min(1),
+  photo: photoSchema.optional(),
 })
 export type Figure = z.infer<typeof figureSchema>
 
@@ -123,6 +140,7 @@ export const motifSchema = z.object({
   kind: z.enum(['tari', 'pemandangan', 'bunga', 'tenun']),
   origin: localizedSchema,
   claims: z.array(claimSchema).min(1),
+  photo: photoSchema.optional(),
 })
 export type Motif = z.infer<typeof motifSchema>
 
