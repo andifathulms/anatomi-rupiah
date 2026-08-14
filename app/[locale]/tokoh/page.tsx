@@ -14,7 +14,12 @@ function PhotoCredit({ photo, locale }: { readonly photo: Photo; readonly locale
   return (
     <p className="mt-2 font-mono text-label leading-snug text-engraving-faint">
       {photo.credit} · {photo.license}{' '}
-      <a href={photo.sourceUrl} target="_blank" rel="noreferrer noopener" className="underline underline-offset-2">
+      <a
+        href={photo.sourceUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="relative inline-block underline underline-offset-2 before:absolute before:-inset-2.5 before:content-['']"
+      >
         ↗<span className="sr-only">{locale === 'id' ? `sumber foto ${photo.credit}` : `photo source: ${photo.credit}`}</span>
       </a>
     </p>
@@ -107,7 +112,7 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
                       <img
                         src={assetPath(`/${note.figurePhoto.path}`)}
                         alt={note.figureName}
-                        className="h-40 w-40 rounded-sm border border-engraving/15 object-cover"
+                        className="h-40 w-40 border border-engraving/15 object-cover"
                       />
                       <PhotoCredit photo={note.figurePhoto} locale={locale} />
                     </>
@@ -138,10 +143,10 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
                       <img
                         src={assetPath(`/${motif.photo.path}`)}
                         alt={motif.name}
-                        className="mb-3 aspect-[4/3] w-full rounded-sm border border-engraving/15 object-cover"
+                        className="mb-3 aspect-[4/3] w-full border border-engraving/15 object-cover"
                       />
                     )}
-                    <p className="font-mono text-xs uppercase tracking-[0.18em] text-engraving-faint">
+                    <p className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
                       {KIND_LABEL[motif.kind][locale]}
                     </p>
                     <h4 className="mt-2 font-display text-lg">{motif.name}</h4>
