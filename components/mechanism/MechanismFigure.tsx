@@ -49,7 +49,7 @@ export function MechanismFigure({
         <ol className="mt-4 space-y-2">
           {steps.map((step, index) => (
             <li key={step} className="flex gap-3 text-sm leading-relaxed">
-              <span className="callout-number mt-0.5 shrink-0 text-engraving-faint">
+              <span aria-hidden="true" className="callout-number mt-0.5 shrink-0 text-engraving-faint">
                 {index + 1}
               </span>
               <span>{step}</span>
