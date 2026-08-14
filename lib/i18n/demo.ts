@@ -11,6 +11,7 @@ export interface DemoCopy {
   readonly tiltUsingDevice: string
   readonly tiltDeviceUnavailable: string
   readonly tiltDisclaimer: string
+  readonly tiltDisclaimerFallback: string
   readonly uvHeading: string
   readonly uvBody: string
   readonly uvOrdinary: string
@@ -42,6 +43,8 @@ export const DEMO: Record<Locale, DemoCopy> = {
     tiltDeviceUnavailable: 'Perangkat ini tidak melaporkan kemiringan. Gunakan penggeser.',
     tiltDisclaimer:
       'Warna yang mata lihat adalah cara otak membaca panjang gelombang cahaya — merah panjang gelombangnya panjang, biru pendek. Peragaan ini menghitung interferensi lapisan tipis untuk tiga panjang gelombang itu, jadi warnanya benar-benar mengikuti sudut pandang, bukan gambar yang diputar. Tebal lapisannya dipilih agar efeknya jelas di layar — ini bukan tiruan tinta pada uang mana pun.',
+    tiltDisclaimerFallback:
+      'Peramban ini tidak mendukung WebGL, jadi warna di atas bukan hasil hitungan interferensi — ia hanya bergeser lurus antara dua warna contoh, sekadar untuk tetap menunjukkan arah pergeserannya. Angka selisih jarak tempuh di bawah tetap dihitung sungguhan; hanya warnanya yang disederhanakan.',
     uvHeading: 'Nyalakan lampunya',
     uvBody:
       'Peragaan dua keadaan: cahaya ruangan biasa, lalu di bawah sinar ultraviolet. Perubahannya adalah pergantian keadaan, bukan animasi.',
@@ -78,6 +81,8 @@ export const DEMO: Record<Locale, DemoCopy> = {
     tiltDeviceUnavailable: 'This device reports no tilt. Use the slider.',
     tiltDisclaimer:
       'The colour the eye sees is how the brain reads a wavelength of light — red is a long wavelength, blue a short one. This computes thin-film interference for three such wavelengths, so the colour genuinely follows your viewing angle, not a rotated picture. The layer thickness is chosen to make the effect legible on a screen — it is not a copy of any note’s ink.',
+    tiltDisclaimerFallback:
+      'This browser does not support WebGL, so the colour above is not the result of an interference calculation — it only moves in a straight line between two example colours, enough to show which direction the shift goes. The path-difference number below is still the real calculation; only the colour is simplified.',
     uvHeading: 'Switch the lamp on',
     uvBody:
       'Two states, shown side by side: ordinary room light, then under ultraviolet. The change is a state change, not an animation.',

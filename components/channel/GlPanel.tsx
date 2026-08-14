@@ -20,6 +20,9 @@ export interface GlPanelProps {
   readonly label: string
   readonly className?: string
   readonly fallback: React.ReactNode
+  /** Called once if this panel falls back — so a caller whose fallback is an
+   * active simplification (not just a static message) can say so honestly. */
+  readonly onFallback?: () => void
 }
 
 function applyUniforms(handle: GlHandle, uniforms: Uniforms): void {
@@ -37,10 +40,15 @@ function applyUniforms(handle: GlHandle, uniforms: Uniforms): void {
   }
 }
 
-export function GlPanel({ fragment, uniforms, label, className, fallback }: GlPanelProps) {
+export function GlPanel({ fragment, uniforms, label, className, fallback, onFallback }: GlPanelProps) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const handle = useRef<GlHandle | null>(null)
   const [failed, setFailed] = useState(false)
+  // A ref so the setup effect below can stay keyed on `fragment` alone —
+  // depending on `onFallback` directly would tear down and rebuild the GL
+  // program on every parent re-render, not just when the shader changes.
+  const onFallbackRef = useRef(onFallback)
+  onFallbackRef.current = onFallback
 
   useEffect(() => {
     const element = canvas.current
@@ -49,6 +57,7 @@ export function GlPanel({ fragment, uniforms, label, className, fallback }: GlPa
     const created = createQuadProgram(element, fragment)
     if (created === null) {
       setFailed(true)
+      onFallbackRef.current?.()
       return undefined
     }
     handle.current = created
@@ -56,6 +65,7 @@ export function GlPanel({ fragment, uniforms, label, className, fallback }: GlPa
     const onLost = (event: Event) => {
       event.preventDefault()
       setFailed(true)
+      onFallbackRef.current?.()
     }
     element.addEventListener('webglcontextlost', onLost)
 

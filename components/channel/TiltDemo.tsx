@@ -36,6 +36,7 @@ const FILM_THICKNESS = 385
 export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
   const [angle, setAngle] = useState(0)
   const [orientation, setOrientation] = useState<OrientationState>('off')
+  const [usingFallback, setUsingFallback] = useState(false)
 
   useEffect(() => {
     if (orientation !== 'on') return undefined
@@ -95,6 +96,7 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
             uniforms={uniforms}
             label={copy.tiltHeading}
             className="h-full w-full"
+            onFallback={() => setUsingFallback(true)}
             fallback={
               <svg viewBox="0 0 160 120" className="h-full w-full" role="img" aria-label={copy.tiltHeading}>
                 <g transform={`translate(80 60) skewX(${skew}) translate(-80 -60)`}>
@@ -156,7 +158,7 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
       </div>
 
       <p className="mt-6 max-w-prose text-xs leading-relaxed text-engraving-faint">
-        {copy.tiltDisclaimer}
+        {usingFallback ? copy.tiltDisclaimerFallback : copy.tiltDisclaimer}
       </p>
     </section>
   )
