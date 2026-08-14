@@ -171,6 +171,13 @@ export function AnatomyStack({ model, links, caption, hint }: AnatomyStackProps)
               href={urlFor(layer.featureId)}
               onMouseEnter={() => setActive(layer.featureId)}
               onMouseLeave={() => setActive(undefined)}
+              // The stack above already links to the same destination and is
+              // reachable in sequential Tab order with a proper label; this
+              // caption-list duplicate stays clickable and screen-reader
+              // discoverable, but drops out of the Tab sequence so keyboard
+              // users aren't asked to tab through the same 8 destinations
+              // twice.
+              tabIndex={-1}
               className={`flex items-baseline gap-2 text-sm ${CHANNEL_TEXT[layer.channel]} ${
                 active === layer.featureId ? 'underline underline-offset-4' : ''
               }`}
