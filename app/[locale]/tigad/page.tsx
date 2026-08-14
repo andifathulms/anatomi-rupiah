@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Reveal } from '@/components/chrome/Reveal'
 import { CitationLines } from '@/components/mechanism/CitationList'
 import { denominationChecklist, featureCards } from '@/lib/content/views'
 import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
@@ -53,11 +54,13 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
 
   return (
     <div className="py-14">
-      <h1 className="font-display text-4xl leading-tight">{copy.title}</h1>
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{copy.lede}</p>
-      <p className="mt-3 max-w-prose text-sm leading-relaxed text-engraving-soft">
-        {copy.exampleIntro}
-      </p>
+      <div className="animate-lift-in">
+        <h1 className="font-display text-4xl leading-tight">{copy.title}</h1>
+        <p className="mt-6 max-w-prose text-lg leading-relaxed text-engraving-soft">{copy.lede}</p>
+        <p className="mt-3 max-w-prose text-sm leading-relaxed text-engraving-soft">
+          {copy.exampleIntro}
+        </p>
+      </div>
 
       <ol className="mt-14 space-y-12">
         {ORDER.map((channel) => {
@@ -65,7 +68,8 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
           const stepFeatures = cards.filter((card) => card.channel === channel)
           const exampleGroup = example.byChannel.find((group) => group.channel === channel)
           return (
-            <li key={channel} className={`border-l-4 pl-6 ${CHANNEL_RULE[channel]}`}>
+            <li key={channel}>
+            <Reveal className={`border-l-4 pl-6 ${CHANNEL_RULE[channel]}`}>
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
                 {step.ordinal}
               </p>
@@ -122,11 +126,13 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
                   </p>
                 </aside>
               )}
+            </Reveal>
             </li>
           )
         })}
       </ol>
 
+      <Reveal>
       <section className="mt-16 max-w-prose border-l-4 border-mesin pl-6" aria-labelledby="keempat">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-engraving-faint">
           {copy.steps.mesin.ordinal}
@@ -177,13 +183,18 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
           )
         })()}
       </section>
+      </Reveal>
 
-      <section className="mt-16 max-w-prose" aria-labelledby="sesudah">
-        <h2 id="sesudah" className="font-display text-2xl">
+      <Reveal>
+      <section className="mt-16 card max-w-prose p-7 sm:p-10" aria-labelledby="sesudah">
+        <h2 id="sesudah" className="font-display text-section">
           {copy.verdictHeading}
         </h2>
-        <p className="mt-3 leading-relaxed text-engraving-soft">{copy.verdictBody}</p>
+        <p className="mt-4 max-w-prose text-lede leading-relaxed text-engraving-soft">
+          {copy.verdictBody}
+        </p>
       </section>
+      </Reveal>
     </div>
   )
 }
