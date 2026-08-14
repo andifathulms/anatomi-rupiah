@@ -95,7 +95,7 @@ export default function LocaleLayout({
           {copy.skipToContent}
         </a>
         <SiteHeader locale={locale} />
-        <main id="isi" className="mx-auto max-w-sheet px-5">
+        <main id="isi" tabIndex={-1} className="mx-auto max-w-sheet px-5">
           {children}
         </main>
         <SiteFooter locale={locale} />
