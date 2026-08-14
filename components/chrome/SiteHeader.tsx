@@ -67,7 +67,11 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
           lang={other}
         >
           {other.toUpperCase()}
-          <span className="ml-1 hidden font-sans normal-case tracking-normal sm:inline">
+          {/* sr-only rather than `hidden`: `hidden` removes text from the
+              accessibility tree too, so below `sm` the link's accessible
+              name collapsed to just "EN"/"ID". This stays visually hidden
+              on narrow viewports but always reaches a screen reader. */}
+          <span className="ml-1 sr-only font-sans normal-case tracking-normal sm:not-sr-only sm:inline">
             · {copy.languageLabel}
           </span>
         </Link>
