@@ -145,10 +145,11 @@ export function Sheet({ notes, mechanisms, copy, locale }: SheetProps) {
                   onClick={() => selectFeature(candidate.featureId)}
                   aria-pressed={candidate.featureId === featureId}
                   // Selected state reads as a solid ink fill, deliberately not
-                  // the border-l-4 grammar used elsewhere for channel-taxonomy
-                  // accents (DESIGN.md's "The Taxonomy Rule") — that grammar
-                  // means "this belongs to a checking channel," not "this is
-                  // selected," and the two must not collide (critique 2026-08-14).
+                  // the left-accent-border grammar used elsewhere for channel-
+                  // taxonomy accents (DESIGN.md's "The Taxonomy Rule") — that
+                  // grammar means "this belongs to a checking channel," not
+                  // "this is selected," and the two must not collide
+                  // (critique 2026-08-14).
                   className={`flex w-full items-baseline gap-3 px-3 py-3 text-left transition-colors ${
                     candidate.featureId === featureId
                       ? 'bg-engraving text-proof'
