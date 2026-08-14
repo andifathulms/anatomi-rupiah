@@ -30,9 +30,16 @@ export function SiteFooter({ locale }: { readonly locale: Locale }) {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-engraving/12 pt-5">
+        {/* Its own landmark, not just a border-t inside the legal footer: a
+            screen-reader user tabbing landmarks should be able to tell "the
+            legal notice" and "the maker's personal credit" apart as two
+            regions, not hear one continuous footer (critique 2026-08-14, P3). */}
+        <section
+          aria-label={locale === 'id' ? 'Kredit pembuat' : 'Maker credit'}
+          className="mt-8 border-t border-engraving/12 pt-5"
+        >
           <MakerSignature locale={locale} />
-        </div>
+        </section>
       </div>
     </footer>
   )
