@@ -20,11 +20,7 @@ export function SiteHeader({ locale }: { readonly locale: Locale }) {
   return (
     <header className="sticky top-0 z-30 border-b border-engraving/12 bg-proof/85 backdrop-blur-sm supports-[backdrop-filter]:bg-proof/70">
       <div className="mx-auto flex max-w-sheet items-center gap-4 px-5 py-3">
-        <Link
-          href={href(locale, '')}
-          className="flex shrink-0 items-center gap-2.5"
-          aria-label={copy.siteName}
-        >
+        <Link href={href(locale, '')} className="flex shrink-0 items-center gap-2.5">
           {/* The tile variant, not the ink-only one: at this size the ink-only
               mark collapses into a blob, exactly as the asset kit warns.
               A plain <img> on purpose — next/image cannot optimise an SVG, and
