@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Reveal } from '@/components/chrome/Reveal'
 import { allSources } from '@/lib/content/views'
 import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { SUMBER } from '@/lib/i18n/sumber'
@@ -32,12 +33,15 @@ export default function SumberPage({ params }: { readonly params: { readonly loc
 
   return (
     <div className="py-14">
-      <h1 className="font-display text-title">{copy.title}</h1>
-      <p className="mt-5 max-w-prose text-lede text-engraving-soft">{copy.lede}</p>
+      <div className="animate-lift-in">
+        <h1 className="font-display text-title">{copy.title}</h1>
+        <p className="mt-5 max-w-prose text-lede text-engraving-soft">{copy.lede}</p>
+      </div>
 
       <ul className="mt-10 space-y-6">
         {sources.map((source) => (
-          <li key={`${source.publisher}-${source.title}-${source.url ?? ''}`} className="card p-5">
+          <li key={`${source.publisher}-${source.title}-${source.url ?? ''}`}>
+          <Reveal className="card p-5">
             <p className="font-mono text-label uppercase tracking-[0.24em] text-engraving-faint">
               {source.publisher}
             </p>
@@ -62,6 +66,7 @@ export default function SumberPage({ params }: { readonly params: { readonly loc
                 {copy.citedForLabel}: {source.locators.join(' · ')}
               </p>
             )}
+          </Reveal>
           </li>
         ))}
       </ul>
