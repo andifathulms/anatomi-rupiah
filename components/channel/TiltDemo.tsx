@@ -87,7 +87,7 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
       <p className="mt-2 max-w-prose text-sm leading-relaxed text-engraving-soft">{copy.tiltBody}</p>
 
       <div className="mt-6 flex flex-wrap items-center gap-8">
-        <div className="h-[150px] w-[200px] shrink-0">
+        <div className="aspect-[4/3] w-full max-w-xs">
           <GlPanel
             fragment={THIN_FILM_FRAGMENT}
             uniforms={uniforms}
@@ -109,7 +109,7 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
           />
         </div>
 
-        <div className="min-w-[16rem] flex-1">
+        <div className="min-w-0 flex-1">
           <label htmlFor="tilt-angle" className="block text-sm">
             {copy.tiltLabel}
           </label>
