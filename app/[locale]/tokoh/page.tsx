@@ -149,7 +149,14 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
                     <p className="font-mono text-xs uppercase tracking-[0.24em] text-engraving-faint">
                       {KIND_LABEL[motif.kind][locale]}
                     </p>
-                    <h4 className="mt-2 font-display text-lg">{motif.name}</h4>
+                    {/* min-h reserves two lines' worth of title regardless of
+                        whether this particular name wraps, so the claim and
+                        credit below it start at the same row across every
+                        card in the grid rather than trailing whichever
+                        sibling had the longer name. */}
+                    <h4 className="mt-2 min-h-[3.5rem] font-display text-lg leading-snug">
+                      {motif.name}
+                    </h4>
                     <p className="mt-2 text-sm leading-relaxed text-engraving-soft">{motif.claim}</p>
                     {motif.photo !== undefined && <PhotoCredit photo={motif.photo} locale={locale} />}
                   </li>
