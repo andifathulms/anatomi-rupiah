@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Reveal } from '@/components/chrome/Reveal'
 import { LOCALES, isLocale, routeLabel } from '@/lib/i18n'
 import { HUKUM } from '@/lib/i18n/hukum'
 import { pageMetadata } from '@/lib/seo'
@@ -29,19 +30,37 @@ export default function HukumPage({ params }: { readonly params: { readonly loca
 
   return (
     <article className="max-w-prose py-14">
-      <h1 className="font-display text-4xl leading-tight">{copy.title}</h1>
-      <p className="mt-6 text-lg leading-relaxed text-engraving-soft">{copy.lede}</p>
+      <div className="animate-lift-in">
+        <h1 className="font-display text-4xl leading-tight">{copy.title}</h1>
+        <p className="mt-6 text-lg leading-relaxed text-engraving-soft">{copy.lede}</p>
+      </div>
 
       {copy.sections.map((section) => (
-        <section key={section.id} className="mt-12" aria-labelledby={section.id}>
+        <Reveal key={section.id}>
+        <section className="mt-12" aria-labelledby={section.id}>
           <h2 id={section.id} className="font-display text-2xl">
             {section.heading}
           </h2>
-          {section.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="mt-4 leading-relaxed text-engraving-soft">
-              {paragraph}
-            </p>
-          ))}
+          {section.id === 'dasar' ? (
+            <>
+              {section.paragraphs[0] !== undefined && (
+                <blockquote className="mt-5 border-l-4 border-engraving bg-proof-deep/40 p-6 font-display text-lede leading-snug text-engraving">
+                  {section.paragraphs[0]}
+                </blockquote>
+              )}
+              {section.paragraphs.slice(1).map((paragraph) => (
+                <p key={paragraph} className="mt-4 leading-relaxed text-engraving-soft">
+                  {paragraph}
+                </p>
+              ))}
+            </>
+          ) : (
+            section.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="mt-4 leading-relaxed text-engraving-soft">
+                {paragraph}
+              </p>
+            ))
+          )}
           {section.bullets !== undefined && (
             <ul className="mt-4 space-y-2">
               {section.bullets.map((bullet) => (
@@ -55,8 +74,10 @@ export default function HukumPage({ params }: { readonly params: { readonly loca
             </ul>
           )}
         </section>
+        </Reveal>
       ))}
 
+      <Reveal>
       <section className="mt-12" aria-labelledby="sumber">
         <h2 id="sumber" className="font-display text-2xl">
           {copy.linksHeading}
@@ -76,6 +97,7 @@ export default function HukumPage({ params }: { readonly params: { readonly loca
           ))}
         </ul>
       </section>
+      </Reveal>
 
       <p className="rule mt-12 pt-6 text-sm text-engraving-faint">{copy.notAffiliated}</p>
     </article>
