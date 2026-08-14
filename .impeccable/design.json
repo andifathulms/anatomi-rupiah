@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-14T00:00:00.000Z",
+  "title": "Design System: Anatomi Rupiah",
+  "extensions": {
+    "colorMeta": {
+      "proof": { "role": "neutral", "displayName": "Proof Stock", "canonical": "#EFEBE1", "tonalRamp": ["#484744", "#8f8d87", "#d7d4cb", "#f1ede4", "#f4f1ea", "#f7f5f0", "#faf9f6", "#fdfdfc"] },
+      "engraving": { "role": "primary", "displayName": "Engraving Ink", "canonical": "#1A1F26", "tonalRamp": ["#08090b", "#101317", "#171c22", "#31353c", "#5f6267", "#8d8f93", "#babcbe", "#e8e9e9"] },
+      "dilihat": { "role": "secondary", "displayName": "Dilihat Teal", "canonical": "#2C6E75", "tonalRamp": ["#0d2123", "#1a4246", "#286369", "#417d83", "#6b9a9e", "#96b7ba", "#c0d4d6", "#eaf1f1"] },
+      "diraba": { "role": "secondary", "displayName": "Diraba Copper", "canonical": "#9A6B45", "tonalRamp": ["#2e2015", "#5c4029", "#8b603e", "#a47a58", "#b8977d", "#cdb5a2", "#e1d3c7", "#f5f0ec"] },
+      "diterawang": { "role": "secondary", "displayName": "Diterawang Amber", "canonical": "#C08A2E", "tonalRamp": ["#3a290e", "#73531c", "#ad7c29", "#c69643", "#d3ad6d", "#e0c597", "#ecdcc0", "#f9f3ea"] },
+      "mesin": { "role": "secondary", "displayName": "Mesin Violet", "canonical": "#6B4FA8", "tonalRamp": ["#201832", "#402f65", "#604797", "#7a61b1", "#9784c2", "#b5a7d4", "#d3cae5", "#f0edf6"] },
+      "spesimen": { "role": "tertiary", "displayName": "Spesimen Red", "canonical": "#A8443A", "tonalRamp": ["#321411", "#652923", "#973d34", "#b1574e", "#c27c75", "#d4a29d", "#e5c7c4", "#f6eceb"] },
+      "inspect": { "role": "neutral", "displayName": "Inspection Surface", "canonical": "#14181E", "tonalRamp": ["#060709", "#0c0e12", "#12161b", "#2c2f35", "#5b5d62", "#8a8c8f", "#b9babc", "#e7e8e8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only, one per page." },
+      "title": { "displayName": "Title", "purpose": "Page and section titles below the hero." },
+      "section": { "displayName": "Section", "purpose": "Sub-section headings within a page." },
+      "lede": { "displayName": "Lede", "purpose": "The opening paragraph under a headline, sized up from body." },
+      "body": { "displayName": "Body", "purpose": "All prose." },
+      "label": { "displayName": "Label / Eyebrow", "purpose": "Channel labels, citation headings, eyebrows — uppercase mono." },
+      "numeric": { "displayName": "Numeric", "purpose": "Denominations and dimensions; tabular-nums so figures align in a column." }
+    },
+    "shadows": [
+      { "name": "sheet", "value": "0 1px 2px rgba(26,31,38,0.05), 0 8px 24px -12px rgba(26,31,38,0.18)", "purpose": "Resting elevation for .card." },
+      { "name": "lift", "value": "0 2px 4px rgba(26,31,38,0.06), 0 18px 40px -18px rgba(26,31,38,0.28)", "purpose": "Hover/focus-within state for .card-interactive." },
+      { "name": "plate", "value": "0 24px 60px -28px rgba(26,31,38,0.45)", "purpose": "Heaviest lift, reserved for the single most prominent element on a view (the hero anatomy stack)." }
+    ],
+    "motion": [
+      { "name": "ray-travel", "value": "3.2s ease-in-out infinite", "purpose": "Light-ray sweep inside mechanism diagrams that opt in via the .mech .rays path class." },
+      { "name": "thread-draw", "value": "2.4s ease-out forwards", "purpose": "Security-thread stroke reveal in mechanism diagrams." },
+      { "name": "lift-in", "value": "0.5s ease-out both, translateY(12px) to translateY(0)", "purpose": "Quiet arrival fade/lift for sections and cards entering view." },
+      { "name": "card-shadow-transition", "value": "200ms, shadow property only", "purpose": "Sheet-to-Lift elevation change on .card-interactive hover/focus-within." },
+      { "name": "reduced-motion-override", "value": "prefers-reduced-motion: reduce sets all animation/transition durations to 0.01ms and scroll-behavior to auto", "purpose": "Full motion opt-out; also required so no feature ever simulates the diraba touch check via animation." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Pill (default)",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Inactive route item in the sticky header nav.",
+      "html": "<a class=\"ds-nav-pill\" href=\"#\">Ciri</a>",
+      "css": ".ds-nav-pill { display: block; border-radius: 9999px; padding: 6px 12px; font-size: 0.875rem; color: #3D454F; text-decoration: none; transition: background 0.2s, color 0.2s; } .ds-nav-pill:hover { background: #E4DFD2; color: #1A1F26; } .ds-nav-pill:focus-visible { outline: 2px solid #2C6E75; outline-offset: 3px; }"
+    },
+    {
+      "name": "Nav Pill (active)",
+      "kind": "nav",
+      "refersTo": "nav-pill-active",
+      "description": "Current-route item in the sticky header nav.",
+      "html": "<a class=\"ds-nav-pill-active\" href=\"#\" aria-current=\"page\">Sumber</a>",
+      "css": ".ds-nav-pill-active { display: block; border-radius: 9999px; padding: 6px 12px; font-size: 0.875rem; background: #1A1F26; color: #EFEBE1; text-decoration: none; }"
+    },
+    {
+      "name": "Locale Toggle",
+      "kind": "button",
+      "refersTo": "locale-toggle",
+      "description": "The ID/EN language switch pill at the end of the header.",
+      "html": "<a class=\"ds-locale-toggle\" href=\"#\">EN</a>",
+      "css": ".ds-locale-toggle { display: inline-flex; align-items: center; border-radius: 9999px; border: 1px solid rgba(26,31,38,0.3); background: #E4DFD2; color: #1A1F26; padding: 4px 10px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s; } .ds-locale-toggle:hover { background: #1A1F26; color: #EFEBE1; border-color: #1A1F26; }"
+    },
+    {
+      "name": "Card (static)",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Resting information card — proof-stock surface, hairline border, sheet-level ink shadow.",
+      "html": "<div class=\"ds-card\"><p class=\"ds-eyebrow\">Dilihat</p><h3>Tanda Air</h3><p>Terlihat saat diterawangkan ke arah cahaya.</p></div>",
+      "css": ".ds-card { background: #EFEBE1; color: #1A1F26; border: 1px solid rgba(26,31,38,0.1); box-shadow: 0 1px 2px rgba(26,31,38,0.05), 0 8px 24px -12px rgba(26,31,38,0.18); padding: 24px; } .ds-eyebrow { font-family: 'Space Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.24em; color: #626870; margin: 0 0 8px; }"
+    },
+    {
+      "name": "Card (interactive)",
+      "kind": "card",
+      "refersTo": "card-interactive-hover",
+      "description": "Clickable feature card — lifts to Lift-level shadow on hover/focus-within; channel-coloured top border ties it to one of the four checking methods.",
+      "html": "<a class=\"ds-card-interactive\" href=\"#\"><p class=\"ds-eyebrow\" style=\"color:#2C6E75\">Dilihat</p><h3>Benang Pengaman</h3><p>Tampak sebagai garis gelap saat diterawangkan.</p></a>",
+      "css": ".ds-card-interactive { display: block; background: #EFEBE1; color: #1A1F26; border-top: 4px solid #2C6E75; padding: 24px; text-decoration: none; box-shadow: 0 1px 2px rgba(26,31,38,0.05), 0 8px 24px -12px rgba(26,31,38,0.18); transition: box-shadow 0.2s; } .ds-card-interactive:hover, .ds-card-interactive:focus-within { box-shadow: 0 2px 4px rgba(26,31,38,0.06), 0 18px 40px -18px rgba(26,31,38,0.28); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Engraving Proof Sheet",
+    "overview": "The material world is a printer's proof sheet pulled fresh from an intaglio press: heavy off-white stock, dense black line-work, registration marks sitting in the margin, a loupe resting nearby waiting to be picked up. This is not a metaphor borrowed for flavour — banknote design is engraving, and the site's entire visual language commits to that fact rather than decorating around it. Depth comes from ink and paper, never from glass and glow. Colour is never chosen for mood; it is chosen because it names one of Bank Indonesia's own checking methods, plus one colour — spesimen red — reserved entirely for the Pasal 24 legal marking. The one deliberate departure from the proof-sheet ground is the inspection surface: a near-black panel used only where the subject under discussion is light itself.",
+    "keyCharacteristics": [
+      "Off-white proof stock as the constant ground; near-black ink as the constant figure.",
+      "Four checking-method colours used as taxonomy, never decoration; spesimen red used for nothing but the legal mark.",
+      "Flat by default — shadows read as ink pooling under stock, appearing only on hover/focus.",
+      "Sharp corners everywhere except circular pills and two small fixed-radius brand/focus marks.",
+      "Serif display face for headline weight; grotesque for reading; monospace for anything struck like note lettering.",
+      "One orchestrated motion moment (the colour-shift tilt demo); everything else is a quiet arrival fade, fully stripped under prefers-reduced-motion."
+    ],
+    "rules": [
+      { "name": "The Taxonomy Rule", "body": "Dilihat teal, diraba copper, diterawang amber, and mesin violet mean one thing each — a checking method — everywhere on the site. Never repurpose one of these four hues for an unrelated UI state.", "section": "colors" },
+      { "name": "The One Red Rule", "body": "Spesimen red is reserved entirely for the Pasal 24 marking baked into schematic artwork. Never a button colour, an error colour, or a UI accent.", "section": "colors" },
+      { "name": "The Ink Shadow Rule", "body": "Every shadow is a tint of engraving ink (rgba(26,31,38,…)), never black-on-white glass elevation and never a colour-tinted glow.", "section": "elevation" },
+      { "name": "The Struck-Lettering Rule", "body": "Space Mono is for things that were struck, not written: numbers, codes, citations, labels. Conversational prose is never mono, regardless of length.", "section": "typography" },
+      { "name": "The Sharp-or-Pill Rule", "body": "Every shape resolves to one of exactly two corner treatments: 0px (paper) or rounded-full (a token/chip/toggle). An 8–16px 'soft card' radius breaks the system.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do treat the four channel colours as a fixed vocabulary — reuse them only to mean dilihat/diraba/diterawang/mesin.",
+      "Do keep every shadow an ink tint at the documented Sheet/Lift/Plate stops.",
+      "Do resolve every new shape to 0px or rounded-full — nothing in between.",
+      "Do reserve Space Mono for struck lettering, and Brygada 1918 for headline-scale display only.",
+      "Do author the SPESIMEN mark into a schematic's own path geometry when adding new note-like artwork — never as a CSS layer or overlay."
+    ],
+    "donts": [
+      "Don't introduce spesimen red anywhere except the baked legal mark.",
+      "Don't add a glass/frosted/glow treatment anywhere outside the header's translucent backdrop-blur.",
+      "Don't add a mid-size border-radius (8–16px) to any card, panel, or image frame.",
+      "Don't use the inspection surface as a general dark theme — it belongs only to panels where the subject is literally light.",
+      "Don't animate anything beyond the one orchestrated colour-shift tilt moment and quiet arrival fades; never simulate the diraba touch check via animation."
+    ]
+  }
+}
