@@ -1,7 +1,7 @@
 import { denominations } from '@/data/denominations'
 import { FIGURES_WITHOUT_BIOGRAPHY } from '@/data/figures'
 import { figuresById, motifsById } from '@/lib/content'
-import type { Citation, Motif } from './schema'
+import type { Citation, Motif, Photo } from './schema'
 import type { Locale } from '@/lib/i18n'
 
 /**
@@ -15,6 +15,7 @@ export interface MotifView {
   readonly kind: Motif['kind']
   readonly claim: string
   readonly citations: readonly Citation[]
+  readonly photo?: Photo
 }
 
 export interface NotePeopleView {
@@ -23,6 +24,7 @@ export interface NotePeopleView {
   readonly figureName?: string
   readonly figureLifespan?: string
   readonly figureClaims: readonly string[]
+  readonly figurePhoto?: Photo
   readonly motifs: readonly MotifView[]
   readonly citations: readonly Citation[]
 }
@@ -54,12 +56,14 @@ export function notePeople(locale: Locale): readonly NotePeopleView[] {
         figureName: figure?.name,
         figureLifespan: figure?.lifespan,
         figureClaims: (figure?.claims ?? []).map((claim) => claim.text[locale]),
+        figurePhoto: figure?.photo,
         motifs: motifs.map((motif) => ({
           id: motif.id,
           name: motif.name[locale],
           kind: motif.kind,
           claim: motif.claims[0]?.text[locale] ?? '',
           citations: motif.claims.flatMap((claim) => claim.citations),
+          photo: motif.photo,
         })),
         citations: [...seen.values()],
       }

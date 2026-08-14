@@ -4,8 +4,22 @@ import { Reveal } from '@/components/chrome/Reveal'
 import { CitationLines } from '@/components/mechanism/CitationList'
 import { figuresWithoutBiography, notePeople } from '@/lib/content/tokoh'
 import { LOCALES, isLocale, routeLabel, type Locale } from '@/lib/i18n'
+import { assetPath } from '@/lib/paths'
 import { pageMetadata } from '@/lib/seo'
-import type { Motif } from '@/lib/content/schema'
+import type { Motif, Photo } from '@/lib/content/schema'
+
+/** Credit line for a photograph — CLAUDE.md invariant 13: licence and
+ * source stay visible at the point of use, not just recorded in data/. */
+function PhotoCredit({ photo, locale }: { readonly photo: Photo; readonly locale: Locale }) {
+  return (
+    <p className="mt-2 font-mono text-label leading-snug text-engraving-faint">
+      {photo.credit} · {photo.license}{' '}
+      <a href={photo.sourceUrl} target="_blank" rel="noreferrer noopener" className="underline underline-offset-2">
+        ↗<span className="sr-only">{locale === 'id' ? `sumber foto ${photo.credit}` : `photo source: ${photo.credit}`}</span>
+      </a>
+    </p>
+  )
+}
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))
@@ -71,16 +85,29 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
             </h2>
 
             {note.figureName !== undefined && (
-              <div className="mt-4">
-                <h3 className="font-display text-2xl">{note.figureName}</h3>
-                {note.figureLifespan !== undefined && (
-                  <p className="numeric mt-1 text-sm text-engraving-faint">{note.figureLifespan}</p>
+              <div className="mt-4 sm:flex sm:gap-6">
+                {note.figurePhoto !== undefined && (
+                  <div className="shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={assetPath(`/${note.figurePhoto.path}`)}
+                      alt={note.figureName}
+                      className="h-40 w-40 rounded-sm border border-engraving/15 object-cover"
+                    />
+                    <PhotoCredit photo={note.figurePhoto} locale={locale} />
+                  </div>
                 )}
-                <ul className="mt-3 max-w-prose space-y-2 leading-relaxed text-engraving-soft">
-                  {note.figureClaims.map((claim) => (
-                    <li key={claim}>{claim}</li>
-                  ))}
-                </ul>
+                <div className="mt-4 sm:mt-0">
+                  <h3 className="font-display text-2xl">{note.figureName}</h3>
+                  {note.figureLifespan !== undefined && (
+                    <p className="numeric mt-1 text-sm text-engraving-faint">{note.figureLifespan}</p>
+                  )}
+                  <ul className="mt-3 max-w-prose space-y-2 leading-relaxed text-engraving-soft">
+                    {note.figureClaims.map((claim) => (
+                      <li key={claim}>{claim}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
 
@@ -88,11 +115,20 @@ export default function TokohPage({ params }: { readonly params: { readonly loca
               <ul className="mt-8 grid gap-px bg-engraving/10 sm:grid-cols-3">
                 {note.motifs.map((motif) => (
                   <li key={motif.id} className="bg-proof p-5">
+                    {motif.photo !== undefined && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={assetPath(`/${motif.photo.path}`)}
+                        alt={motif.name}
+                        className="mb-3 aspect-[4/3] w-full rounded-sm border border-engraving/15 object-cover"
+                      />
+                    )}
                     <p className="font-mono text-xs uppercase tracking-[0.18em] text-engraving-faint">
                       {KIND_LABEL[motif.kind][locale]}
                     </p>
                     <h4 className="mt-2 font-display text-lg">{motif.name}</h4>
                     <p className="mt-2 text-sm leading-relaxed text-engraving-soft">{motif.claim}</p>
+                    {motif.photo !== undefined && <PhotoCredit photo={motif.photo} locale={locale} />}
                   </li>
                 ))}
               </ul>
