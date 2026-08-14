@@ -38,7 +38,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
     tiltUsingDevice: 'Mengikuti kemiringan perangkat',
     tiltDeviceUnavailable: 'Perangkat ini tidak melaporkan kemiringan. Gunakan penggeser.',
     tiltDisclaimer:
-      'Peragaan ini menghitung interferensi lapisan tipis untuk tiga panjang gelombang, jadi warnanya benar-benar mengikuti sudut pandang. Tebal lapisannya dipilih agar efeknya jelas di layar — ini bukan tiruan tinta pada uang mana pun.',
+      'Warna yang mata lihat adalah cara otak membaca panjang gelombang cahaya — merah panjang gelombangnya panjang, biru pendek. Peragaan ini menghitung interferensi lapisan tipis untuk tiga panjang gelombang itu, jadi warnanya benar-benar mengikuti sudut pandang, bukan gambar yang diputar. Tebal lapisannya dipilih agar efeknya jelas di layar — ini bukan tiruan tinta pada uang mana pun.',
     uvHeading: 'Nyalakan lampunya',
     uvBody:
       'Peragaan dua keadaan: cahaya ruangan biasa, lalu di bawah sinar ultraviolet. Perubahannya adalah pergantian keadaan, bukan animasi.',
@@ -72,7 +72,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
     tiltUsingDevice: 'Following device tilt',
     tiltDeviceUnavailable: 'This device reports no tilt. Use the slider.',
     tiltDisclaimer:
-      'This computes thin-film interference for three wavelengths, so the colour genuinely follows your viewing angle. The layer thickness is chosen to make the effect legible on a screen — it is not a copy of any note’s ink.',
+      'The colour the eye sees is how the brain reads a wavelength of light — red is a long wavelength, blue a short one. This computes thin-film interference for three such wavelengths, so the colour genuinely follows your viewing angle, not a rotated picture. The layer thickness is chosen to make the effect legible on a screen — it is not a copy of any note’s ink.',
     uvHeading: 'Switch the lamp on',
     uvBody:
       'Two states, shown side by side: ordinary room light, then under ultraviolet. The change is a state change, not an animation.',
