@@ -117,15 +117,6 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
                 </div>
               )}
 
-              {channel === 'diraba' && (
-                <aside className="mt-8 max-w-prose border-l-4 border-diraba bg-proof-deep/60 p-5">
-                  <h3 className="font-display text-xl">{copy.honestHeading}</h3>
-                  <p className="mt-3 leading-relaxed text-engraving-soft">{copy.honestBody}</p>
-                  <p lang="id" className="mt-4 font-display text-xl leading-snug">
-                    {copy.honestQuote}
-                  </p>
-                </aside>
-              )}
             </Reveal>
             </li>
           )
@@ -192,6 +183,31 @@ export default function TigadPage({ params }: { readonly params: { readonly loca
         </h2>
         <p className="mt-4 max-w-prose text-lede leading-relaxed text-engraving-soft">
           {copy.verdictBody}
+        </p>
+      </section>
+      </Reveal>
+
+      {/* Closes the walkthrough, not buried mid-step: PRD §9 calls this the
+          site's proudest claim ("a web app admitting the limits of its
+          medium is rare"), and the peak-end rule means the last thing read
+          should be it, not the verdict-authority disclaimer above, which is
+          already repeated in the footer on every page (critique 2026-08-14,
+          P2). Same border-diraba/card language as the walkthrough steps,
+          scaled up to the verdict section's own weight rather than a
+          subordinate aside. */}
+      <Reveal>
+      <section
+        className="mt-10 card max-w-prose border-l-4 border-diraba p-7 sm:p-10"
+        aria-labelledby="jujur"
+      >
+        <h2 id="jujur" className="font-display text-section">
+          {copy.honestHeading}
+        </h2>
+        <p className="mt-4 max-w-prose text-lede leading-relaxed text-engraving-soft">
+          {copy.honestBody}
+        </p>
+        <p lang="id" className="mt-5 font-display text-2xl leading-snug">
+          {copy.honestQuote}
         </p>
       </section>
       </Reveal>
