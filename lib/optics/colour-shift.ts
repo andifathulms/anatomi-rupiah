@@ -15,6 +15,10 @@ import { OVI_FAR, OVI_NEAR } from '@/lib/tokens'
 export const TILT_MIN_DEG = -60
 export const TILT_MAX_DEG = 60
 
+/** Refractive index used by the thin-film shader — kept here too so the
+ * displayed path difference is computed the same way the pixels are. */
+const FILM_REFRACTIVE_INDEX = 1.45
+
 interface Rgb {
   readonly r: number
   readonly g: number
@@ -63,4 +67,18 @@ export function colourAtAngle(deg: number): string {
 /** Skew of the demonstration shape, so the plane visibly turns with the angle. */
 export function skewForAngle(deg: number): number {
   return clampTilt(deg) * 0.35
+}
+
+/**
+ * The optical path difference between the two reflections, at the centre of
+ * the patch — the actual number the shader's per-pixel colour comes from
+ * (THIN_FILM_FRAGMENT in lib/webgl/shaders.ts), not a separate estimate.
+ * Same trig, same refractive index, same thickness; shown here as text
+ * because the shader only ever draws it as a colour.
+ */
+export function pathDifferenceNm(deg: number, thicknessNm: number): number {
+  const incidence = (clampTilt(deg) * Math.PI) / 180
+  const sinT = Math.sin(incidence) / FILM_REFRACTIVE_INDEX
+  const cosT = Math.sqrt(Math.max(0, 1 - sinT * sinT))
+  return 2 * FILM_REFRACTIVE_INDEX * thicknessNm * cosT
 }

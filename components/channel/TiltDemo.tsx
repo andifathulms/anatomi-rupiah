@@ -6,6 +6,7 @@ import {
   TILT_MIN_DEG,
   clampTilt,
   colourAtAngle,
+  pathDifferenceNm,
   skewForAngle,
 } from '@/lib/optics/colour-shift'
 import { ENGRAVING, ENGRAVING_FAINT, PROOF, rgbTriplet } from '@/lib/tokens'
@@ -78,6 +79,7 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
 
   const flatColour = colourAtAngle(angle)
   const skew = skewForAngle(angle)
+  const opd = Math.round(pathDifferenceNm(angle, FILM_THICKNESS))
 
   return (
     <section className="mt-10 border-t-4 border-dilihat bg-proof-deep/40 p-5" aria-labelledby="tilt">
@@ -128,6 +130,9 @@ export function TiltDemo({ copy }: { readonly copy: DemoCopy }) {
           />
           <p className="numeric mt-2 text-sm text-engraving-soft">
             {copy.tiltAngle}: {rounded}°{rounded === 0 ? ` · ${copy.tiltHeadOn}` : ''}
+          </p>
+          <p className="numeric mt-1 text-sm text-engraving-faint">
+            {copy.tiltPathDifference}: ≈{opd} nm
           </p>
 
           {orientation === 'off' && (

@@ -4,6 +4,7 @@ import {
   TILT_MIN_DEG,
   clampTilt,
   colourAtAngle,
+  pathDifferenceNm,
   skewForAngle,
   tiltFraction,
 } from '@/lib/optics/colour-shift'
@@ -37,6 +38,17 @@ describe('the colour-shift demonstration', () => {
     expect(skewForAngle(40)).toBeGreaterThan(0)
     expect(skewForAngle(-40)).toBeLessThan(0)
     expect(skewForAngle(0)).toBe(0)
+  })
+
+  it('is at its maximum head-on and shrinks as the angle opens', () => {
+    const headOn = pathDifferenceNm(0, 385)
+    expect(headOn).toBeCloseTo(2 * 1.45 * 385)
+    expect(pathDifferenceNm(45, 385)).toBeLessThan(headOn)
+    expect(pathDifferenceNm(-45, 385)).toBeCloseTo(pathDifferenceNm(45, 385))
+  })
+
+  it('scales linearly with the layer thickness passed in', () => {
+    expect(pathDifferenceNm(30, 770)).toBeCloseTo(pathDifferenceNm(30, 385) * 2)
   })
 
   it('keeps the demonstration ramp out of the channel taxonomy', async () => {

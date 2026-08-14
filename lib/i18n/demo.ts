@@ -5,6 +5,7 @@ export interface DemoCopy {
   readonly tiltBody: string
   readonly tiltLabel: string
   readonly tiltAngle: string
+  readonly tiltPathDifference: string
   readonly tiltHeadOn: string
   readonly tiltUseDevice: string
   readonly tiltUsingDevice: string
@@ -33,6 +34,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
       'Geser kendali di bawah untuk mengubah sudut pandang. Warnanya bergeser karena sudutnya berubah, bukan karena tintanya berubah.',
     tiltLabel: 'Sudut pandang',
     tiltAngle: 'Sudut',
+    tiltPathDifference: 'Selisih jarak tempuh cahaya',
     tiltHeadOn: 'Tegak lurus',
     tiltUseDevice: 'Gunakan kemiringan perangkat',
     tiltUsingDevice: 'Mengikuti kemiringan perangkat',
@@ -67,6 +69,7 @@ export const DEMO: Record<Locale, DemoCopy> = {
       'Move the control below to change the viewing angle. The colour shifts because the angle changed, not because the ink did.',
     tiltLabel: 'Viewing angle',
     tiltAngle: 'Angle',
+    tiltPathDifference: 'Light path difference',
     tiltHeadOn: 'Head-on',
     tiltUseDevice: 'Use device tilt',
     tiltUsingDevice: 'Following device tilt',
