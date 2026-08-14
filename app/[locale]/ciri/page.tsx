@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Reveal } from '@/components/chrome/Reveal'
 import { CHANNEL_LABEL, LOCALES, isLocale, routeLabel, type Locale } from '@/lib/i18n'
 import { featureCards } from '@/lib/content/views'
 import { mechanismSvg } from '@/lib/art/mechanisms'
@@ -68,28 +69,31 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
 
   return (
     <div className="py-14">
-      <p className="eyebrow">{locale === 'id' ? 'Delapan mekanisme' : 'Eight mechanisms'}</p>
-      <h1 className="mt-4 font-display text-title">
-        {locale === 'id' ? 'Ciri dan cara kerjanya' : 'The features and how they work'}
-      </h1>
-      <p className="mt-5 max-w-prose text-lede text-engraving-soft">{ledeFor(locale)}</p>
+      <div className="animate-lift-in">
+        <p className="eyebrow">{locale === 'id' ? 'Delapan mekanisme' : 'Eight mechanisms'}</p>
+        <h1 className="mt-4 font-display text-title">
+          {locale === 'id' ? 'Ciri dan cara kerjanya' : 'The features and how they work'}
+        </h1>
+        <p className="mt-5 max-w-prose text-lede text-engraving-soft">{ledeFor(locale)}</p>
 
-      {/* The legend, so the colour coding is learnable rather than guessable. */}
-      <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2">
-        {CHANNEL_ORDER.map((channel) => (
-          <li key={channel} className="flex items-center gap-2 text-sm text-engraving-soft">
-            <span
-              aria-hidden="true"
-              className={`h-3 w-3 rounded-full ${CHANNEL_SWATCH[channel]}`}
-            />
-            <span className={CHANNEL_TEXT[channel]}>{CHANNEL_LABEL[channel][locale]}</span>
-          </li>
-        ))}
-      </ul>
+        {/* The legend, so the colour coding is learnable rather than guessable. */}
+        <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2">
+          {CHANNEL_ORDER.map((channel) => (
+            <li key={channel} className="flex items-center gap-2 text-sm text-engraving-soft">
+              <span
+                aria-hidden="true"
+                className={`h-3 w-3 rounded-full ${CHANNEL_SWATCH[channel]}`}
+              />
+              <span className={CHANNEL_TEXT[channel]}>{CHANNEL_LABEL[channel][locale]}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => (
-          <li key={card.id}>
+          <li key={card.id} className="h-full">
+            <Reveal className="h-full">
             <Link
               href={card.url}
               className={`card-interactive group flex h-full flex-col border-t-4 ${CHANNEL_ACCENT[card.channel]}`}
@@ -117,6 +121,7 @@ export default function CiriIndexPage({ params }: { readonly params: { readonly 
                 )}
               </div>
             </Link>
+            </Reveal>
           </li>
         ))}
       </ul>

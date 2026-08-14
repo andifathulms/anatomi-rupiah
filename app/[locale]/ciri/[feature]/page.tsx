@@ -4,6 +4,7 @@ import { LightTable } from '@/components/channel/LightTable'
 import { ReliefLight } from '@/components/channel/ReliefLight'
 import { TiltDemo } from '@/components/channel/TiltDemo'
 import { UvToggle } from '@/components/channel/UvToggle'
+import { Reveal } from '@/components/chrome/Reveal'
 import { CitationList } from '@/components/mechanism/CitationList'
 import { DEMO } from '@/lib/i18n/demo'
 import { MechanismFigure } from '@/components/mechanism/MechanismFigure'
@@ -67,7 +68,7 @@ export default function FeaturePage({
         ← {locale === 'id' ? 'Semua ciri' : 'All features'}
       </Link>
 
-      <div className={`mt-5 border-l-4 pl-5 sm:pl-7 ${CHANNEL_ACCENT[detail.channel]}`}>
+      <div className={`animate-lift-in mt-5 border-l-4 pl-5 sm:pl-7 ${CHANNEL_ACCENT[detail.channel]}`}>
         <p className={`font-mono text-label uppercase tracking-[0.24em] ${CHANNEL_TEXT[detail.channel]}`}>
           {detail.channelLabel}
         </p>
@@ -75,7 +76,7 @@ export default function FeaturePage({
         <p className="mt-5 max-w-prose text-lede text-engraving-soft">{detail.summary}</p>
       </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+      <Reveal className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <MechanismFigure
           id={detail.illustration}
           channel={detail.channel}
@@ -131,15 +132,37 @@ export default function FeaturePage({
             </div>
           )}
         </section>
-      </div>
+      </Reveal>
 
-      {detail.id === 'tanda-air' && <LightTable copy={DEMO[locale]} />}
-      {detail.id === 'cetak-intaglio' && <ReliefLight copy={DEMO[locale]} ridges={11} />}
-      {detail.id === 'kode-tuna-netra' && <ReliefLight copy={DEMO[locale]} ridges={4} />}
-      {detail.id === 'tinta-berubah-warna' && <TiltDemo copy={DEMO[locale]} />}
-      {detail.id === 'tinta-tampak-uv' && <UvToggle copy={DEMO[locale]} />}
+      {detail.id === 'tanda-air' && (
+        <Reveal>
+          <LightTable copy={DEMO[locale]} />
+        </Reveal>
+      )}
+      {detail.id === 'cetak-intaglio' && (
+        <Reveal>
+          <ReliefLight copy={DEMO[locale]} ridges={11} />
+        </Reveal>
+      )}
+      {detail.id === 'kode-tuna-netra' && (
+        <Reveal>
+          <ReliefLight copy={DEMO[locale]} ridges={4} />
+        </Reveal>
+      )}
+      {detail.id === 'tinta-berubah-warna' && (
+        <Reveal>
+          <TiltDemo copy={DEMO[locale]} />
+        </Reveal>
+      )}
+      {detail.id === 'tinta-tampak-uv' && (
+        <Reveal>
+          <UvToggle copy={DEMO[locale]} />
+        </Reveal>
+      )}
 
-      <CitationList citations={detail.citations} locale={locale} />
+      <Reveal>
+        <CitationList citations={detail.citations} locale={locale} />
+      </Reveal>
     </article>
   )
 }
